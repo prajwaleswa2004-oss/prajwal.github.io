@@ -246,7 +246,7 @@ footer {
     display: flex;
     flex-direction: column; /* Stacks the icon on top of links */
     align-items: flex-end;  /* Pushes everything to the right edge */
-    gap: 1.5rem;            /* Space between the icon and the email/linkedin */
+    gap: 2rem;            /* Space between the icon and the email/linkedin */
 }
 
 /* The Download Icon Button */
