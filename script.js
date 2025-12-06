@@ -1,111 +1,12 @@
-// 1. The Spotlight Effect
-document.getElementById("cards").onmousemove = e => {
-  for(const card of document.getElementsByClassName("card")) {
-    const rect = card.getBoundingClientRect(),
-          x = e.clientX - rect.left,
-          y = e.clientY - rect.top;
-
-    card.style.setProperty("--mouse-x", `${x}px`);
-    card.style.setProperty("--mouse-y", `${y}px`);
-  }// 1. The Spotlight Effect
-document.getElementById("cards").onmousemove = e => {
-  for(const card of document.getElementsByClassName("card")) {
-    const rect = card.getBoundingClientRect(),
-          x = e.clientX - rect.left,
-          y = e.clientY - rect.top;
-
-    card.style.setProperty("--mouse-x", `${x}px`);
-    card.style.setProperty("--mouse-y", `${y}px`);
-  }
-};
-
-// 2. Smooth Reveal Animation on Load
 document.addEventListener("DOMContentLoaded", () => {
-    const cards = document.querySelectorAll(".card");
-    const header = document.querySelector("header");
 
-    // Fade in Header
-    header.style.opacity = "0";
-    header.style.transform = "translateY(20px)";
-    header.style.transition = "all 0.8s ease-out";
-    
-    setTimeout(() => {
-        header.style.opacity = "1";
-        header.style.transform = "translateY(0)";
-    }, 100);
-
-    // Staggered fade in for cards
-    cards.forEach((card, index) => {
-        card.style.opacity = "0";
-        card.style.transform = "translateY(20px)";
-        card.style.transition = "all 0.6s ease-out";
-        
-        setTimeout(() => {
-            card.style.opacity = "1";
-            card.style.transform = "translateY(0)";
-        }, 300 + (index * 100)); // Stagger effect
-    });
-});
-};
-
-// 2. Smooth Reveal Animation on Load
-document.addEventListener("DOMContentLoaded", () => {
-    const cards = document.querySelectorAll(".card");
-    const header = document.querySelector("header");
-
-    // Fade in Header
-    header.style.opacity = "0";
-    header.style.transform = "translateY(20px)";
-    header.style.transition = "all 0.8s ease-out";
-    
-    setTimeout(() => {
-        header.style.opacity = "1";
-        header.style.transform = "translateY(0)";
-    }, 100);
-
-    // Staggered fade in for cards
-    cards.forEach((card, index) => {
-        card.style.opacity = "0";
-        card.style.transform = "translateY(20px)";
-        card.style.transition = "all 0.6s ease-out";
-        
-        setTimeout(() => {
-            card.style.opacity = "1";
-            card.style.transform = "translateY(0)";
-        }, 300 + (index * 100)); // Stagger effect
-    });
-});
-// --- MODAL LOGIC ---
-const modal = document.getElementById('project-modal');
-const closeBtn = document.querySelector('.close-modal');
-const projectCard = document.querySelector('.project-card'); // Targets your Curry Maker card
-
-// Open Modal
-projectCard.addEventListener('click', () => {
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Prevents scrolling behind modal
-});
-
-// Close Modal (Clicking 'X')
-closeBtn.addEventListener('click', () => {
-    modal.classList.remove('active');
-    document.body.style.overflow = 'auto'; // Re-enable scrolling
-});
-
-// Close Modal (Clicking outside the box)
-modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
-});
-document.addEventListener("DOMContentLoaded", () => {
-    
-    // 1. Spotlight Effect (Your existing code)
+    /* =========================================
+       1. SPOTLIGHT EFFECT (Mouse Tracking)
+       ========================================= */
     const cardsContainer = document.getElementById("cards");
-    if(cardsContainer) {
+    if (cardsContainer) {
         cardsContainer.onmousemove = e => {
-            for(const card of document.getElementsByClassName("card")) {
+            for (const card of document.getElementsByClassName("card")) {
                 const rect = card.getBoundingClientRect(),
                       x = e.clientX - rect.left,
                       y = e.clientY - rect.top;
@@ -115,27 +16,28 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
-    // --- 2. MODAL LOGIC (The Fix) ---
+    /* =========================================
+       2. MODAL LOGIC (Project Pop-up)
+       ========================================= */
     const modal = document.getElementById('project-modal');
     const closeBtn = document.querySelector('.close-modal');
-    const projectCard = document.querySelector('.project-card'); // This targets your Curry Maker card
+    const projectCard = document.querySelector('.project-card');
 
     if (projectCard && modal && closeBtn) {
-        
         // Open Modal
         projectCard.addEventListener('click', (e) => {
-            e.preventDefault(); // Stops page from jumping
+            e.preventDefault();
             modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Stop background scrolling
+            document.body.style.overflow = 'hidden'; // Stop scrolling
         });
 
-        // Close Modal (Clicking X)
+        // Close Modal (X Button)
         closeBtn.addEventListener('click', () => {
             modal.classList.remove('active');
             document.body.style.overflow = 'auto'; // Resume scrolling
         });
 
-        // Close Modal (Clicking Outside the box)
+        // Close Modal (Click Outside)
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.classList.remove('active');
@@ -143,18 +45,39 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Close on Escape Key
+        // Close Modal (Escape Key)
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modal.classList.contains('active')) {
                 modal.classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
         });
-    } else {
-        console.error("Error: Could not find modal elements. Check HTML IDs.");
     }
-    
-    // Initialize Icons
+
+    /* =========================================
+       3. SCROLL ANIMATIONS (Reveal on Scroll)
+       ========================================= */
+    const observerOptions = {
+        threshold: 0.1, // Trigger when 10% visible
+        rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show-element');
+                observer.unobserve(entry.target); // Run only once
+            }
+        });
+    }, observerOptions);
+
+    // Target all hidden elements (Header + Cards)
+    const hiddenElements = document.querySelectorAll('.hidden-element');
+    hiddenElements.forEach((el) => observer.observe(el));
+
+    /* =========================================
+       4. INITIALIZE ICONS
+       ========================================= */
     if (typeof feather !== 'undefined') {
         feather.replace();
     }
