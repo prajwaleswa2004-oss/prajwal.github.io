@@ -103,3 +103,22 @@ document.addEventListener("DOMContentLoaded", () => {
         feather.replace();
     }
 });
+
+// 6. MAGNETIC BUTTON EFFECT
+    const magneticBtns = document.querySelectorAll('.contact-links a');
+
+    magneticBtns.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const position = btn.getBoundingClientRect();
+            const x = e.pageX - position.left - position.width / 2;
+            const y = e.pageY - position.top - position.height / 2;
+
+            // Move the button slightly towards the mouse (divided by 5 for subtlety)
+            btn.style.transform = `translate(${x * 0.3}px, ${y * 0.5}px)`;
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            // Snap back to center
+            btn.style.transform = 'translate(0px, 0px)';
+        });
+    });
