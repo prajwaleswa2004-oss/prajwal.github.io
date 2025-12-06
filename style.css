@@ -249,24 +249,35 @@ footer {
     gap: 1.5rem;            /* Space between the icon and the email/linkedin */
 }
 
-/* The Download Icon Button */
+/* Align links and icon in a straight line */
+.contact-links {
+    display: flex;
+    align-items: center; /* Centers them vertically */
+    gap: 20px; /* Space between Email, LinkedIn, and Icon */
+}
+
+/* Style the icon to look premium */
 .download-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--text-muted);
     transition: all 0.3s ease;
     padding: 8px;
-    border-radius: 50%;
+    border-radius: 50%; /* Makes it a perfect circle */
+    background: rgba(255, 255, 255, 0.05); /* Very subtle background */
     border: 1px solid transparent;
+    margin-left: 10px; /* Extra space to separate it from "LinkedIn" */
 }
 
 .download-icon-btn:hover {
-    color: #fff; /* Turns white on hover */
-    background: rgba(255, 255, 255, 0.1); /* Subtle circle background */
-    border-color: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px); /* Slight lift effect */
+    color: #fff;
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
 }
 
-/* Ensure the Feather icon is a good size */
 .download-icon-btn svg {
-    width: 24px;
-    height: 24px;
+    width: 20px; /* Slightly smaller to match text size */
+    height: 20px;
 }
