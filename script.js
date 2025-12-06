@@ -75,3 +75,27 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 300 + (index * 100)); // Stagger effect
     });
 });
+// --- MODAL LOGIC ---
+const modal = document.getElementById('project-modal');
+const closeBtn = document.querySelector('.close-modal');
+const projectCard = document.querySelector('.project-card'); // Targets your Curry Maker card
+
+// Open Modal
+projectCard.addEventListener('click', () => {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevents scrolling behind modal
+});
+
+// Close Modal (Clicking 'X')
+closeBtn.addEventListener('click', () => {
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto'; // Re-enable scrolling
+});
+
+// Close Modal (Clicking outside the box)
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+});
