@@ -278,9 +278,9 @@ header {
 
 /* Project Card Images */
 .project-card {
-    padding: 0;
+    padding: 0;       /* Keeps the image touching the edges */
+    cursor: pointer;  /* ADDS the hand icon so people know to click */
 }
-
 .card-bg-image {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
