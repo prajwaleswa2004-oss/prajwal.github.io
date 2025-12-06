@@ -1,243 +1,133 @@
-:root {
-    --bg-color: #050505;
-    --card-bg: #0f0f0f;
-    --text-main: #ffffff;
-    --text-muted: #888888;
-    --border-color: rgba(255, 255, 255, 0.08);
-    --highlight: rgba(255, 255, 255, 0.15);
-    --accent: #3b82f6; /* Subtle tech blue */
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prajwal E. | Engineer & Creator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+    <div class="noise-overlay"></div>
 
-body {
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    font-family: 'Space Grotesk', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-}
+    <main class="main-container">
+        
+        <header class="fade-in">
+            <div class="profile-header">
+                <h1>Prajwal E.</h1>
+                <p class="subtitle">Mechanical Engineer & Visual Storyteller</p>
+                <div class="status-pill">
+                    <span class="dot"></span> Open for Internships
+                </div>
+            </div>
+            <div class="contact-links">
+                <a href="mailto:prajwaleswa2004@gmail.com">Email</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">GitHub</a>
+            </div>
+        </header>
 
-/* Background Grain */
-.noise-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-}
+        <div class="bento-grid" id="cards">
+            
+            <div class="card card-large">
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="user"></i></div>
+                    <h3>The Profile</h3>
+                    <p>3rd Year Mechanical Engineering student at JNTUA. Passionate about smart product design, automation, and visual storytelling.</p>
+                </div>
+            </div>
 
-.main-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-    position: relative;
-    z-index: 1;
-}
+            <div class="card card-wide project-card">
+                <div class="card-bg-image" style="background-image: url('https://images.unsplash.com/photo-1581092921461-eab62e97a783?q=80&w=2070&auto=format&fit=crop');"></div> <div class="card-content overlay-dark">
+                    <div class="badge">Major Project</div>
+                    <h3>Automated Curry Maker</h3>
+                    <p>Designed in Fusion 360. Features rotating spoon mechanism, slotted lid timing, and ingredient-release systems. Low-cost automation.</p>
+                </div>
+            </div>
 
-/* Typography */
-h1 {
-    font-size: 3.5rem;
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    background: linear-gradient(to right, #fff, #888);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+            <div class="card">
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="tool"></i></div>
+                    <h3>Engineering</h3>
+                    <ul class="skill-list">
+                        <li>Fusion 360</li>
+                        <li>AutoCAD & UG NX</li>
+                        <li>Hypermesh</li>
+                        <li>3D Printing</li>
+                    </ul>
+                </div>
+            </div>
 
-.subtitle {
-    color: var(--text-muted);
-    font-size: 1.2rem;
-    margin-top: 0.5rem;
-}
+            <div class="card">
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="camera"></i></div>
+                    <h3>Creative</h3>
+                    <ul class="skill-list">
+                        <li>Video Editing</li>
+                        <li>Photography</li>
+                        <li>Short Films</li>
+                        <li>Sketching</li>
+                    </ul>
+                </div>
+            </div>
 
-.status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    margin-top: 1.5rem;
-    border: 1px solid var(--border-color);
-}
+            <div class="card card-tall">
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="code"></i></div>
+                    <h3>Programming</h3>
+                    <p>Bridging the gap between hardware and software.</p>
+                    <div class="tags">
+                        <span>Python</span>
+                        <span>Java</span>
+                        <span>C Language</span>
+                    </div>
+                </div>
+            </div>
 
-.dot {
-    width: 8px;
-    height: 8px;
-    background-color: #4ade80;
-    border-radius: 50%;
-    box-shadow: 0 0 10px #4ade80;
-}
+            <div class="card">
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="book"></i></div>
+                    <h3>Education</h3>
+                    <p><strong>B.Tech Mechanical</strong><br>JNTUA College of Eng.</p>
+                    <p class="faded">2023–2027</p>
+                </div>
+            </div>
 
-/* Header */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 4rem;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
+            <div class="card">
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="heart"></i></div>
+                    <h3>Impact</h3>
+                    <p>CRPF: 10,000+ Plantations</p>
+                    <p>Class Rep (2 Semesters)</p>
+                </div>
+            </div>
 
-.contact-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 0.9rem;
-    transition: color 0.3s;
-}
+             <div class="card card-wide">
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="cpu"></i></div>
+                    <h3>Workshops</h3>
+                    <div class="row-spread">
+                        <span>Ornithopter Design</span>
+                        <span>Ethical Hacking</span>
+                    </div>
+                </div>
+            </div>
 
-.contact-links a:hover { color: #fff; }
+        </div>
 
-/* The Bento Grid Layout */
-.bento-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 16px;
-    grid-auto-flow: dense;
-}
+        <footer>
+            <p>Designed by Prajwal E. | +91 9014159926</p>
+        </footer>
 
-/* Card Styling - The Premium Glass Look */
-.card {
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    min-height: 240px;
-    cursor: default;
-}
+    </main>
 
-/* JavaScript Mouse Hover Effect targets these */
-.card::before {
-    content: "";
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0; left: 0;
-    background: radial-gradient(
-        800px circle at var(--mouse-x) var(--mouse-y), 
-        rgba(255, 255, 255, 0.06), 
-        transparent 40%
-    );
-    z-index: 1;
-    opacity: 0; /* Hidden by default, JS enables it */
-    transition: opacity 0.5s;
-    pointer-events: none;
-}
-
-.card:hover::before { opacity: 1; }
-
-.card-content {
-    position: relative;
-    z-index: 2;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Grid Spanning */
-@media (min-width: 768px) {
-    .card-wide { grid-column: span 2; }
-    .card-tall { grid-row: span 2; }
-    .card-large { grid-column: span 2; grid-row: span 1; }
-}
-
-/* Content Styling */
-.icon-box {
-    margin-bottom: auto;
-    color: var(--text-muted);
-}
-
-.card h3 {
-    margin-top: 1rem;
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
-
-.card p {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    line-height: 1.5;
-}
-
-/* Specific Card Styles */
-.skill-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-}
-
-.skill-list li {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    padding: 4px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-
-.tags span {
-    display: inline-block;
-    background: rgba(255,255,255,0.1);
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    margin-right: 5px;
-    margin-top: 10px;
-}
-
-/* Project Card Images */
-.project-card {
-    padding: 0;
-}
-
-.card-bg-image {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-size: cover;
-    background-position: center;
-    transition: transform 0.5s;
-    z-index: 0;
-}
-
-.project-card:hover .card-bg-image {
-    transform: scale(1.05);
-}
-
-.overlay-dark {
-    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-    padding: 24px;
-    justify-content: flex-end;
-}
-
-.badge {
-    background: #fff;
-    color: #000;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    font-weight: bold;
-    align-self: flex-start;
-    margin-bottom: 8px;
-}
-
-footer {
-    margin-top: 4rem;
-    border-top: 1px solid var(--border-color);
-    padding-top: 2rem;
-    color: var(--text-muted);
-    font-size: 0.8rem;
-    text-align: center;
-}
+    <script src="script.js"></script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
