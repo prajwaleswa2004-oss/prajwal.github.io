@@ -3,66 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>Prajwal E. | Engineer & Creator</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
 
-    <header>
-        <div class="logo">YOUR NAME.</div>
-        <nav>
-            <a href="#">Work</a>
-            <a href="#">Profile</a>
-            <a href="#">Contact</a>
-        </nav>
-    </header>
+    <div class="noise-overlay"></div>
 
-    <main class="grid-wrapper">
-        <div class="card">
-            <img src="https://picsum.photos/600/800?random=1" alt="Project 1">
-            <div class="card-info">
-                <h3>Brand Identity</h3>
-                <p>2024 Design</p>
-            </div>
-        </div>
-
-        <div class="card wide">
-            <img src="https://picsum.photos/1200/800?random=2" alt="Project 2">
-            <div class="card-info">
-                <h3>Editorial Layout</h3>
-                <p>Art Direction</p>
-            </div>
-        </div>
-
-        <div class="card tall">
-            <img src="https://picsum.photos/600/1200?random=3" alt="Project 3">
-            <div class="card-info">
-                <h3>Mobile App</h3>
-                <p>UX/UI</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <img src="https://picsum.photos/600/800?random=4" alt="Project 4">
-             <div class="card-info">
-                <h3>Photography</h3>
-                <p>Visuals</p>
-            </div>
-        </div>
+    <main class="main-container">
         
-         <div class="card">
-            <img src="https://picsum.photos/600/800?random=5" alt="Project 5">
-             <div class="card-info">
-                <h3>Packaging</h3>
-                <p>Print</p>
+        <header class="fade-in">
+            <div class="profile-header">
+                <h1>Prajwal E.</h1>
+                <p class="subtitle">Mechanical Engineer & Visual Storyteller</p>
+                <div class="status-pill">
+                    <span class="dot"></span> Open for Internships
+                </div>
             </div>
+            <div class="contact-links">
+                <a href="mailto:prajwaleswa2004@gmail.com">Email</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">GitHub</a>
+            </div>
+        </header>
+
+        <div class="bento-grid" id="cards">
+            
+            <div class="card card-large">
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="user"></i></div>
+                    <h3>The Profile</h3>
+                    <p>3rd Year Mechanical Engineering student at JNTUA. Passionate about smart product design, automation, and visual storytelling.</p>
+                </div>
+            </div>
+
+            <div class="card card-wide project-card">
+                <div class="card-bg-image" style="background-image: url('https://images.unsplash.com/photo-1581092921461-eab62e97a783?q=80&w=2070&auto=format&fit=crop');"></div> <div class="card-content overlay-dark">
+                    <div class="badge">Major Project</div>
+                    <h3>Automated Curry Maker</h3>
+                    <p>Designed in Fusion 360. Features rotating spoon mechanism, slotted lid timing, and ingredient-release systems. Low-cost automation.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="tool"></i></div>
+                    <h3>Engineering</h3>
+                    <ul class="skill-list">
+                        <li>Fusion 360</li>
+                        <li>AutoCAD & UG NX</li>
+                        <li>Hypermesh</li>
+                        <li>3D Printing</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="camera"></i></div>
+                    <h3>Creative</h3>
+                    <ul class="skill-list">
+                        <li>Video Editing</li>
+                        <li>Photography</li>
+                        <li>Short Films</li>
+                        <li>Sketching</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card card-tall">
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="code"></i></div>
+                    <h3>Programming</h3>
+                    <p>Bridging the gap between hardware and software.</p>
+                    <div class="tags">
+                        <span>Python</span>
+                        <span>Java</span>
+                        <span>C Language</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="book"></i></div>
+                    <h3>Education</h3>
+                    <p><strong>B.Tech Mechanical</strong><br>JNTUA College of Eng.</p>
+                    <p class="faded">2023–2027</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="heart"></i></div>
+                    <h3>Impact</h3>
+                    <p>CRPF: 10,000+ Plantations</p>
+                    <p>Class Rep (2 Semesters)</p>
+                </div>
+            </div>
+
+             <div class="card card-wide">
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="cpu"></i></div>
+                    <h3>Workshops</h3>
+                    <div class="row-spread">
+                        <span>Ornithopter Design</span>
+                        <span>Ethical Hacking</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
+        <footer>
+            <p>Designed by Prajwal E. | +91 9014159926</p>
+        </footer>
+
     </main>
 
-    <footer>
-        <p>&copy; 2024 Your Name. Crafted in Code.</p>
-    </footer>
-
+    <script src="script.js"></script>
+    <script>
+        feather.replace();
+    </script>
 </body>
 </html>
