@@ -359,3 +359,111 @@ footer {
     width: 20px; /* Slightly smaller to match text size */
     height: 20px;
 }
+/* --- MODAL STYLES (Paste at the bottom of style.css) --- */
+
+/* 1. The Background Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8); /* Dark background */
+    backdrop-filter: blur(10px);     /* The Glass Blur Effect */
+    z-index: 2000;                   /* Sit on top of everything */
+    opacity: 0;                      /* Hidden by default */
+    pointer-events: none;            /* Cannot click it when hidden */
+    transition: all 0.4s ease;       /* Smooth fade in */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 2. The Active State (When JS adds this class) */
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* 3. The Pop-up Box */
+.modal-content {
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 90%;
+    max-width: 600px;
+    border-radius: 16px;
+    overflow: hidden;
+    transform: translateY(50px); /* Starts slightly lower */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy pop-up */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    position: relative;
+    max-height: 90vh; /* Prevents it from being too tall on mobile */
+    overflow-y: auto; /* Allows scrolling inside the modal if text is long */
+}
+
+/* 4. Animation when opening */
+.modal-overlay.active .modal-content {
+    transform: translateY(0); /* Moves into place */
+}
+
+/* 5. The Close Button (X) */
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.close-modal:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* 6. Modal Content Styling */
+.modal-header img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.modal-title {
+    padding: 24px 24px 0;
+}
+
+.modal-title h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.8rem;
+}
+
+.modal-body {
+    padding: 24px;
+    color: #aaa; /* Soft text color */
+    line-height: 1.6;
+}
+
+.modal-body h3 {
+    color: #fff;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.modal-body ul {
+    padding-left: 20px;
+}
+
+/* Make the project card look clickable */
+.project-card {
+    cursor: pointer;
+}
