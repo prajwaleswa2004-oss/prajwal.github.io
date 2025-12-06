@@ -1,96 +1,16 @@
-/* --- MODAL STYLES --- */
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.7); /* Darkens the background */
-    backdrop-filter: blur(8px); /* Blurs the background (High-end feel) */
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
+/* === COPY & REPLACE ALL CONTENT IN style.css === */
 
-.modal-overlay.active {
-    opacity: 1;
-    pointer-events: all;
-}
-
-.modal-content {
-    background: #0f0f0f;
-    border: 1px solid var(--border-color);
-    width: 90%;
-    max-width: 600px;
-    border-radius: 16px;
-    overflow: hidden;
-    transform: translateY(50px);
-    transition: transform 0.3s ease;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    position: relative;
-}
-
-.modal-overlay.active .modal-content {
-    transform: translateY(0);
-}
-
-.close-modal {
-    position: absolute;
-    top: 15px; right: 15px;
-    background: rgba(0,0,0,0.5);
-    border: none;
-    color: white;
-    font-size: 2rem;
-    cursor: pointer;
-    z-index: 10;
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    line-height: 1;
-}
-
-.modal-header img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-}
-
-.modal-title {
-    padding: 20px 24px 0;
-}
-
-.modal-body {
-    padding: 24px;
-    color: var(--text-muted);
-    line-height: 1.6;
-}
-
-.modal-body h3 {
-    color: #fff;
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
-}
-
-.modal-body ul {
-    padding-left: 20px;
-    margin-top: 10px;
-}
 :root {
     --bg-color: #050505;
-    --card-bg: #0f0f0f;
+    --card-bg: rgba(20, 20, 20, 0.6); /* More transparent for glass effect */
     --text-main: #ffffff;
-    --text-muted: #888888;
+    --text-muted: #888888; /* Fixed missing # */
     --border-color: rgba(255, 255, 255, 0.08);
     --highlight: rgba(255, 255, 255, 0.15);
-    --accent: #3b82f6; /* Subtle tech blue */
+    --accent-glow: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.15), transparent 60%);
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     background-color: var(--bg-color);
@@ -100,80 +20,58 @@ body {
     overflow-x: hidden;
 }
 
-/* Background Grain */
+/* --- 1. ADVANCED BACKGROUND --- */
 .noise-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
+    /* Retaining your noise texture */
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 0;
 }
 
+/* NEW: Moving Gradient Blob */
+.background-blob {
+    position: fixed;
+    top: 50%; left: 50%;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    animation: pulse-move 10s infinite alternate ease-in-out;
+}
+
+@keyframes pulse-move {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+    100% { transform: translate(-30%, -30%) scale(1.2); opacity: 0.8; }
+}
+
+/* --- 2. CUSTOM SCROLLBAR --- */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #050505; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* --- 3. LAYOUT & CARDS --- */
 .main-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-    position: relative;
-    z-index: 1;
+    max-width: 1200px; margin: 0 auto; padding: 4rem 2rem;
+    position: relative; z-index: 1;
 }
 
-/* Typography */
-h1 {
-    font-size: 3.5rem;
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    background: linear-gradient(to right, #fff, #888);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.subtitle {
-    color: var(--text-muted);
-    font-size: 1.2rem;
-    margin-top: 0.5rem;
-}
-
-.status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    margin-top: 1.5rem;
-    border: 1px solid var(--border-color);
-}
-
-.dot {
-    width: 8px;
-    height: 8px;
-    background-color: #4ade80;
-    border-radius: 50%;
-    box-shadow: 0 0 10px #4ade80;
-}
-
-/* Header */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 4rem;
-    flex-wrap: wrap;
-    gap: 2rem;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem;
 }
 
-.contact-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 0.9rem;
-    transition: color 0.3s;
+h1 {
+    font-size: 3.5rem; font-weight: 600; letter-spacing: -0.04em;
+    background: linear-gradient(to right, #fff, #999);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 
-.contact-links a:hover { color: #fff; }
+.subtitle { color: var(--text-muted); font-size: 1.2rem; margin-top: 0.5rem; }
 
-/* The Bento Grid Layout */
+/* Bento Grid */
 .bento-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -181,7 +79,6 @@ header {
     grid-auto-flow: dense;
 }
 
-/* Card Styling - The Premium Glass Look */
 .card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -189,302 +86,115 @@ header {
     padding: 24px;
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    /* Smooth transform for the 3D tilt effect */
+    transition: transform 0.1s ease-out, border-color 0.3s;
+    display: flex; flex-direction: column; justify-content: space-between;
     height: 100%;
-    min-height: 240px;
-    cursor: default;
+    backdrop-filter: blur(10px); /* Glassmorphism */
 }
 
-/* JavaScript Mouse Hover Effect targets these */
+/* Spotlight Effect Base */
 .card::before {
     content: "";
     position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0; left: 0;
-    background: radial-gradient(
-        800px circle at var(--mouse-x) var(--mouse-y), 
-        rgba(255, 255, 255, 0.06), 
-        transparent 40%
-    );
-    z-index: 1;
-    opacity: 0; /* Hidden by default, JS enables it */
-    transition: opacity 0.5s;
-    pointer-events: none;
+    height: 100%; width: 100%; top: 0; left: 0;
+    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%);
+    opacity: 0; transition: opacity 0.5s;
+    pointer-events: none; z-index: 1;
 }
-
 .card:hover::before { opacity: 1; }
+.card:hover { border-color: rgba(255,255,255,0.2); }
 
-.card-content {
-    position: relative;
-    z-index: 2;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
+.card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; }
 
-/* Grid Spanning */
+/* Grid Spans */
 @media (min-width: 768px) {
     .card-wide { grid-column: span 2; }
     .card-tall { grid-row: span 2; }
     .card-large { grid-column: span 2; grid-row: span 1; }
 }
 
-/* Content Styling */
-.icon-box {
-    margin-bottom: auto;
-    color: var(--text-muted);
-}
-
-.card h3 {
-    margin-top: 1rem;
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
-
-.card p {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    line-height: 1.5;
-}
-
-/* Specific Card Styles */
-.skill-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-}
-
-.skill-list li {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    padding: 4px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-}
+/* Typography & Elements */
+.icon-box { margin-bottom: auto; color: var(--text-muted); }
+.card h3 { margin-top: 1rem; font-size: 1.2rem; font-weight: 500; margin-bottom: 0.5rem; color: #fff; }
+.card p, .skill-list li { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
+.skill-list { list-style: none; padding: 0; margin-top: 10px; }
+.skill-list li { padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
 .tags span {
-    display: inline-block;
-    background: rgba(255,255,255,0.1);
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    margin-right: 5px;
-    margin-top: 10px;
+    display: inline-block; background: rgba(255,255,255,0.1);
+    padding: 4px 10px; border-radius: 4px;
+    font-size: 0.75rem; margin-right: 5px; margin-top: 10px;
 }
 
-/* Project Card Images */
-.project-card {
-    padding: 0;       /* Keeps the image touching the edges */
-    cursor: pointer;  /* ADDS the hand icon so people know to click */
-}
+/* Project Card */
+.project-card { padding: 0; cursor: pointer; }
 .card-bg-image {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-size: cover;
-    background-position: center;
-    transition: transform 0.5s;
-    z-index: 0;
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background-size: cover; background-position: center;
+    transition: transform 0.5s; z-index: 0;
 }
-
-.project-card:hover .card-bg-image {
-    transform: scale(1.05);
-}
-
+.project-card:hover .card-bg-image { transform: scale(1.05); }
 .overlay-dark {
     background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-    padding: 24px;
-    justify-content: flex-end;
+    padding: 24px; justify-content: flex-end;
 }
-
 .badge {
-    background: #fff;
-    color: #000;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    font-weight: bold;
-    align-self: flex-start;
-    margin-bottom: 8px;
+    background: #fff; color: #000; padding: 4px 8px;
+    border-radius: 4px; font-size: 0.7rem; font-weight: bold;
+    align-self: flex-start; margin-bottom: 8px;
 }
 
-footer {
-    margin-top: 4rem;
-    border-top: 1px solid var(--border-color);
-    padding-top: 2rem;
-    color: var(--text-muted);
-    font-size: 0.8rem;
-    text-align: center;
+/* Contact Links */
+.contact-links a { color: var(--text-muted); text-decoration: none; margin-left: 20px; font-size: 0.9rem; transition: color 0.3s; }
+.contact-links a:hover { color: #fff; }
+.status-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255, 255, 255, 0.05); padding: 6px 12px;
+    border-radius: 20px; font-size: 0.8rem; margin-top: 1.5rem;
+    border: 1px solid var(--border-color);
 }
-/* New Right-Side Layout */
-.header-right {
-    display: flex;
-    flex-direction: column; /* Stacks the icon on top of links */
-    align-items: flex-end;  /* Pushes everything to the right edge */
-    gap: 1.5rem;            /* Space between the icon and the email/linkedin */
-}
+.dot { width: 8px; height: 8px; background-color: #4ade80; border-radius: 50%; box-shadow: 0 0 10px #4ade80; }
 
-/* Align links and icon in a straight line */
-.contact-links {
-    display: flex;
-    align-items: center; /* Centers them vertically */
-    gap: 20px; /* Space between Email, LinkedIn, and Icon */
-}
+/* Footer */
+footer { margin-top: 4rem; border-top: 1px solid var(--border-color); padding-top: 2rem; color: var(--text-muted); font-size: 0.8rem; text-align: center; }
 
-/* Style the icon to look premium */
-.download-icon-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
-    transition: all 0.3s ease;
-    padding: 8px;
-    border-radius: 50%; /* Makes it a perfect circle */
-    background: rgba(255, 255, 255, 0.05); /* Very subtle background */
-    border: 1px solid transparent;
-    margin-left: 10px; /* Extra space to separate it from "LinkedIn" */
-}
-
-.download-icon-btn:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-}
-
-.download-icon-btn svg {
-    width: 20px; /* Slightly smaller to match text size */
-    height: 20px;
-}
-/* --- MODAL STYLES (Paste at the bottom of style.css) --- */
-
-/* 1. The Background Overlay */
+/* --- 4. MODAL STYLES (Fixed) --- */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8); /* Dark background */
-    backdrop-filter: blur(10px);     /* The Glass Blur Effect */
-    z-index: 2000;                   /* Sit on top of everything */
-    opacity: 0;                      /* Hidden by default */
-    pointer-events: none;            /* Cannot click it when hidden */
-    transition: all 0.4s ease;       /* Smooth fade in */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
+    z-index: 2000; opacity: 0; pointer-events: none;
+    transition: all 0.4s ease; display: flex;
+    justify-content: center; align-items: center;
 }
+.modal-overlay.active { opacity: 1; pointer-events: all; }
 
-/* 2. The Active State (When JS adds this class) */
-.modal-overlay.active {
-    opacity: 1;
-    pointer-events: all;
-}
-
-/* 3. The Pop-up Box */
 .modal-content {
-    background: #111;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    width: 90%;
-    max-width: 600px;
-    border-radius: 16px;
-    overflow: hidden;
-    transform: translateY(50px); /* Starts slightly lower */
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy pop-up */
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    position: relative;
-    max-height: 90vh; /* Prevents it from being too tall on mobile */
-    overflow-y: auto; /* Allows scrolling inside the modal if text is long */
+    background: #111; border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 90%; max-width: 600px; border-radius: 16px; overflow: hidden;
+    transform: translateY(50px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 25px 50px 12px rgba(0, 0, 0, 0.5);
+    position: relative; max-height: 90vh; overflow-y: auto;
 }
+/* FIXED: Correct Selector */
+.modal-overlay.active .modal-content { transform: translateY(0); }
 
-/* 4. Animation when opening */
-.modal-overlay.active .modal-content {
-    transform: translateY(0); /* Moves into place */
-}
-
-/* 5. The Close Button (X) */
 .close-modal {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(0, 0, 0, 0.6);
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: absolute; top: 15px; right: 15px;
+    background: rgba(0, 0, 0, 0.6); border: none; color: white;
+    font-size: 1.5rem; width: 32px; height: 32px;
+    border-radius: 50%; cursor: pointer; z-index: 10;
+    display: flex; align-items: center; justify-content: center;
     transition: background 0.2s;
 }
+.close-modal:hover { background: rgba(255, 255, 255, 0.2); }
+.modal-header img { width: 100%; height: 250px; object-fit: cover; }
+.modal-title { padding: 24px 24px 0; }
+.modal-body { padding: 24px; color: #aaa; line-height: 1.6; }
+.modal-body h3 { color: #fff; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+.modal-body ul { padding-left: 20px; }
 
-.close-modal:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-/* 6. Modal Content Styling */
-.modal-header img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-}
-
-.modal-title {
-    padding: 24px 24px 0;
-}
-
-.modal-title h2 {
-    margin: 0 0 10px 0;
-    font-size: 1.8rem;
-}
-
-.modal-body {
-    padding: 24px;
-    color: #aaa; /* Soft text color */
-    line-height: 1.6;
-}
-
-.modal-body h3 {
-    color: #fff;
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
-}
-
-.modal-body ul {
-    padding-left: 20px;
-}
-
-/* Make the project card look clickable */
-.project-card {
-    cursor: pointer;
-}
-/* --- SCROLL ANIMATIONS --- */
-
-/* 1. The Starting State (Hidden) */
-.hidden-element {
-    opacity: 0;
-    filter: blur(5px);
-    transform: translateY(30px); /* Pushed down slightly */
-    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); /* Very smooth ease-out */
-}
-
-/* 2. The Ending State (Visible) */
-.show-element {
-    opacity: 1;
-    filter: blur(0);
-    transform: translateY(0); /* Returns to original spot */
-}
-
-/* 3. Staggered Delays (Optional: Adds rhythm) */
-.card:nth-child(2) { transition-delay: 100ms; }
-.card:nth-child(3) { transition-delay: 200ms; }
-.card:nth-child(4) { transition-delay: 100ms; }
+/* Scroll Animations */
+.hidden-element { opacity: 0; filter: blur(5px); transform: translateY(30px); transition: all 0.8s ease; }
+.show-element { opacity: 1; filter: blur(0); transform: translateY(0); }
