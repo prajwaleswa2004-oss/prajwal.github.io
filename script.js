@@ -99,3 +99,63 @@ modal.addEventListener('click', (e) => {
         document.body.style.overflow = 'auto';
     }
 });
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // 1. Spotlight Effect (Your existing code)
+    const cardsContainer = document.getElementById("cards");
+    if(cardsContainer) {
+        cardsContainer.onmousemove = e => {
+            for(const card of document.getElementsByClassName("card")) {
+                const rect = card.getBoundingClientRect(),
+                      x = e.clientX - rect.left,
+                      y = e.clientY - rect.top;
+                card.style.setProperty("--mouse-x", `${x}px`);
+                card.style.setProperty("--mouse-y", `${y}px`);
+            }
+        };
+    }
+
+    // --- 2. MODAL LOGIC (The Fix) ---
+    const modal = document.getElementById('project-modal');
+    const closeBtn = document.querySelector('.close-modal');
+    const projectCard = document.querySelector('.project-card'); // This targets your Curry Maker card
+
+    if (projectCard && modal && closeBtn) {
+        
+        // Open Modal
+        projectCard.addEventListener('click', (e) => {
+            e.preventDefault(); // Stops page from jumping
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
+        });
+
+        // Close Modal (Clicking X)
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Resume scrolling
+        });
+
+        // Close Modal (Clicking Outside the box)
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close on Escape Key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    } else {
+        console.error("Error: Could not find modal elements. Check HTML IDs.");
+    }
+    
+    // Initialize Icons
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+});
