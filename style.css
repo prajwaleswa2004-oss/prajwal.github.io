@@ -241,3 +241,32 @@ footer {
     font-size: 0.8rem;
     text-align: center;
 }
+/* New Right-Side Layout */
+.header-right {
+    display: flex;
+    flex-direction: column; /* Stacks the icon on top of links */
+    align-items: flex-end;  /* Pushes everything to the right edge */
+    gap: 1.5rem;            /* Space between the icon and the email/linkedin */
+}
+
+/* The Download Icon Button */
+.download-icon-btn {
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+    padding: 8px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+}
+
+.download-icon-btn:hover {
+    color: #fff; /* Turns white on hover */
+    background: rgba(255, 255, 255, 0.1); /* Subtle circle background */
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Ensure the Feather icon is a good size */
+.download-icon-btn svg {
+    width: 24px;
+    height: 24px;
+}
