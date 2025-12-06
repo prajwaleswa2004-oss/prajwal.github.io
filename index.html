@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Praju | Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f5f5f5;
+    }
+    header {
+      background: #111827;
+      color: white;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+    }
+    header h1 { margin: 0; font-size: 20px; }
+    nav a {
+      color: #e5e7eb;
+      margin-left: 16px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    nav a:hover { color: #38bdf8; }
+    .container {
+      max-width: 900px;
+      margin: 24px auto;
+      padding: 0 16px 40px;
+      background: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      border-radius: 8px;
+    }
+    section { padding: 24px 0; border-bottom: 1px solid #e5e7eb; }
+    section:last-child { border-bottom: none; }
+    h2 { margin-top: 0; color: #111827; }
+    .tag {
+      display: inline-block;
+      background: #e5f3ff;
+      color: #1d4ed8;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      margin-right: 4px;
+      margin-top: 4px;
+    }
+    .project {
+      padding: 12px 0;
+    }
+    .project-title {
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .project a {
+      font-size: 13px;
+      text-decoration: none;
+      color: #2563eb;
+    }
+    .project a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: #6b7280;
+      padding: 16px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Praju | Mechanical Engineer & Developer</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <section id="about">
+      <h2>About Me</h2>
+      <p>
+        Hi, I'm <strong>Praju</strong>, a Mechanical Engineering student interested in
+        design (AutoCAD, Fusion 360), Python and full-stack development (React, Node, MongoDB).
+        I love building practical projects like smart kitchen devices and web apps.
+      </p>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <div>
+        <span class="tag">Mechanical Design</span>
+        <span class="tag">AutoCAD</span>
+        <span class="tag">Fusion 360</span>
+        <span class="tag">Python</span>
+        <span class="tag">HTML & CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">React.js</span>
+        <span class="tag">Node.js</span>
+        <span class="tag">MongoDB</span>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+
+      <div class="project">
+        <div class="project-title">AutoChef – Smart Curry Maker</div>
+        <p>
+          Designed a smart curry maker concept using AutoCAD/Fusion 360 with
+          automated ingredient dispensing and water flow system.
+        </p>
+        <!-- Replace with your GitHub repo link -->
+        <a href="https://github.com/YOUR-USERNAME/YOUR-REPO" target="_blank">
+          View on GitHub
+        </a>
+      </div>
+
+      <div class="project">
+        <div class="project-title">DocSpot – Doctor Appointment Booking</div>
+        <p>
+          Full-stack MERN application for seamless doctor appointment booking with
+          React frontend and Node/Express backend.
+        </p>
+        <a href="https://github.com/YOUR-USERNAME/DOCSPOT-REPO" target="_blank">
+          View on GitHub
+        </a>
+      </div>
+
+      <div class="project">
+        <div class="project-title">TravelLog – Travel Account Manager</div>
+        <p>
+          Web app to manage ticket, luggage, and commission accounts for travel agencies.
+        </p>
+        <a href="https://github.com/YOUR-USERNAME/TRAVELLOG-REPO" target="_blank">
+          View on GitHub
+        </a>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>
+        📧 Email: <a href="mailto:yourmail@example.com">yourmail@example.com</a><br/>
+        🔗 GitHub: <a href="https://github.com/YOUR-USERNAME" target="_blank">
+          github.com/YOUR-USERNAME
+        </a><br/>
+        🎨 YouTube: <a href="https://www.youtube.com/@PrajuArtVentureStudio" target="_blank">
+          Praju Art Venture Studio
+        </a>
+      </p>
+    </section>
+  </div>
+
+  <footer>
+    © <span id="year"></span> Praju. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
