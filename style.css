@@ -338,3 +338,96 @@ body.hovering .cursor-outline {
         transform: none !important; 
     }
 }
+/* --- PROFILE PICTURE STYLES --- */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between photo and text */
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Perfect circle */
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 20px rgba(74, 222, 128, 0.2); /* Green glow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-avatar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(74, 222, 128, 0.5); /* Stronger glow on hover */
+}
+/* --- DELIVERY TRACKER STYLES --- */
+.click-hint { font-size: 0.7rem; color: #4ade80; margin-bottom: 10px; opacity: 0.7; }
+
+.tracker-container {
+    position: relative;
+    padding-left: 20px;
+    margin-top: 15px;
+}
+
+/* Background Line (Gray path) */
+.tracker-line-bg {
+    position: absolute;
+    left: 4px;
+    top: 5px;
+    bottom: 0;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Filling Line (Green progress) */
+.tracker-line-fill {
+    position: absolute;
+    left: 4px;
+    top: 5px;
+    width: 2px;
+    height: 0%; /* Starts Empty */
+    background: #4ade80;
+    box-shadow: 0 0 10px #4ade80;
+    transition: height 1.5s ease-in-out; /* Takes 1.5s to fill */
+    z-index: 1;
+}
+
+.tracker-item {
+    position: relative;
+    margin-bottom: 25px;
+    padding-left: 15px;
+    opacity: 0.5; /* Dimmed until active */
+    transition: opacity 0.5s;
+}
+
+/* The Dot (Station) */
+.tracker-dot {
+    position: absolute;
+    left: -20px;
+    top: 0;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #333;
+    border: 2px solid #555;
+    z-index: 2;
+    transition: all 0.3s;
+}
+
+/* --- ACTIVE STATES (When JS triggers) --- */
+/* 1. Expand the line */
+.card.tracking .tracker-line-fill {
+    height: 90%; /* Stops at the last dot */
+}
+
+/* 2. Light up the dots sequentially */
+.card.tracking .tracker-item { opacity: 1; }
+
+.card.tracking .tracker-dot {
+    background: #000;
+    border-color: #4ade80;
+    box-shadow: 0 0 10px #4ade80;
+}
+
+/* Delays for the dots to match the line moving down */
+.card.tracking .tracker-item:nth-child(3) .tracker-dot { transition-delay: 0.1s; } /* Top item */
+.card.tracking .tracker-item:nth-child(4) .tracker-dot { transition-delay: 0.7s; } /* Middle */
+.card.tracking .tracker-item:nth-child(5) .tracker-dot { transition-delay: 1.4s; } /* Bottom */
