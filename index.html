@@ -16,33 +16,29 @@
 <body>
 
     <div class="noise-overlay"></div>
-    <div class="background-blob"></div> <main class="main-container">
+    <div class="background-blob"></div>
 
-<main class="main-container">
+    <main class="main-container">
     
-    <header class="fade-in hidden-element">
-        
-        <div class="profile-header">
-            <h1>Prajwal E.</h1>
-            <p class="subtitle">Mechanical Engineer</p>
-            <div class="status-pill">
-                <span class="dot"></span> Open for Internships
+        <header class="fade-in hidden-element">
+            <div class="profile-header">
+                <h1>Prajwal E.</h1>
+                <p class="subtitle">Mechanical Engineer</p>
+                <div class="status-pill">
+                    <span class="dot"></span> Open for Internships
+                </div>
             </div>
-        </div>
 
-        <div class="contact-links">
-            <a href="mailto:prajwaleswa2004@gmail.com">Email</a>
-            <a href="https://linkedin.com">LinkedIn</a>
-            <a href="assets/resume.pdf" class="download-icon-btn">
-                <i data-feather="download"></i>
-            </a>
-        </div>
+            <div class="contact-links">
+                <a href="mailto:prajwaleswa2004@gmail.com">Email</a>
+                <a href="https://www.linkedin.com/in/prajwal-esvi-0a9514321">LinkedIn</a>
+                <a href="assets/Prajwal_E_Resume.pdf" target="_blank" class="download-icon-btn" title="Download Resume">
+                    <i data-feather="download"></i>
+                </a>
+            </div>
+        </header> 
 
-    </header> 
-    <div class="bento-grid hidden-element" id="cards">
-         </div>
-
-</main>
+        <div class="bento-grid hidden-element" id="cards">
             
             <div class="card card-large">
                 <div class="card-content">
@@ -104,8 +100,13 @@
                 <div class="card-content">
                     <div class="icon-box"><i data-feather="book"></i></div>
                     <h3>Education</h3>
-                    <p><strong>B.Tech Mechanical</strong><br>JNTUA College of Eng.</p>
-                    <p class="faded" style="margin-top: 5px; opacity: 0.6;">2023-2027</p>
+                    <div class="timeline-container">
+                        <div class="timeline-item">
+                            <span class="timeline-title">B.Tech Mechanical</span>
+                            <span class="timeline-date">2023 - 2027</span>
+                            <p style="font-size: 0.85rem; color: #888;">JNTUA College of Engineering</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -133,7 +134,7 @@
             <div class="system-status">
                 <span id="system-time">00:00:00</span> | 
                 <span>SYSTEM: ONLINE</span> |
-                <span> INDIA</span>
+                <span>LOC: INDIA</span>
             </div>
         </footer>
 
@@ -173,7 +174,9 @@
     <script src="script.js"></script>
     <script>
         // Fallback icon init if script.js loads slowly
-        feather.replace();
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
     </script>
 </body>
 </html>
