@@ -165,3 +165,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     setInterval(updateTime, 1000);
     updateTime(); // Run immediately
+/* ==========================
+       9. DELIVERY TRACKER TRIGGER
+       ========================== */
+    const eduCard = document.getElementById('edu-card');
+    
+    if (eduCard) {
+        eduCard.addEventListener('click', () => {
+            // Toggle the animation class
+            eduCard.classList.toggle('tracking');
+            
+            // Change the hint text
+            const hint = eduCard.querySelector('.click-hint');
+            if(eduCard.classList.contains('tracking')) {
+                hint.textContent = "Tracking History...";
+            } else {
+                hint.textContent = "(Click to track)";
+            }
+        });
+    }
