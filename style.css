@@ -569,3 +569,40 @@ body.hovering .cursor-outline {
 .spacer {
     height: 15px; /* Space between the two items */
 }
+/* --- PREMIUM RESUME BUTTON --- */
+.resume-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between text and icon */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 20px;
+    border-radius: 30px; /* Pill shape */
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-left: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover State */
+.resume-btn:hover {
+    background: rgba(74, 222, 128, 0.1); /* Subtle green tint */
+    border-color: #4ade80;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(74, 222, 128, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Icon Animation on Hover */
+.resume-btn:hover i {
+    animation: bounceDown 0.6s ease infinite;
+}
+
+@keyframes bounceDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(3px); }
+}
