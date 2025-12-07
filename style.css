@@ -450,3 +450,47 @@ body.hovering .cursor-outline {
 .card.tracking .tracker-item:nth-child(3) .tracker-dot { 
     transition-delay: 1.4s; 
 }
+/* --- HOLOGRAPHIC BADGES --- */
+.workshop-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.badge-holo {
+    position: relative;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.85rem;
+    overflow: hidden;
+    transition: transform 0.3s;
+    cursor: default;
+}
+
+/* The "Shine" Effect */
+.badge-holo::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(
+        90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.2), 
+        transparent
+    );
+    transition: left 0.5s;
+}
+
+.badge-holo:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.badge-holo:hover::before {
+    left: 100%; /* Moves the shine across */
+}
