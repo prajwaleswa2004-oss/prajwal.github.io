@@ -184,3 +184,46 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+    /* ==========================
+       11. PROJECT GALLERY LOGIC
+       ========================== */
+    
+    // 1. List your images here
+    const projectImages = [
+        "assets/IMG-20251206-WA0058.jpg", // Image 1 (Main)
+        "assets/cad-screenshot.jpg",       // Image 2 (Upload this later!)
+        "assets/prototype-side.jpg"        // Image 3 (Upload this later!)
+    ];
+
+    let currentSlide = 0;
+    const galleryImg = document.getElementById('gallery-img');
+    const counterDisplay = document.getElementById('current-slide');
+
+    // Make the function global so the HTML buttons can see it
+    window.changeSlide = function(direction) {
+        if (!galleryImg) return;
+
+        // Fade out
+        galleryImg.style.opacity = 0;
+
+        setTimeout(() => {
+            // Update Index
+            currentSlide += direction;
+
+            // Loop Logic (If at end, go to start)
+            if (currentSlide >= projectImages.length) {
+                currentSlide = 0;
+            } else if (currentSlide < 0) {
+                currentSlide = projectImages.length - 1;
+            }
+
+            // Change Source
+            galleryImg.src = projectImages[currentSlide];
+            
+            // Update Counter
+            if (counterDisplay) counterDisplay.innerText = currentSlide + 1;
+
+            // Fade In
+            galleryImg.style.opacity = 1;
+        }, 300); // Wait for fade out
+    };
