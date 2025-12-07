@@ -193,15 +193,24 @@
         <div class="modal-content">
             <button class="close-modal">&times;</button>
             <div class="modal-header">
-                <img src="assets/IMG-20251206-WA0058.jpg" alt="Project Detail">
-                <div class="modal-title">
-                    <h2>Automated Curry Maker</h2>
-                    <div class="tags">
-                        <span>Fusion 360</span>
-                        <span>Mechanism Design</span>
-                        <span>Automation</span>
-                    </div>
-                </div>
+    <div class="gallery-container">
+        <button class="nav-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
+        
+        <img src="assets/IMG-20251206-WA0058.jpg" id="gallery-img" alt="Project Detail">
+        
+        <button class="nav-btn next-btn" onclick="changeSlide(1)">&#10095;</button>
+        
+        <div class="image-counter">IMG <span id="current-slide">1</span> / 3</div>
+    </div>
+
+    <div class="modal-title">
+        <h2>Automated Curry Maker</h2>
+        <div class="tags">
+            <span>Fusion 360</span>
+            <span>Mechanism Design</span>
+            <span>Automation</span>
+        </div>
+    </div>
             </div>
             <div class="modal-body">
                 <h3>The Problem</h3>
