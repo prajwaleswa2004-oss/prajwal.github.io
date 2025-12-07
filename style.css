@@ -536,3 +536,36 @@ body.hovering .cursor-outline {
     opacity: 1;
     transform: rotate(45deg) translateY(100%); /* Moves scanline down */
 }
+/* --- IMPACT CARD REFINEMENTS --- */
+.impact-item {
+    margin-bottom: 10px;
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+    padding-left: 12px;
+}
+
+.impact-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #fff;
+    font-weight: 500;
+}
+
+.impact-stat {
+    font-size: 1.2rem;
+    color: #4ade80; /* Green text for the number */
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    margin: 2px 0;
+}
+
+/* The clarification text */
+.impact-role {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-style: italic; /* Italics to show it's a detail */
+    opacity: 0.8;
+}
+
+.spacer {
+    height: 15px; /* Space between the two items */
+}
