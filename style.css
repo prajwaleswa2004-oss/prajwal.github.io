@@ -233,3 +233,34 @@ footer { margin-top: 4rem; border-top: 1px solid var(--border-color); padding-to
 /* Scroll Animations */
 .hidden-element { opacity: 0; filter: blur(5px); transform: translateY(30px); transition: all 0.8s ease; }
 .show-element { opacity: 1; filter: blur(0); transform: translateY(0); }
+/* --- CUSTOM CURSOR STYLES --- */
+body {
+    cursor: none; /* Hides standard cursor */
+}
+
+/* The small center dot */
+.cursor-dot {
+    width: 5px; height: 5px;
+    background-color: white;
+    position: fixed; top: 0; left: 0;
+    border-radius: 50%; z-index: 9999;
+    pointer-events: none;
+}
+
+/* The larger trailing circle */
+.cursor-outline {
+    width: 30px; height: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    position: fixed; top: 0; left: 0;
+    border-radius: 50%; z-index: 9999;
+    pointer-events: none;
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+    transform: translate(-50%, -50%); /* Centers it */
+}
+
+/* Interaction: When hovering over links/cards */
+body.hovering .cursor-outline {
+    width: 50px; height: 50px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+}
