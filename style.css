@@ -359,13 +359,16 @@ body.hovering .cursor-outline {
     transform: scale(1.05);
     box-shadow: 0 0 30px rgba(74, 222, 128, 0.5); /* Stronger glow on hover */
 }
-/* --- DELIVERY TRACKER STYLES --- */
+/* --- DELIVERY TRACKER STYLES (Bottom-to-Top Flow) --- */
 .click-hint { font-size: 0.7rem; color: #4ade80; margin-bottom: 10px; opacity: 0.7; }
 
 .tracker-container {
     position: relative;
     padding-left: 20px;
     margin-top: 15px;
+    /* Ensure the container height covers all items */
+    display: flex;
+    flex-direction: column;
 }
 
 /* Background Line (Gray path) */
@@ -373,7 +376,7 @@ body.hovering .cursor-outline {
     position: absolute;
     left: 4px;
     top: 5px;
-    bottom: 0;
+    bottom: 5px; /* Spans full height */
     width: 2px;
     background: rgba(255, 255, 255, 0.1);
 }
@@ -382,12 +385,15 @@ body.hovering .cursor-outline {
 .tracker-line-fill {
     position: absolute;
     left: 4px;
-    top: 5px;
+    /* CHANGE 1: Anchor to BOTTOM so it grows upwards */
+    bottom: 5px; 
+    top: auto; 
+    
     width: 2px;
-    height: 0%; /* Starts Empty */
+    height: 0%; /* Starts Empty at bottom */
     background: #4ade80;
     box-shadow: 0 0 10px #4ade80;
-    transition: height 1.5s ease-in-out; /* Takes 1.5s to fill */
+    transition: height 1.5s ease-in-out;
     z-index: 1;
 }
 
@@ -395,7 +401,7 @@ body.hovering .cursor-outline {
     position: relative;
     margin-bottom: 25px;
     padding-left: 15px;
-    opacity: 0.5; /* Dimmed until active */
+    opacity: 0.5;
     transition: opacity 0.5s;
 }
 
@@ -413,12 +419,13 @@ body.hovering .cursor-outline {
 }
 
 /* --- ACTIVE STATES (When JS triggers) --- */
-/* 1. Expand the line */
+
+/* 1. Expand the line UPWARDS */
 .card.tracking .tracker-line-fill {
-    height: 90%; /* Stops at the last dot */
+    height: 95%; /* Fills up to the top dot */
 }
 
-/* 2. Light up the dots sequentially */
+/* 2. Light up the dots */
 .card.tracking .tracker-item { opacity: 1; }
 
 .card.tracking .tracker-dot {
@@ -427,7 +434,19 @@ body.hovering .cursor-outline {
     box-shadow: 0 0 10px #4ade80;
 }
 
-/* Delays for the dots to match the line moving down */
-.card.tracking .tracker-item:nth-child(3) .tracker-dot { transition-delay: 0.1s; } /* Top item */
-.card.tracking .tracker-item:nth-child(4) .tracker-dot { transition-delay: 0.7s; } /* Middle */
-.card.tracking .tracker-item:nth-child(5) .tracker-dot { transition-delay: 1.4s; } /* Bottom */
+/* CHANGE 2: Reverse Delays (Bottom activates first) */
+
+/* The 3rd item (Bottom / 10th) lights up FIRST */
+.card.tracking .tracker-item:nth-child(5) .tracker-dot { 
+    transition-delay: 0.1s; 
+} 
+
+/* The 2nd item (Middle / Diploma) lights up SECOND */
+.card.tracking .tracker-item:nth-child(4) .tracker-dot { 
+    transition-delay: 0.7s; 
+} 
+
+/* The 1st item (Top / B.Tech) lights up LAST */
+.card.tracking .tracker-item:nth-child(3) .tracker-dot { 
+    transition-delay: 1.4s; 
+}
