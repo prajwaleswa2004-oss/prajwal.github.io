@@ -190,9 +190,10 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // 1. List your images here
     const projectImages = [
-        "assets/IMG-20251206-WA0058.jpg", // Image 1 (Main)
-        "assets/cad-screenshot.jpg",       // Image 2 (Upload this later!)
-        "assets/prototype-side.jpg"        // Image 3 (Upload this later!)
+    "assets/IMG-20251206-WA0058.jpg",
+    "assets/IMG-20251206-WA0058.jpg", 
+    "assets/IMG-20251206-WA0058.jpg"
+];
     ];
 
     let currentSlide = 0;
