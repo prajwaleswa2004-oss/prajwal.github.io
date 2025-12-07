@@ -15,6 +15,13 @@
 </head>
 <body>
 
+    <div id="boot-screen">
+        <div class="terminal-container">
+            <div id="boot-text"></div>
+            <span class="cursor-blink">_</span>
+        </div>
+    </div>
+
     <div class="noise-overlay"></div>
     <div class="background-blob"></div>
 
@@ -22,25 +29,26 @@
     
         <header class="fade-in hidden-element">
             <div class="profile-header">
-    <div class="profile-img-container">
-        <img src="assets/profile.jpg" alt="Prajwal E." class="profile-avatar">
-    </div>
-    
-    <div>
-        <h1>Prajwal E.</h1>
-        <p class="subtitle">Mechanical Engineer</p>
-        <div class="status-pill">
-            <span class="dot"></span> Open for Internships
-        </div>
-    </div>
-</div>
+                <div class="profile-img-container">
+                    <img src="assets/profile.jpg" alt="Prajwal E." class="profile-avatar">
+                </div>
+                
+                <div>
+                    <h1>Prajwal E.</h1>
+                    <p class="subtitle">Mechanical Engineer</p>
+                    <div class="status-pill">
+                        <span class="dot"></span> Open for Internships
+                    </div>
+                </div>
+            </div>
 
             <div class="contact-links">
                 <a href="mailto:prajwaleswa2004@gmail.com">Email</a>
                 <a href="https://www.linkedin.com/in/prajwal-esvi-0a9514321">LinkedIn</a>
+                
                 <a href="assets/Prajwal_E_Resume.pdf" target="_blank" class="resume-btn" title="Download Resume">
-    <span>Resume</span>
-    <i data-feather="download"></i>
+                    <span>Resume</span>
+                    <i data-feather="download"></i>
                 </a>
             </div>
         </header> 
@@ -104,82 +112,85 @@
             </div>
 
             <div class="card" id="edu-card" style="cursor: pointer;">
-    <div class="card-content">
-        <div class="icon-box"><i data-feather="book"></i></div>
-        <h3>Education Journey</h3>
-        <p class="click-hint">(Click to track)</p>
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="book"></i></div>
+                    <h3>Education Journey</h3>
+                    <p class="click-hint">(Click to track)</p>
 
-        <div class="tracker-container">
-            <div class="tracker-line-bg"></div>
-            <div class="tracker-line-fill"></div>
+                    <div class="tracker-container">
+                        <div class="tracker-line-bg"></div>
+                        <div class="tracker-line-fill"></div>
 
-            <div class="tracker-item">
-                <div class="tracker-dot"></div>
-                <div class="tracker-info">
-                    <span class="date">2023 - Present</span>
-                    <strong>B.Tech Mechanical</strong> 
-                    <span class="school">JNTUA-CEK</span>
+                        <div class="tracker-item">
+                            <div class="tracker-dot"></div>
+                            <div class="tracker-info">
+                                <span class="date">2023 - Present</span>
+                                <strong>B.Tech Mechanical</strong> 
+                                <span class="school">JNTUA-CEK</span>
+                            </div>
+                        </div>
+
+                        <div class="tracker-item">
+                            <div class="tracker-dot"></div>
+                            <div class="tracker-info">
+                                <span class="date">2020 - 2022</span>
+                                <strong>12th</strong>
+                                <span class="school">S.K. Govt. Junior College</span>
+                            </div>
+                        </div>
+
+                        <div class="tracker-item">
+                            <div class="tracker-dot"></div>
+                            <div class="tracker-info">
+                                <span class="date">2019 - 2020</span>
+                                <strong>SSC</strong>
+                                <span class="school">A.P. Model School</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="tracker-item">
-                <div class="tracker-dot"></div>
-                <div class="tracker-info">
-                    <span class="date">2020 - 2022</span>
-                    <strong>12th</strong>
-                    <span class="school">S.K. Govt. Junior College</span>
+            <div class="card">
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="heart"></i></div>
+                    <h3>Social Impact</h3>
+                    
+                    <div class="impact-item">
+                        <span class="impact-label">CRPF Mega Drive</span>
+                        <p class="impact-stat">
+                            <span class="counter" data-target="10000">1000</span>+ Trees
+                        </p>
+                        <p class="impact-role">Active Volunteer Participant</p> 
+                    </div>
+
+                    <div class="spacer"></div>
+
+                    <div class="impact-item">
+                        <span class="impact-label">Student Leadership</span>
+                        <p class="impact-stat">
+                            <span class="counter" data-target="2">2</span> Semesters
+                        </p>
+                        <p class="impact-role">Class Representative</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="tracker-item">
-                <div class="tracker-dot"></div>
-                <div class="tracker-info">
-                    <span class="date">2019 - 2020</span>
-                    <strong>SSC</strong>
-                    <span class="school">A.P. Model School</span>
+            <div class="card card-wide">
+                <div class="card-content">
+                    <div class="icon-box"><i data-feather="cpu"></i></div>
+                    <h3>Workshops & Certifications</h3>
+                    <div class="workshop-grid">
+                        <div class="badge-holo">Ornithopter Design</div>
+                        <div class="badge-holo">Ethical Hacking</div>
+                        <div class="badge-holo">Fusion 360 Certified</div> 
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 
-<div class="card">
-    <div class="card-content">
-        <div class="icon-box"><i data-feather="heart"></i></div>
-        <h3>Social Impact</h3>
+        </div> 
         
-        <div class="impact-item">
-            <span class="impact-label">CRPF Mega Drive</span>
-            <p class="impact-stat">
-                <span class="counter" data-target="10000">1000</span>+ Trees
-            </p>
-            <p class="impact-role">Active Volunteer Participant</p> 
-        </div>
-
-        <div class="spacer"></div>
-
-        <div class="impact-item">
-            <span class="impact-label">Student Leadership</span>
-            <p class="impact-stat">
-                <span class="counter" data-target="2">2</span> Semesters
-            </p>
-            <p class="impact-role">Class Representative</p>
-        </div>
-    </div>
-</div>
-
-<div class="card card-wide">
-    <div class="card-content">
-        <div class="icon-box"><i data-feather="cpu"></i></div>
-        <h3>Workshops & Certifications</h3>
-        <div class="workshop-grid">
-            <div class="badge-holo">Ornithopter Design</div>
-            <div class="badge-holo">Ethical Hacking</div>
-            <div class="badge-holo">Fusion 360 Certified</div> </div>
-    </div>
-</div>
-
-        </div> <footer>
+        <footer>
             <div class="system-status">
                 <span id="system-time">00:00:00</span> | 
                 <span>SYSTEM: ONLINE</span> |
@@ -192,26 +203,28 @@
     <div id="project-modal" class="modal-overlay">
         <div class="modal-content">
             <button class="close-modal">&times;</button>
+            
             <div class="modal-header">
-    <div class="gallery-container">
-        <button class="nav-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
-        
-        <img src="assets/IMG-20251206-WA0058.jpg" id="gallery-img" alt="Project Detail">
-        
-        <button class="nav-btn next-btn" onclick="changeSlide(1)">&#10095;</button>
-        
-        <div class="image-counter">IMG <span id="current-slide">1</span> / 3</div>
-    </div>
+                <div class="gallery-container">
+                    <button class="nav-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
+                    
+                    <img src="assets/IMG-20251206-WA0058.jpg" id="gallery-img" alt="Project Detail">
+                    
+                    <button class="nav-btn next-btn" onclick="changeSlide(1)">&#10095;</button>
+                    
+                    <div class="image-counter">IMG <span id="current-slide">1</span> / 3</div>
+                </div>
 
-    <div class="modal-title">
-        <h2>Automated Curry Maker</h2>
-        <div class="tags">
-            <span>Fusion 360</span>
-            <span>Mechanism Design</span>
-            <span>Automation</span>
-        </div>
-    </div>
+                <div class="modal-title">
+                    <h2>Automated Curry Maker</h2>
+                    <div class="tags">
+                        <span>Fusion 360</span>
+                        <span>Mechanism Design</span>
+                        <span>Automation</span>
+                    </div>
+                </div>
             </div>
+
             <div class="modal-body">
                 <h3>The Problem</h3>
                 <p>Cooking consistently requires precise timing and stirring. Manual methods are labor-intensive.</p>
