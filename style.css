@@ -211,8 +211,36 @@ h1:hover {
 }
 
 /* Contact Links */
-.contact-links a { color: var(--text-muted); text-decoration: none; margin-left: 20px; font-size: 0.9rem; transition: color 0.3s; }
-.contact-links a:hover { color: #fff; }
+.contact-links {
+    display: flex;
+    align-items: center;
+    /* CHANGE 1: Increase gap between the text links */
+    gap: 30px; 
+}
+
+.resume-btn {
+    /* ... existing styles ... */
+    
+    /* CHANGE 2: Add extra distance specifically for the button */
+    margin-left: 40px; 
+}
+
+/* --- MOBILE ADJUSTMENT --- */
+@media (max-width: 768px) {
+    .contact-links {
+        /* On mobile, we might want them to stack or spread evenly */
+        gap: 20px;
+        flex-wrap: wrap; 
+        justify-content: flex-start; /* Aligns them to the left */
+    }
+
+    .resume-btn {
+        margin-left: 0; /* Reset margin on mobile */
+        margin-top: 15px; /* Push it down slightly from the links */
+        width: 100%; /* Full width looks best on phone */
+    }
+}
+
 .status-pill {
     display: inline-flex; align-items: center; gap: 8px;
     background: rgba(255, 255, 255, 0.05); padding: 6px 12px;
