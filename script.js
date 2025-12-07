@@ -153,3 +153,15 @@ document.addEventListener("DOMContentLoaded", () => {
         el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
         el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
     });
+/* ==========================
+       8. LIVE SYSTEM TIME
+       ========================== */
+    function updateTime() {
+        const timeDisplay = document.getElementById('system-time');
+        if (timeDisplay) {
+            const now = new Date();
+            timeDisplay.innerText = now.toLocaleTimeString('en-US', { hour12: false });
+        }
+    }
+    setInterval(updateTime, 1000);
+    updateTime(); // Run immediately
