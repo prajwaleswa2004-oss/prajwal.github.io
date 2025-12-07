@@ -228,3 +228,47 @@ document.addEventListener("DOMContentLoaded", () => {
             galleryImg.style.opacity = 1;
         }, 300); // Wait for fade out
     };
+    /* ==========================
+       12. SYSTEM BOOT SEQUENCE
+       ========================== */
+    const bootScreen = document.getElementById('boot-screen');
+    const bootText = document.getElementById('boot-text');
+    
+    // The "Engineering" messages to display
+    const bootMessages = [
+        "> INITIALIZING KERNEL...",
+        "> LOADING CAD MODULES...",
+        "> CALIBRATING SENSORS...",
+        "> CONNECTING TO NEURAL LINK...",
+        "> SYSTEM ONLINE."
+    ];
+
+    if (bootScreen && bootText) {
+        let lineIndex = 0;
+
+        const typeLine = () => {
+            if (lineIndex < bootMessages.length) {
+                // Create a new line element
+                const line = document.createElement('div');
+                line.className = 'boot-line';
+                line.textContent = bootMessages[lineIndex];
+                bootText.appendChild(line);
+                
+                lineIndex++;
+                
+                // Random typing speed (makes it feel real)
+                const randomDelay = Math.floor(Math.random() * 300) + 100;
+                setTimeout(typeLine, randomDelay);
+            } else {
+                // Sequence finished: Fade out
+                setTimeout(() => {
+                    bootScreen.classList.add('fade-out');
+                    // Allow scrolling again (just in case)
+                    document.body.style.overflow = 'auto';
+                }, 800); // Wait a bit after "SYSTEM ONLINE"
+            }
+        };
+
+        // Start the sequence
+        setTimeout(typeLine, 500);
+    }
