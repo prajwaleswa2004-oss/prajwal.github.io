@@ -4,7 +4,7 @@
     --bg-color: #050505;
     --card-bg: rgba(20, 20, 20, 0.6); /* More transparent for glass effect */
     --text-main: #ffffff;
-    --text-muted: #888888; /* Fixed missing # */
+    --text-muted: #888888;
     --border-color: rgba(255, 255, 255, 0.08);
     --highlight: rgba(255, 255, 255, 0.15);
     --accent-glow: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.15), transparent 60%);
@@ -18,10 +18,11 @@ body {
     font-family: 'Space Grotesk', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
+    /* Custom cursor logic handled at bottom */
+    cursor: none; 
 }
 
 /* --- 1. ADVANCED BACKGROUND --- */
-/* Find .noise-overlay in style.css and UPDATE it to this: */
 .noise-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -29,16 +30,16 @@ body {
     /* 1. The Noise Texture */
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E"),
     
-    /* 2. THE BLUEPRINT GRID (New!) */
+    /* 2. THE BLUEPRINT GRID */
     linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
     
-    background-size: 150px 150px, 40px 40px, 40px 40px; /* Size of the noise, then the grid squares */
+    background-size: 150px 150px, 40px 40px, 40px 40px; 
     pointer-events: none;
     z-index: 0;
 }
 
-/* NEW: Moving Gradient Blob */
+/* Moving Gradient Blob */
 .background-blob {
     position: fixed;
     top: 50%; left: 50%;
@@ -71,10 +72,28 @@ header {
     margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem;
 }
 
+/* Typography & Glitch Effect */
 h1 {
     font-size: 3.5rem; font-weight: 600; letter-spacing: -0.04em;
     background: linear-gradient(to right, #fff, #999);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    position: relative;
+    transition: color 0.1s;
+}
+
+h1:hover {
+    animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+    color: #fff;
+    -webkit-text-fill-color: #fff; /* Override gradient on hover */
+}
+
+@keyframes glitch-anim {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); text-shadow: 2px 0 #ff00c1; }
+    40% { transform: translate(-2px, -2px); text-shadow: -2px 0 #00fff9; }
+    60% { transform: translate(2px, 2px); text-shadow: 2px 0 #ff00c1; }
+    80% { transform: translate(2px, -2px); text-shadow: -2px 0 #00fff9; }
+    100% { transform: translate(0); }
 }
 
 .subtitle { color: var(--text-muted); font-size: 1.2rem; margin-top: 0.5rem; }
@@ -94,11 +113,10 @@ h1 {
     padding: 24px;
     position: relative;
     overflow: hidden;
-    /* Smooth transform for the 3D tilt effect */
     transition: transform 0.1s ease-out, border-color 0.3s;
     display: flex; flex-direction: column; justify-content: space-between;
     height: 100%;
-    backdrop-filter: blur(10px); /* Glassmorphism */
+    backdrop-filter: blur(10px);
 }
 
 /* Spotlight Effect Base */
@@ -125,34 +143,26 @@ h1 {
 /* Typography & Elements */
 .icon-box { margin-bottom: auto; color: var(--text-muted); }
 .card h3 { margin-top: 1rem; font-size: 1.2rem; font-weight: 500; margin-bottom: 0.5rem; color: #fff; }
-.card p, .skill-list li { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
-/* UPDATE .skill-list and .skill-list li in style.css */
+.card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
 
+/* --- TECH CHIPS (Skills) --- */
 .skill-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 15px;
-    display: flex;
-    flex-wrap: wrap; /* Allows them to stack horizontally */
-    gap: 8px; /* Space between chips */
+    list-style: none; padding: 0; margin-top: 15px;
+    display: flex; flex-wrap: wrap; gap: 8px;
 }
 
 .skill-list li {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    background: rgba(255, 255, 255, 0.05); /* Subtle background */
+    font-size: 0.8rem; color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 6px 12px;
-    border-radius: 20px; /* Makes them pill-shaped */
-    transition: all 0.3s ease;
-    cursor: default;
+    padding: 6px 12px; border-radius: 20px;
+    transition: all 0.3s ease; cursor: default;
 }
 
-/* Hover Effect for Skills */
 .skill-list li:hover {
     background: rgba(255, 255, 255, 0.15);
     color: #fff;
-    transform: translateY(-2px); /* Slight lift */
+    transform: translateY(-2px);
     border-color: rgba(255, 255, 255, 0.3);
 }
 
@@ -160,6 +170,44 @@ h1 {
     display: inline-block; background: rgba(255,255,255,0.1);
     padding: 4px 10px; border-radius: 4px;
     font-size: 0.75rem; margin-right: 5px; margin-top: 10px;
+}
+
+/* --- CIRCUIT TIMELINE (Education) --- */
+.timeline-container {
+    position: relative;
+    padding-left: 20px;
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+    margin-left: 10px;
+    margin-top: 15px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -26px; /* Position on the line */
+    top: 5px;
+    width: 10px; height: 10px;
+    background: var(--bg-color);
+    border: 2px solid #4ade80;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(74, 222, 128, 0.4);
+    transition: background 0.3s;
+}
+
+.timeline-item:hover::before { background: #4ade80; }
+
+.timeline-title {
+    display: block; font-weight: bold; color: #fff; font-size: 1rem;
+}
+.timeline-date {
+    font-size: 0.8rem; color: var(--text-muted);
+    font-family: 'Courier New', monospace;
+    margin-bottom: 4px; display: block;
 }
 
 /* Contact Links */
@@ -175,8 +223,12 @@ h1 {
 
 /* Footer */
 footer { margin-top: 4rem; border-top: 1px solid var(--border-color); padding-top: 2rem; color: var(--text-muted); font-size: 0.8rem; text-align: center; }
+.system-status {
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem; color: var(--text-muted); opacity: 0.7;
+}
 
-/* --- 4. MODAL STYLES (Fixed) --- */
+/* --- MODAL STYLES --- */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
@@ -194,7 +246,6 @@ footer { margin-top: 4rem; border-top: 1px solid var(--border-color); padding-to
     box-shadow: 0 25px 50px 12px rgba(0, 0, 0, 0.5);
     position: relative; max-height: 90vh; overflow-y: auto;
 }
-/* FIXED: Correct Selector */
 .modal-overlay.active .modal-content { transform: translateY(0); }
 
 .close-modal {
@@ -215,11 +266,30 @@ footer { margin-top: 4rem; border-top: 1px solid var(--border-color); padding-to
 /* Scroll Animations */
 .hidden-element { opacity: 0; filter: blur(5px); transform: translateY(30px); transition: all 0.8s ease; }
 .show-element { opacity: 1; filter: blur(0); transform: translateY(0); }
-/* --- CUSTOM CURSOR STYLES --- */
-body {
-    cursor: none; /* Hides standard cursor */
+
+/* --- LASER SCAN EFFECT (Project Card) --- */
+.project-card .card-bg-image::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, 
+        transparent 45%, 
+        rgba(74, 222, 128, 0.6) 50%, 
+        transparent 55%);
+    background-size: 100% 200%;
+    animation: scanline 3s linear infinite;
+    opacity: 0.3;
+    pointer-events: none;
 }
 
+@keyframes scanline {
+    0% { background-position: 0% -100%; }
+    100% { background-position: 0% 200%; }
+}
+
+.project-card:hover .card-bg-image::after { opacity: 0; }
+
+/* --- CUSTOM CURSOR STYLES --- */
 /* The small center dot */
 .cursor-dot {
     width: 5px; height: 5px;
@@ -237,43 +307,34 @@ body {
     border-radius: 50%; z-index: 9999;
     pointer-events: none;
     transition: width 0.2s, height 0.2s, background-color 0.2s;
-    transform: translate(-50%, -50%); /* Centers it */
+    transform: translate(-50%, -50%);
 }
 
-/* Interaction: When hovering over links/cards */
 body.hovering .cursor-outline {
     width: 50px; height: 50px;
     background-color: rgba(255, 255, 255, 0.1);
     border-color: #fff;
 }
-.system-status {
-    font-family: 'Courier New', monospace; /* Monospaced font for tech look */
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    opacity: 0.7;
-}
-/* Add this to style.css */
 
-.project-card .card-bg-image::after {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(to bottom, 
-        transparent 45%, 
-        rgba(74, 222, 128, 0.6) 50%, 
-        transparent 55%);
-    background-size: 100% 200%;
-    animation: scanline 3s linear infinite;
-    opacity: 0.3; /* Subtle effect */
-    pointer-events: none;
-}
-
-@keyframes scanline {
-    0% { background-position: 0% -100%; }
-    100% { background-position: 0% 200%; }
-}
-
-/* Remove the scanline when hovering so they can see the image clearly */
-.project-card:hover .card-bg-image::after {
-    opacity: 0;
+/* --- MOBILE OPTIMIZATION --- */
+@media (hover: none) and (pointer: coarse) {
+    /* Hide custom cursor on phones */
+    .cursor-dot, .cursor-outline {
+        display: none;
+    }
+    
+    /* Bring back the normal cursor logic */
+    body {
+        cursor: auto; 
+    }
+    
+    /* Adjust grid for small screens */
+    .bento-grid {
+        grid-template-columns: 1fr; /* 1 column on mobile */
+    }
+    
+    /* Stop 3D tilt on mobile to save battery */
+    .card {
+        transform: none !important; 
+    }
 }
