@@ -122,3 +122,34 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.style.transform = 'translate(0px, 0px)';
         });
     });
+/* ==========================
+       7. PRECISION CURSOR LOGIC
+       ========================== */
+    const cursorDot = document.createElement('div');
+    const cursorOutline = document.createElement('div');
+    cursorDot.className = 'cursor-dot';
+    cursorOutline.className = 'cursor-outline';
+    document.body.appendChild(cursorDot);
+    document.body.appendChild(cursorOutline);
+
+    window.addEventListener("mousemove", (e) => {
+        const posX = e.clientX;
+        const posY = e.clientY;
+
+        // Dot moves instantly
+        cursorDot.style.left = `${posX}px`;
+        cursorDot.style.top = `${posY}px`;
+
+        // Outline moves with a slight delay (smooth physics)
+        cursorOutline.animate({
+            left: `${posX}px`,
+            top: `${posY}px`
+        }, { duration: 500, fill: "forwards" });
+    });
+
+    // Expand cursor on hoverable elements
+    const hoverables = document.querySelectorAll('a, button, .card, .project-card');
+    hoverables.forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+    });
