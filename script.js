@@ -33,53 +33,46 @@ document.addEventListener("DOMContentLoaded", () => {
                 card.style.setProperty("--mouse-x", `${x}px`);
                 card.style.setProperty("--mouse-y", `${y}px`);
 
-                // 3D TILT CALCULATION
-                // We calculate rotation based on how far the mouse is from center of card
+                // 3D TILT CALCULATION (Subtle rotation)
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -5; // Max 5deg rotation
+                // Multipliers (-5 and 5) control the intensity of the tilt
+                const rotateX = ((y - centerY) / centerY) * -5; 
                 const rotateY = ((x - centerX) / centerX) * 5; 
 
-                // Apply the transform
+                // Uncomment the line below if you want the tilt effect to be active
                 // card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
             }
         });
-        
-        // Reset tilt on mouse leave (Optional - can feel cleaner without)
-        /*
-        cardsContainer.addEventListener("mouseleave", () => {
-            for (const card of cards) {
-                card.style.transform = `perspective(1000px) rotateX(0) rotateY(0)`;
-            }
-        });
-        */
     }
 
-    // 3. MODAL LOGIC (Fixed)
+    // 3. MODAL LOGIC (Project Pop-up)
     const modal = document.getElementById('project-modal');
     const closeBtn = document.querySelector('.close-modal');
     const projectCard = document.querySelector('.project-card');
 
     if (projectCard && modal && closeBtn) {
-        // Open
+        // Open Modal
         projectCard.addEventListener('click', (e) => {
             e.preventDefault();
             modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden'; // Stop scrolling
         });
 
         // Close functions
         const closeModal = () => {
             modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = 'auto'; // Resume scrolling
         };
 
         closeBtn.addEventListener('click', closeModal);
         
+        // Close on click outside
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeModal();
         });
 
+        // Close on Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
         });
@@ -98,64 +91,62 @@ document.addEventListener("DOMContentLoaded", () => {
     const hiddenElements = document.querySelectorAll('.hidden-element');
     hiddenElements.forEach((el) => observer.observe(el));
 
-    // 5. INITIALIZE ICONS
+    // 5. INITIALIZE ICONS (Feather Icons)
     if (typeof feather !== 'undefined') {
         feather.replace();
     }
-});
 
-// 6. MAGNETIC BUTTON EFFECT
+    // 6. MAGNETIC BUTTON EFFECT
     const magneticBtns = document.querySelectorAll('.contact-links a');
-
     magneticBtns.forEach(btn => {
         btn.addEventListener('mousemove', (e) => {
             const position = btn.getBoundingClientRect();
             const x = e.pageX - position.left - position.width / 2;
             const y = e.pageY - position.top - position.height / 2;
 
-            // Move the button slightly towards the mouse (divided by 5 for subtlety)
+            // Move the button slightly towards the mouse
             btn.style.transform = `translate(${x * 0.3}px, ${y * 0.5}px)`;
         });
 
         btn.addEventListener('mouseleave', () => {
-            // Snap back to center
             btn.style.transform = 'translate(0px, 0px)';
         });
     });
-/* ==========================
-       7. PRECISION CURSOR LOGIC
-       ========================== */
-    const cursorDot = document.createElement('div');
-    const cursorOutline = document.createElement('div');
-    cursorDot.className = 'cursor-dot';
-    cursorOutline.className = 'cursor-outline';
-    document.body.appendChild(cursorDot);
-    document.body.appendChild(cursorOutline);
 
-    window.addEventListener("mousemove", (e) => {
-        const posX = e.clientX;
-        const posY = e.clientY;
+    // 7. PRECISION CURSOR LOGIC
+    // Create cursor elements only if they don't exist
+    if (!document.querySelector('.cursor-dot')) {
+        const cursorDot = document.createElement('div');
+        const cursorOutline = document.createElement('div');
+        cursorDot.className = 'cursor-dot';
+        cursorOutline.className = 'cursor-outline';
+        document.body.appendChild(cursorDot);
+        document.body.appendChild(cursorOutline);
 
-        // Dot moves instantly
-        cursorDot.style.left = `${posX}px`;
-        cursorDot.style.top = `${posY}px`;
+        window.addEventListener("mousemove", (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
 
-        // Outline moves with a slight delay (smooth physics)
-        cursorOutline.animate({
-            left: `${posX}px`,
-            top: `${posY}px`
-        }, { duration: 500, fill: "forwards" });
-    });
+            // Dot moves instantly
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
 
-    // Expand cursor on hoverable elements
-    const hoverables = document.querySelectorAll('a, button, .card, .project-card');
-    hoverables.forEach(el => {
-        el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
-        el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
-    });
-/* ==========================
-       8. LIVE SYSTEM TIME
-       ========================== */
+            // Outline moves with a slight delay (smooth physics)
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Expand cursor on hoverable elements
+        const hoverables = document.querySelectorAll('a, button, .card, .project-card, .resume-btn');
+        hoverables.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+    }
+
+    // 8. LIVE SYSTEM TIME
     function updateTime() {
         const timeDisplay = document.getElementById('system-time');
         if (timeDisplay) {
@@ -165,11 +156,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     setInterval(updateTime, 1000);
     updateTime(); // Run immediately
-/* ==========================
-       9. DELIVERY TRACKER TRIGGER
-       ========================== */
+
+    // 9. DELIVERY TRACKER TRIGGER
     const eduCard = document.getElementById('edu-card');
-    
     if (eduCard) {
         eduCard.addEventListener('click', () => {
             // Toggle the animation class
@@ -177,23 +166,56 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // Change the hint text
             const hint = eduCard.querySelector('.click-hint');
-            if(eduCard.classList.contains('tracking')) {
-                hint.textContent = "Tracking History...";
-            } else {
-                hint.textContent = "(Click to track)";
+            if (hint) {
+                if (eduCard.classList.contains('tracking')) {
+                    hint.textContent = "Tracking History...";
+                } else {
+                    hint.textContent = "(Click to track)";
+                }
             }
         });
     }
-    /* ==========================
-       11. PROJECT GALLERY LOGIC
-       ========================== */
-    
-    // 1. List your images here
+
+    // 10. DIGITAL ODOMETER (Counter)
+    const counters = document.querySelectorAll('.counter');
+    const speed = 200; 
+
+    const runCounters = () => {
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const inc = target / speed;
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + inc);
+                    setTimeout(updateCount, 20); 
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        });
+    };
+
+    // Trigger counting when the card scrolls into view
+    const impactCard = document.querySelector('.card .icon-box i[data-feather="heart"]')?.closest('.card');
+    if (impactCard) {
+        const counterObserver = new IntersectionObserver((entries) => {
+            if(entries[0].isIntersecting) {
+                runCounters();
+                counterObserver.disconnect(); // Only run once
+            }
+        });
+        counterObserver.observe(impactCard);
+    }
+
+    // 11. PROJECT GALLERY LOGIC
+    // List your images here
     const projectImages = [
-    "assets/IMG-20251206-WA0058.jpg",
-    "assets/IMG-20251206-WA0058.jpg", 
-    "assets/IMG-20251206-WA0058.jpg"
-];
+        "assets/IMG-20251206-WA0058.jpg",
+        "assets/IMG-20251206-WA0058.jpg", 
+        "assets/IMG-20251206-WA0058.jpg"
     ];
 
     let currentSlide = 0;
@@ -228,13 +250,11 @@ document.addEventListener("DOMContentLoaded", () => {
             galleryImg.style.opacity = 1;
         }, 300); // Wait for fade out
     };
-    /* ==========================
-       12. SYSTEM BOOT SEQUENCE
-       ========================== */
+
+    // 12. SYSTEM BOOT SEQUENCE
     const bootScreen = document.getElementById('boot-screen');
     const bootText = document.getElementById('boot-text');
     
-    // The "Engineering" messages to display
     const bootMessages = [
         "> INITIALIZING KERNEL...",
         "> LOADING CAD MODULES...",
@@ -263,7 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Sequence finished: Fade out
                 setTimeout(() => {
                     bootScreen.classList.add('fade-out');
-                    // Allow scrolling again (just in case)
+                    // Allow scrolling again
                     document.body.style.overflow = 'auto';
                 }, 800); // Wait a bit after "SYSTEM ONLINE"
             }
@@ -272,3 +292,4 @@ document.addEventListener("DOMContentLoaded", () => {
         // Start the sequence
         setTimeout(typeLine, 500);
     }
+});
