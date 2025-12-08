@@ -255,13 +255,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const bootScreen = document.getElementById('boot-screen');
     const bootText = document.getElementById('boot-text');
     
-    const bootMessages = [
-        "> INITIALIZING KERNEL...",
-        "> LOADING CAD MODULES...",
-        "> CALIBRATING SENSORS...",
-        "> CONNECTING TO NEURAL LINK...",
-        "> SYSTEM ONLINE."
-    ];
+const bootMessages = [
+    "> INITIALIZING PORTFOLIO...",
+    "> LOADING PROJECT ARCHIVES...",
+    "> RENDERING VISUAL ASSETS...",
+    "> PREPARING INTERFACE...",
+    "> WELCOME "
+];
+];
 
     if (bootScreen && bootText) {
         let lineIndex = 0;
