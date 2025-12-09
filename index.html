@@ -1,249 +1,418 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prajwal E. | Engineer & Creator</title>
-    <link rel="stylesheet" href="style.css">
+/* Prajwal E. Portfolio - Main JavaScript
+   Features: FEA Mesh, Synchro-Gears, Mech-Audio, Boot Sequence, Decipher Text
+*/
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =========================================
+       1. SYSTEM BOOT SEQUENCE (Professional + Fail-Safe)
+       ========================================= */
+    const bootScreen = document.getElementById('boot-screen');
+    const bootText = document.getElementById('boot-text');
+
+    const bootMessages = [
+        "> INITIALIZING PORTFOLIO...",
+        "> LOADING PROJECT ARCHIVES...",
+        "> RENDERING VISUAL ASSETS...",
+        "> WELCOME, PRAJWAL."
+    ];
+
+    if (bootScreen && bootText) {
+        // FAIL-SAFE: Force remove screen after 4 seconds (prevents mobile stuck)
+        setTimeout(() => {
+            if (bootScreen.style.display !== 'none') {
+                bootScreen.classList.add('fade-out');
+                document.body.style.overflow = 'auto';
+                setTimeout(() => { bootScreen.style.display = 'none'; }, 500);
+            }
+        }, 4000);
+
+        // Typing Animation
+        let lineIndex = 0;
+        const typeLine = () => {
+            if (lineIndex < bootMessages.length) {
+                const line = document.createElement('div');
+                line.className = 'boot-line';
+                line.textContent = bootMessages[lineIndex];
+                bootText.appendChild(line);
+                lineIndex++;
+                setTimeout(typeLine, 200); 
+            } else {
+                setTimeout(() => {
+                    bootScreen.classList.add('fade-out');
+                    document.body.style.overflow = 'auto';
+                    setTimeout(() => { bootScreen.style.display = 'none'; }, 500);
+                }, 500);
+            }
+        };
+        typeLine();
+    }
+
+    /* =========================================
+       2. FEA MESH NETWORK (Background Simulation)
+       ========================================= */
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '-1'; 
+    canvas.style.background = 'radial-gradient(circle at center, #1a1a1a 0%, #000000 100%)'; 
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+
+    // OPTIMIZATION: Less particles on mobile to prevent lag
+    const isMobile = window.innerWidth <= 768;
+    const particleCount = isMobile ? 40 : 80; 
+    const connectionDistance = isMobile ? 100 : 150; 
+    const mouseDistance = 200;
+
+    const resize = () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 1.5; 
+            this.vy = (Math.random() - 0.5) * 1.5; 
+            this.size = Math.random() * 2 + 1;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > width) this.vx *= -1;
+            if (this.y < 0 || this.y > height) this.vy *= -1;
+        }
+        draw() {
+            ctx.fillStyle = 'rgba(74, 222, 128, 0.5)'; 
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+
+    let mouse = { x: null, y: null };
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.x;
+        mouse.y = e.y;
+    });
+    window.addEventListener('touchmove', (e) => {
+        mouse.x = e.touches[0].clientX;
+        mouse.y = e.touches[0].clientY;
+    });
+
+    const animate = () => {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach((p, index) => {
+            p.update();
+            p.draw();
+            for (let j = index; j < particles.length; j++) {
+                const dx = p.x - particles[j].x;
+                const dy = p.y - particles[j].y;
+                const distance = Math.hypot(dx, dy);
+                if (distance < connectionDistance) {
+                    ctx.beginPath();
+                    const opacity = 1 - (distance / connectionDistance);
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.15})`;
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+            if (mouse.x != null) {
+                const dx = p.x - mouse.x;
+                const dy = p.y - mouse.y;
+                const distance = Math.hypot(dx, dy);
+                if (distance < mouseDistance) {
+                    ctx.beginPath();
+                    const opacity = 1 - (distance / mouseDistance);
+                    ctx.strokeStyle = `rgba(74, 222, 128, ${opacity * 0.4})`;
+                    ctx.lineWidth = 2;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.stroke();
+                }
+            }
+        });
+        requestAnimationFrame(animate);
+    };
+    animate();
+
+    /* =========================================
+       3. AUDIO FEEDBACK SYSTEM (Mech-UI)
+       ========================================= */
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <script src="https://unpkg.com/feather-icons"></script>
-</head>
-<body>
-
-    <div id="boot-screen">
-        <div class="terminal-container">
-            <div id="boot-text"></div>
-            <span class="cursor-blink">_</span>
-        </div>
-    </div>
-
-    <div class="noise-overlay"></div>
-    <div class="background-blob"></div>
-
-    <div class="gear-container">
-        <svg class="mech-gear gear-1" viewBox="0 0 100 100">
-            <path d="M94.1 58.6c-0.6-2.5-1.4-4.9-2.5-7.2l7.1-5.1c0.7-0.5 0.9-1.4 0.5-2.2l-4.8-8.3c-0.4-0.8-1.4-1.1-2.2-0.7l-7.7 3.9c-1.9-1.7-4-3.2-6.2-4.5l0.8-8.7c0.1-0.9-0.5-1.7-1.4-1.8l-9.6-1.3c-0.9-0.1-1.7 0.5-1.8 1.4l-1.1 8.6c-2.4 0-4.9 0.3-7.2 0.9L55 26.6c-0.5-0.7-1.4-0.9-2.2-0.5l-8.3 4.8c-0.8 0.4-1.1 1.4-0.7 2.2l3.9 7.7c-1.7 1.9-3.2 4-4.5 6.2l-8.7-0.8c-0.9-0.1-1.7 0.5-1.8 1.4l-1.3 9.6c-0.1 0.9 0.5 1.7 1.4 1.8l8.6 1.1c0 2.4 0.3 4.9 0.9 7.2L35.2 75c-0.7 0.5-0.9 1.4-0.5 2.2l4.8 8.3c0.4 0.8 1.4 1.1 2.2 0.7l7.7-3.9c1.9 1.7 4 3.2 6.2 4.5l-0.8 8.7c-0.1 0.9 0.5 1.7 1.4 1.8l9.6 1.3c0.9 0.1 1.7-0.5 1.8-1.4l1.1-8.6c2.4 0 4.9-0.3 7.2-0.9l2.8 7c0.5 0.7 1.4 0.9 2.2 0.5l8.3-4.8c0.8-0.4 1.1-1.4 0.7-2.2l-3.9-7.7c1.7-1.9 3.2-4 4.5-6.2l8.7 0.8c0.9 0.1 1.7-0.5 1.8-1.4l1.3-9.6C95.9 60.1 95.3 59.3 94.4 59.2L94.1 58.6z M50 67c-9.4 0-17-7.6-17-17s7.6-17 17-17s17 7.6 17 17S59.4 67 50 67z" />
-        </svg>
+    const playSound = (type) => {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
         
-        <svg class="mech-gear gear-2" viewBox="0 0 100 100">
-            <path d="M88.2 55.4c-0.8-2.3-1.9-4.5-3.2-6.5l6.3-4.6c0.6-0.5 0.8-1.3 0.4-1.9l-4.3-7.4c-0.4-0.7-1.2-0.9-1.9-0.6l-6.8 3.5c-1.7-1.5-3.5-2.9-5.5-4l0.7-7.7c0.1-0.8-0.4-1.5-1.2-1.6l-8.5-1.2c-0.8-0.1-1.5 0.4-1.6 1.2l-1 7.6c-2.1 0-4.3 0.3-6.4 0.8l-2.5-6.3c-0.5-0.6-1.2-0.8-1.9-0.4L43.5 30c-0.7 0.4-0.9 1.2-0.6 1.9l3.5 6.8c-1.5 1.7-2.9 3.5-4 5.5l-7.7-0.7c-0.8-0.1-1.5 0.4-1.6 1.2l-1.2 8.5c-0.1 0.8 0.4 1.5 1.2 1.6l7.6 1c0 2.1 0.3 4.3 0.8 6.4l-6.3 2.5c-0.6 0.5-0.8 1.2-0.4 1.9l4.3 7.4c0.4 0.7 1.2 0.9 1.9 0.6l6.8-3.5c1.7 1.5 3.5 2.9 5.5 4l-0.7 7.7c-0.1 0.8 0.4 1.5 1.2 1.6l8.5 1.2c0.8 0.1 1.5-0.4 1.6-1.2l1-7.6c2.1 0 4.3-0.3 6.4-0.8l2.5 6.3c0.5 0.6 1.2 0.8 1.9 0.4l7.4-4.3c0.7-0.4 0.9-1.2 0.6-1.9l-3.5-6.8c1.5-1.7 2.9-3.5 4-5.5l7.7 0.7c0.8 0.1 1.5-0.4 1.6-1.2l1.2-8.5C89.8 56.8 89.2 56 88.4 55.9L88.2 55.4z M45 61c-8.3 0-15-6.7-15-15s6.7-15 15-15s15 6.7 15 15S53.3 61 45 61z" />
-        </svg>
-    </div>
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        if (type === 'hover') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.05);
+            gainNode.gain.setValueAtTime(0.02, audioCtx.currentTime); 
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.05);
+        } else if (type === 'click') {
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.1);
+            gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+    };
 
-    <main class="main-container">
+    const interactiveElements = document.querySelectorAll('a, button, .card, .project-card, .resume-btn');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => playSound('hover'));
+        el.addEventListener('mousedown', () => playSound('click'));
+    });
 
-        <header class="fade-in hidden-element">
-            <div class="profile-header">
-                <div class="profile-img-container">
-                    <img src="assets/profile.jpg" alt="Prajwal E." class="profile-avatar" onerror="this.style.display='none'">
-                </div>
+    /* =========================================
+       4. SYNCHRO-GEAR SCROLL ENGINE
+       ========================================= */
+    const gear1 = document.querySelector('.gear-1');
+    const gear2 = document.querySelector('.gear-2');
+    
+    if (gear1 && gear2) {
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            gear1.style.transform = `rotate(${scrollY / 10}deg)`;
+            gear2.style.transform = `rotate(${scrollY / -5}deg)`;
+        });
+    }
+
+    /* =========================================
+       5. DECIPHER TEXT EFFECT (Hacker Style)
+       ========================================= */
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const headers = document.querySelectorAll('.card h3'); 
+
+    headers.forEach(header => {
+        header.addEventListener('mouseenter', event => {
+            let iterations = 0;
+            const originalText = event.target.dataset.value || event.target.innerText;
+            if (!event.target.dataset.value) event.target.dataset.value = event.target.innerText;
+
+            const interval = setInterval(() => {
+                event.target.innerText = originalText.split("")
+                    .map((letter, index) => {
+                        if(index < iterations) return originalText[index];
+                        return letters[Math.floor(Math.random() * 36)];
+                    })
+                    .join("");
                 
-                <div>
-                    <h1>Prajwal E.</h1>
-                    <p class="subtitle">Mechanical Engineer & Visual Storyteller</p>
-                    <div class="status-pill">
-                        <span class="dot"></span> Open for Internships
-                    </div>
-                </div>
-            </div>
+                if(iterations >= originalText.length) clearInterval(interval);
+                iterations += 1 / 3; 
+            }, 30);
+        });
+    });
 
-            <div class="contact-links">
-                <a href="mailto:prajwaleswa2004@gmail.com">Email</a>
-                <a href="https://linkedin.com/in/prajwal-esvi-0a9514321">LinkedIn</a>
-                
-                <a href="assets/Prajwal_E_Resume.pdf" target="_blank" class="resume-btn" title="Download Resume">
-                    <span>Resume</span>
-                    <i data-feather="download"></i>
-                </a>
-            </div>
-        </header>
+    /* =========================================
+       6. CUSTOM PRECISION CURSOR
+       ========================================= */
+    if (window.matchMedia("(min-width: 768px)").matches) {
+        const cursorDot = document.createElement('div');
+        const cursorOutline = document.createElement('div');
+        cursorDot.className = 'cursor-dot';
+        cursorOutline.className = 'cursor-outline';
+        document.body.appendChild(cursorDot);
+        document.body.appendChild(cursorOutline);
 
-        <div class="bento-grid hidden-element" id="cards">
+        window.addEventListener("mousemove", (e) => {
+            cursorDot.style.left = `${e.clientX}px`;
+            cursorDot.style.top = `${e.clientY}px`;
+            cursorOutline.animate({
+                left: `${e.clientX}px`,
+                top: `${e.clientY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+        
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+    }
 
-            <div class="card card-large">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="user"></i></div>
-                    <h3>The Profile</h3>
-                    <p>3rd Year Mechanical Engineering student at JNTUA. Passionate about smart product design, automation, and visual storytelling.</p>
-                </div>
-            </div>
+    /* =========================================
+       7. TYPEWRITER EFFECT
+       ========================================= */
+    const subtitle = document.querySelector(".subtitle");
+    if (subtitle) {
+        const text = "Mechanical Engineer & Visual Storyteller";
+        subtitle.textContent = "";
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                subtitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 40);
+            }
+        }
+        setTimeout(typeWriter, 2500);
+    }
 
-            <div class="card card-wide project-card">
-                <div class="card-bg-image" style="background-image: url('assets/IMG-20251206-WA0058.jpg');"></div>
-                <div class="card-content overlay-dark">
-                    <div class="badge">Major Project</div>
-                    <h3>Automated Curry Maker</h3>
-                    <p>Designed in Fusion 360. Features rotating spoon mechanism, slotted lid timing, and ingredient-release systems.</p>
-                </div>
-            </div>
+    /* =========================================
+       8. MAGNETIC BUTTONS
+       ========================================= */
+    const magneticBtns = document.querySelectorAll('.contact-links a');
+    if (window.innerWidth > 768) {
+        magneticBtns.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const position = btn.getBoundingClientRect();
+                const x = e.clientX - position.left - position.width / 2;
+                const y = e.clientY - position.top - position.height / 2;
+                btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0px, 0px)';
+            });
+        });
+    }
 
-            <div class="card">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="tool"></i></div>
-                    <h3>Engineering</h3>
-                    <ul class="skill-list">
-                        <li>Fusion 360</li>
-                        <li>AutoCAD & UG NX</li>
-                        <li>Hypermesh</li>
-                        <li>3D Printing</li>
-                    </ul>
-                </div>
-            </div>
+    /* =========================================
+       9. SPOTLIGHT & 3D TILT
+       ========================================= */
+    const cardsContainer = document.getElementById("cards");
+    const cards = document.querySelectorAll(".card");
+    if (cardsContainer && window.innerWidth > 768) {
+        cardsContainer.addEventListener("mousemove", (e) => {
+            for (const card of cards) {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty("--mouse-x", `${x}px`);
+                card.style.setProperty("--mouse-y", `${y}px`);
+            }
+        });
+    }
 
-            <div class="card">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="camera"></i></div>
-                    <h3>Creative</h3>
-                    <ul class="skill-list">
-                        <li>Video Editing</li>
-                        <li>Photography</li>
-                        <li>Short Films</li>
-                        <li>Sketching</li>
-                    </ul>
-                </div>
-            </div>
+    /* =========================================
+       10. MODAL & GALLERY
+       ========================================= */
+    const modal = document.getElementById('project-modal');
+    const closeBtn = document.querySelector('.close-modal');
+    const projectCard = document.querySelector('.project-card');
 
-            <div class="card card-tall">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="code"></i></div>
-                    <h3>Programming</h3>
-                    <p>Bridging the gap between hardware and software.</p>
-                    <div class="tags">
-                        <span>Python</span>
-                        <span>Java</span>
-                        <span>C Language</span>
-                    </div>
-                </div>
-            </div>
+    const projectImages = [
+        "assets/IMG-20251206-WA0058.jpg",
+        "assets/IMG-20251206-WA0058.jpg",
+        "assets/IMG-20251206-WA0058.jpg"
+    ];
+    let currentSlide = 0;
+    const galleryImg = document.getElementById('gallery-img');
+    const counterDisplay = document.getElementById('current-slide');
 
-            <div class="card" id="edu-card" style="cursor: pointer;">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="book"></i></div>
-                    <h3>Education Journey</h3>
-                    <p class="click-hint">(Click to track)</p>
+    window.changeSlide = function(direction) {
+        if (!galleryImg) return;
+        galleryImg.style.opacity = 0;
+        setTimeout(() => {
+            currentSlide += direction;
+            if (currentSlide >= projectImages.length) currentSlide = 0;
+            if (currentSlide < 0) currentSlide = projectImages.length - 1;
+            galleryImg.src = projectImages[currentSlide];
+            if (counterDisplay) counterDisplay.innerText = currentSlide + 1;
+            galleryImg.style.opacity = 1;
+        }, 300);
+    };
 
-                    <div class="tracker-container">
-                        <div class="tracker-line-bg"></div>
-                        <div class="tracker-line-fill"></div>
+    if (projectCard && modal && closeBtn) {
+        projectCard.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        const closeModal = () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('active')) closeModal(); });
+    }
 
-                        <div class="tracker-item">
-                            <div class="tracker-dot"></div>
-                            <div class="tracker-info">
-                                <span class="date">2023 - 2027</span>
-                                <strong>B.Tech Mechanical</strong>
-                                <span class="school">JNTUA College</span>
-                            </div>
-                        </div>
+    /* =========================================
+       11. EDUCATION TRACKER
+       ========================================= */
+    const eduCard = document.getElementById('edu-card');
+    if (eduCard) {
+        eduCard.addEventListener('click', () => {
+            eduCard.classList.toggle('tracking');
+            const hint = eduCard.querySelector('.click-hint');
+            if (hint) {
+                hint.textContent = eduCard.classList.contains('tracking') 
+                    ? "Tracking History..." 
+                    : "(Click to track)";
+            }
+        });
+    }
 
-                        <div class="tracker-item">
-                            <div class="tracker-dot"></div>
-                            <div class="tracker-info">
-                                <span class="date">2021 - 2023</span>
-                                <strong>Intermediate</strong>
-                                <span class="school">Narayana Junior College</span>
-                            </div>
-                        </div>
+    /* =========================================
+       12. SCROLL REVEAL & COUNTERS
+       ========================================= */
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                if (entry.target.classList.contains('hidden-element')) {
+                    entry.target.classList.add('show-element');
+                }
+                const counters = entry.target.querySelectorAll('.counter');
+                if (counters.length > 0) {
+                    counters.forEach(counter => {
+                        const target = +counter.getAttribute('data-target');
+                        const updateCount = () => {
+                            const count = +counter.innerText;
+                            const inc = target / 100;
+                            if (count < target) {
+                                counter.innerText = Math.ceil(count + inc);
+                                setTimeout(updateCount, 25);
+                            } else counter.innerText = target;
+                        };
+                        updateCount();
+                    });
+                }
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
 
-                        <div class="tracker-item">
-                            <div class="tracker-dot"></div>
-                            <div class="tracker-info">
-                                <span class="date">2021</span>
-                                <strong>SSC</strong>
-                                <span class="school">ZPHS School</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    document.querySelectorAll('.hidden-element').forEach((el) => observer.observe(el));
+    document.querySelectorAll('.card').forEach((el) => {
+        if(el.querySelector('.counter')) observer.observe(el);
+    });
 
-            <div class="card">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="heart"></i></div>
-                    <h3>Social Impact</h3>
-                    
-                    <div class="impact-item">
-                        <span class="impact-label">CRPF Mega Drive</span>
-                        <p class="impact-stat"><span class="counter" data-target="10000">0</span>+ Trees</p>
-                        <p class="impact-role">Active Volunteer Participant</p> 
-                    </div>
+    /* =========================================
+       13. SYSTEM TIME & ICONS
+       ========================================= */
+    function updateTime() {
+        const timeDisplay = document.getElementById('system-time');
+        if (timeDisplay) timeDisplay.innerText = new Date().toLocaleTimeString('en-US', { hour12: false });
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
 
-                    <div class="spacer"></div>
-
-                    <div class="impact-item">
-                        <span class="impact-label">Student Leadership</span>
-                        <p class="impact-stat"><span class="counter" data-target="2">0</span> Semesters</p>
-                        <p class="impact-role">Class Representative</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card card-wide">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="cpu"></i></div>
-                    <h3>Workshops & Certifications</h3>
-                    <div class="workshop-grid">
-                        <div class="badge-holo">Ornithopter Design</div>
-                        <div class="badge-holo">Ethical Hacking</div>
-                        <div class="badge-holo">Fusion 360 Certified</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <footer>
-            <div class="system-status">
-                <span id="system-time">00:00:00</span> // 
-                <span>SYSTEM: ONLINE</span> // 
-                <span>LOC: INDIA</span>
-            </div>
-        </footer>
-
-    </main>
-
-    <div id="project-modal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="close-modal">&times;</button>
-            
-            <div class="modal-header">
-                <div class="gallery-container">
-                    <button class="nav-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
-                    <img src="assets/IMG-20251206-WA0058.jpg" id="gallery-img" alt="Project Detail">
-                    <button class="nav-btn next-btn" onclick="changeSlide(1)">&#10095;</button>
-                    <div class="image-counter">IMG <span id="current-slide">1</span> / 3</div>
-                </div>
-
-                <div class="modal-title">
-                    <h2>Automated Curry Maker</h2>
-                    <div class="tags">
-                        <span>Fusion 360</span>
-                        <span>Mechanism Design</span>
-                        <span>Automation</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-body">
-                <h3>The Problem</h3>
-                <p>Cooking consistently requires precise timing and stirring. Manual methods are labor-intensive.</p>
-
-                <h3>The Solution</h3>
-                <p>I designed a smart cooking machine that automates the entire process using low-cost mechanical components.</p>
-
-                <h3>Key Mechanisms</h3>
-                <ul>
-                    <li><strong>Rotating Spoon:</strong> A custom gear-driven assembly to ensure even mixing.</li>
-                    <li><strong>Slotted Lid Timing:</strong> Automated ingredient release.</li>
-                    <li><strong>Cost Optimization:</strong> Built using basic electronic controls.</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+    if (typeof feather !== 'undefined') feather.replace();
+});
+                                
