@@ -21,6 +21,30 @@
         </div>
     </div>
 
+    <div class="hud-container">
+        <div class="hud-item top-left">
+            <span class="hud-label">COORDS:</span>
+            <span id="mouse-coords">000, 000</span>
+        </div>
+        <div class="hud-item top-right">
+            <span class="pulse-dot"></span>
+            <span>SYS.NORMAL</span>
+        </div>
+        <div class="hud-item bottom-left">
+            <span>SCROLL:</span>
+            <div class="scroll-bar-hud">
+                <div id="scroll-progress"></div>
+            </div>
+        </div>
+        <div class="hud-item bottom-right">
+            <span>60 FPS</span>
+        </div>
+        <svg class="hud-corner c-tl" viewBox="0 0 50 50"><path d="M2 50 V 2 H 50" fill="none" stroke="#4ade80" stroke-width="2"/></svg>
+        <svg class="hud-corner c-tr" viewBox="0 0 50 50"><path d="M0 2 H 48 V 50" fill="none" stroke="#4ade80" stroke-width="2"/></svg>
+        <svg class="hud-corner c-bl" viewBox="0 0 50 50"><path d="M2 0 V 48 H 50" fill="none" stroke="#4ade80" stroke-width="2"/></svg>
+        <svg class="hud-corner c-br" viewBox="0 0 50 50"><path d="M0 48 H 48 V 0" fill="none" stroke="#4ade80" stroke-width="2"/></svg>
+    </div>
+
     <div class="noise-overlay"></div>
     <div class="gear-container">
         <svg class="mech-gear gear-1" viewBox="0 0 100 100">
@@ -38,7 +62,6 @@
                 <div class="profile-img-container">
                     <img src="assets/profile.jpg" alt="Prajwal E." class="profile-avatar" onerror="this.style.display='none'">
                 </div>
-                
                 <div>
                     <h1>Prajwal E.</h1>
                     <p class="subtitle">Mechanical Engineer & Visual Storyteller</p>
@@ -51,7 +74,6 @@
             <div class="contact-links">
                 <a href="mailto:prajwaleswa2004@gmail.com">Email</a>
                 <a href="https://linkedin.com/in/prajwal-esvi-0a9514321">LinkedIn</a>
-                
                 <a href="assets/Prajwal_E_Resume.pdf" target="_blank" class="resume-btn" title="Download Resume">
                     <span>Resume</span>
                     <i data-feather="download"></i>
@@ -126,7 +148,6 @@
                     <div class="tracker-container">
                         <div class="tracker-line-bg"></div>
                         <div class="tracker-line-fill"></div>
-
                         <div class="tracker-item">
                             <div class="tracker-dot"></div>
                             <div class="tracker-info">
@@ -135,7 +156,6 @@
                                 <span class="school">JNTUA College</span>
                             </div>
                         </div>
-
                         <div class="tracker-item">
                             <div class="tracker-dot"></div>
                             <div class="tracker-info">
@@ -144,7 +164,6 @@
                                 <span class="school">Narayana Junior College</span>
                             </div>
                         </div>
-
                         <div class="tracker-item">
                             <div class="tracker-dot"></div>
                             <div class="tracker-info">
@@ -161,15 +180,12 @@
                 <div class="card-content">
                     <div class="icon-box"><i data-feather="heart"></i></div>
                     <h3>Social Impact</h3>
-                    
                     <div class="impact-item">
                         <span class="impact-label">CRPF Mega Drive</span>
                         <p class="impact-stat"><span class="counter" data-target="10000">0</span>+ Trees</p>
                         <p class="impact-role">Active Volunteer Participant</p> 
                     </div>
-
                     <div class="spacer"></div>
-
                     <div class="impact-item">
                         <span class="impact-label">Student Leadership</span>
                         <p class="impact-stat"><span class="counter" data-target="2">0</span> Semesters</p>
@@ -189,7 +205,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
         <footer>
@@ -205,7 +220,6 @@
     <div id="project-modal" class="modal-overlay">
         <div class="modal-content">
             <button class="close-modal">&times;</button>
-            
             <div class="modal-header">
                 <div class="gallery-container">
                     <button class="nav-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
@@ -213,7 +227,6 @@
                     <button class="nav-btn next-btn" onclick="changeSlide(1)">&#10095;</button>
                     <div class="image-counter">IMG <span id="current-slide">1</span> / 3</div>
                 </div>
-
                 <div class="modal-title">
                     <h2>Automated Curry Maker</h2>
                     <div class="tags">
@@ -223,14 +236,11 @@
                     </div>
                 </div>
             </div>
-
             <div class="modal-body">
                 <h3>The Problem</h3>
                 <p>Cooking consistently requires precise timing and stirring. Manual methods are labor-intensive.</p>
-
                 <h3>The Solution</h3>
                 <p>I designed a smart cooking machine that automates the entire process using low-cost mechanical components.</p>
-
                 <h3>Key Mechanisms</h3>
                 <ul>
                     <li><strong>Rotating Spoon:</strong> A custom gear-driven assembly to ensure even mixing.</li>
