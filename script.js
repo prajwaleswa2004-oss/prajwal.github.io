@@ -346,129 +346,107 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof feather !== 'undefined') feather.replace();
 });
     /* =========================================
-       2. FEA MESH NETWORK (Advanced Background)
+       2. FEA MESH NETWORK (Mobile Optimized)
        ========================================= */
-    if (window.innerWidth > 768) {
-        const canvas = document.createElement('canvas');
-        canvas.style.position = 'fixed';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
-        canvas.style.zIndex = '-1'; // Behind everything
-        // Dark gradient background
-        canvas.style.background = 'radial-gradient(circle at center, #1a1a1a 0%, #000000 100%)'; 
-        document.body.appendChild(canvas);
+    // We removed the "if > 768" check so it runs everywhere
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '-1'; 
+    canvas.style.background = 'radial-gradient(circle at center, #1a1a1a 0%, #000000 100%)'; 
+    document.body.appendChild(canvas);
 
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
 
-        // Engineering config
-        const particleCount = 80; // Density of nodes
-        const connectionDistance = 150; // How far to connect lines
-        const mouseDistance = 200; // Mouse interaction radius
+    // OPTIMIZATION: Less particles on mobile to prevent lag
+    const isMobile = window.innerWidth <= 768;
+    const particleCount = isMobile ? 40 : 80; // 40 for phone, 80 for laptop
+    const connectionDistance = isMobile ? 100 : 150; // Shorter lines on phone
+    const mouseDistance = 200;
 
-        // Resize Logic
-        const resize = () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        };
-        window.addEventListener('resize', resize);
-        resize();
+    const resize = () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', resize);
+    resize();
 
-        // The Node Class
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 1.5; // Velocity X
-                this.vy = (Math.random() - 0.5) * 1.5; // Velocity Y
-                this.size = Math.random() * 2 + 1;
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                // Bounce off edges
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-            }
-
-            draw() {
-                ctx.fillStyle = 'rgba(74, 222, 128, 0.5)'; // Tech Green Dots
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 1.5; 
+            this.vy = (Math.random() - 0.5) * 1.5; 
+            this.size = Math.random() * 2 + 1;
         }
-
-        // Initialize Nodes
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > width) this.vx *= -1;
+            if (this.y < 0 || this.y > height) this.vy *= -1;
         }
-
-        // Mouse Tracker
-        let mouse = { x: null, y: null };
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.x;
-            mouse.y = e.y;
-        });
-        window.addEventListener('mouseleave', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
-
-        // Main Animation Loop
-        const animate = () => {
-            ctx.clearRect(0, 0, width, height);
-
-            particles.forEach((p, index) => {
-                p.update();
-                p.draw();
-
-                // 1. Connect to other particles (The Mesh)
-                for (let j = index; j < particles.length; j++) {
-                    const dx = p.x - particles[j].x;
-                    const dy = p.y - particles[j].y;
-                    const distance = Math.hypot(dx, dy);
-
-                    if (distance < connectionDistance) {
-                        ctx.beginPath();
-                        const opacity = 1 - (distance / connectionDistance);
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.15})`; // Subtle white lines
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-
-                // 2. Connect to Mouse (Interaction)
-                if (mouse.x != null) {
-                    const dx = p.x - mouse.x;
-                    const dy = p.y - mouse.y;
-                    const distance = Math.hypot(dx, dy);
-
-                    if (distance < mouseDistance) {
-                        ctx.beginPath();
-                        const opacity = 1 - (distance / mouseDistance);
-                        ctx.strokeStyle = `rgba(74, 222, 128, ${opacity * 0.4})`; // Bright Green connection
-                        ctx.lineWidth = 2;
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(mouse.x, mouse.y);
-                        ctx.stroke();
-                        
-                        // Push particles away slightly (Repulsion field)
-                        if (distance < 50) {
-                            p.x += dx * 0.05;
-                            p.y += dy * 0.05;
-                        }
-                    }
-                }
-            });
-            requestAnimationFrame(animate);
-        };
-        animate();
+        draw() {
+            ctx.fillStyle = 'rgba(74, 222, 128, 0.5)'; 
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
     }
+
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+
+    let mouse = { x: null, y: null };
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.x;
+        mouse.y = e.y;
+    });
+    // On mobile, "touch" counts as mouse move
+    window.addEventListener('touchmove', (e) => {
+        mouse.x = e.touches[0].clientX;
+        mouse.y = e.touches[0].clientY;
+    });
+
+    const animate = () => {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach((p, index) => {
+            p.update();
+            p.draw();
+            for (let j = index; j < particles.length; j++) {
+                const dx = p.x - particles[j].x;
+                const dy = p.y - particles[j].y;
+                const distance = Math.hypot(dx, dy);
+                if (distance < connectionDistance) {
+                    ctx.beginPath();
+                    const opacity = 1 - (distance / connectionDistance);
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.15})`;
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+            if (mouse.x != null) {
+                const dx = p.x - mouse.x;
+                const dy = p.y - mouse.y;
+                const distance = Math.hypot(dx, dy);
+                if (distance < mouseDistance) {
+                    ctx.beginPath();
+                    const opacity = 1 - (distance / mouseDistance);
+                    ctx.strokeStyle = `rgba(74, 222, 128, ${opacity * 0.4})`;
+                    ctx.lineWidth = 2;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.stroke();
+                }
+            }
+        });
+        requestAnimationFrame(animate);
+    };
+    animate();
