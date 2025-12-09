@@ -298,3 +298,131 @@ document.addEventListener("DOMContentLoaded", () => {
         feather.replace();
     }
 });
+    /* =========================================
+       13. WELDING SPARKS (PHYSICS ENGINE)
+       ========================================= */
+    // Create the canvas for sparks
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.pointerEvents = 'none'; // Click through it
+    canvas.style.zIndex = '9998'; // Below the cursor, above bg
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    // Resize canvas to fill screen
+    const resizeCanvas = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // The Particle Class
+    class Particle {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            // Random explosion direction
+            this.vx = (Math.random() - 0.5) * 4;
+            this.vy = (Math.random() - 0.5) * 4;
+            this.life = 1; // 100% life
+            this.decay = Math.random() * 0.02 + 0.01; // Random fade speed
+            this.color = [255, 150 + Math.random() * 100, 50]; // Orange/Yellow fire colors
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.vy += 0.2; // Gravity (Sparks fall down)
+            this.life -= this.decay;
+        }
+
+        draw(ctx) {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 2 * this.life, 0, Math.PI * 2);
+            // Color changes from Hot Yellow -> Orange -> Grey as it dies
+            ctx.fillStyle = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${this.life})`;
+            ctx.fill();
+        }
+    }
+
+    // Spawn sparks on mouse move
+    let lastX = 0;
+    let lastY = 0;
+    window.addEventListener('mousemove', (e) => {
+        // Only spawn if mouse moved fast enough (optimizes performance)
+        const dist = Math.hypot(e.clientX - lastX, e.clientY - lastY);
+        if (dist > 5) {
+            // Spawn 2 particles per movement event
+            particles.push(new Particle(e.clientX, e.clientY));
+            particles.push(new Particle(e.clientX, e.clientY));
+            lastX = e.clientX;
+            lastY = e.clientY;
+        }
+    });
+
+    // Animation Loop
+    const animateSparks = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        particles.forEach((p, index) => {
+            p.update();
+            p.draw(ctx);
+            // Remove dead particles
+            if (p.life <= 0) particles.splice(index, 1);
+        });
+        
+        requestAnimationFrame(animateSparks);
+    };
+    animateSparks();
+    /* =========================================
+       14. AUDIO FEEDBACK SYSTEM (Web Audio API)
+       ========================================= */
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    
+    // Function to generate a synth beep
+    const playSound = (type) => {
+        if (audioCtx.state === 'suspended') audioCtx.resume(); // Wake up audio engine
+        
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        if (type === 'hover') {
+            // High pitched, short "chirp"
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.05);
+            gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); // Low volume
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.05);
+        } else if (type === 'click') {
+            // Lower pitched "mechanical clunk"
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.1);
+            gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+    };
+
+    // Attach sounds to interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, .card, .project-card, .resume-btn');
+    
+    interactiveElements.forEach(el => {
+        // Add "Chirp" on hover
+        el.addEventListener('mouseenter', () => playSound('hover'));
+        // Add "Clunk" on click
+        el.addEventListener('mousedown', () => playSound('click'));
+    });
