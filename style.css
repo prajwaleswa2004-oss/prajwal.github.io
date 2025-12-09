@@ -1,6 +1,6 @@
 /* =========================================
-   PRAJWAL E. PORTFOLIO - ULTIMATE STYLE
-   Features: Synchro-Gears, Neon Flow, Mech-UI
+   PRAJWAL E. PORTFOLIO - ADVANCED STYLE
+   Features: Neon Flow, FEA Mesh, Mech-UI, Gears
    ========================================= */
 
 :root {
@@ -19,56 +19,14 @@ body {
     font-family: 'Space Grotesk', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
-    cursor: none; /* Hide default cursor for custom one */
+    cursor: none; /* Hide default cursor */
 }
 
-/* --- 1. ADVANCED BACKGROUNDS --- */
-
-/* Layer 1: Noise Texture */
+/* --- 1. BACKGROUND LAYERS --- */
 .noise-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
     pointer-events: none; z-index: 0; opacity: 0.4;
-}
-/* --- SYNCHRO-GEAR ENGINE (Fixed Visibility) --- */
-.gear-container {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 0; /* Ensures it sits ABOVE the black background canvas */
-    overflow: hidden;
-}
-
-.mech-gear {
-    position: absolute;
-    transition: transform 0.1s linear; /* Smooth mechanical movement */
-}
-
-/* TARGET THE PATH DIRECTLY TO FORCE COLOR */
-.mech-gear path {
-    fill: rgba(255, 255, 255, 0.1) !important; /* Increased opacity to 10% */
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2)); /* Subtle glowing edge */
-}
-
-/* Big Gear Position */
-.gear-1 {
-    width: 600px; height: 600px;
-    top: -100px; right: -150px;
-    transform-origin: center;
-}
-
-/* Small Gear Position */
-.gear-2 {
-    width: 400px; height: 400px;
-    bottom: -50px; left: -100px;
-    transform-origin: center;
-}
-
-/* Mobile Adjustment */
-@media (max-width: 768px) {
-    .gear-container { opacity: 0.3; } /* Make them visible on phone too */
-    .gear-1 { width: 300px; height: 300px; right: -80px; }
-    .gear-2 { width: 200px; height: 200px; left: -50px; }
 }
 
 /* --- 2. LAYOUT & HEADER --- */
@@ -150,37 +108,24 @@ h1:hover { animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both inf
     height: 100%; border: none; z-index: 1;
     backdrop-filter: blur(5px);
 }
-
-/* The Animated Border (Snake of Light) */
 .card::after {
     content: ''; position: absolute;
     top: -50%; left: -50%; width: 200%; height: 200%;
     background: conic-gradient(transparent, transparent, transparent, var(--accent-green));
     animation: rotate-border 4s linear infinite; z-index: -2;
 }
-
-/* The Inner Black Box */
 .card::before {
     content: ''; position: absolute; inset: 2px;
     background: #0f0f0f; border-radius: 14px; z-index: -1;
 }
-
-@keyframes rotate-border {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.card:hover::after {
-    background: conic-gradient(transparent, transparent, var(--accent-green), #ffffff);
-    animation-duration: 2s;
-}
+@keyframes rotate-border { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.card:hover::after { background: conic-gradient(transparent, transparent, var(--accent-green), #ffffff); animation-duration: 2s; }
 
 /* Content */
 .card-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; }
 .card-wide { grid-column: span 2; }
 .card-tall { grid-row: span 2; }
 .card-large { grid-column: span 2; grid-row: span 1; }
-
 .icon-box { margin-bottom: auto; color: var(--text-muted); }
 .card h3 { margin-top: 1rem; font-size: 1.2rem; font-weight: 500; margin-bottom: 0.5rem; color: #fff; }
 .card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
@@ -235,7 +180,6 @@ h1:hover { animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both inf
 .impact-stat { font-size: 1.2rem; color: var(--accent-green); font-family: 'Courier New', monospace; font-weight: bold; margin: 2px 0; }
 .impact-role { font-size: 0.75rem; color: var(--text-muted); font-style: italic; opacity: 0.8; }
 .spacer { height: 15px; }
-
 .workshop-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
 .badge-holo {
     position: relative; padding: 8px 16px; background: rgba(255, 255, 255, 0.03);
@@ -248,7 +192,16 @@ h1:hover { animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both inf
 .badge-holo:hover { transform: translateY(-2px); border-color: rgba(255, 255, 255, 0.3); }
 .badge-holo:hover::before { left: 100%; }
 
-/* --- 5. MODAL & BOOT SCREEN --- */
+/* --- 5. SYNCHRO-GEAR & MODAL --- */
+.gear-container {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden;
+}
+.mech-gear { position: absolute; transition: transform 0.1s linear; }
+.mech-gear path { fill: rgba(255, 255, 255, 0.1) !important; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2)); }
+.gear-1 { width: 600px; height: 600px; top: -100px; right: -150px; transform-origin: center; }
+.gear-2 { width: 400px; height: 400px; bottom: -50px; left: -100px; transform-origin: center; }
+
+/* Modal & Boot */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
@@ -299,12 +252,6 @@ h1:hover { animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both inf
     transition: width 0.2s, height 0.2s, background-color 0.2s; transform: translate(-50%, -50%);
 }
 body.hovering .cursor-outline { width: 50px; height: 50px; background-color: rgba(255, 255, 255, 0.1); border-color: #fff; }
-
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #050505; }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #555; }
-
 footer { margin-top: 4rem; border-top: 1px solid var(--border-color); padding-top: 2rem; color: var(--text-muted); font-size: 0.8rem; text-align: center; }
 .hidden-element { opacity: 0; transform: perspective(1000px) rotateX(20deg) translateY(100px) scale(0.9); transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 .show-element { opacity: 1; transform: perspective(1000px) rotateX(0) translateY(0) scale(1); }
@@ -313,24 +260,15 @@ footer { margin-top: 4rem; border-top: 1px solid var(--border-color); padding-to
 @media (max-width: 768px) {
     .main-container { padding: 2rem 1.5rem; }
     header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
-    
     .contact-links { width: 100%; gap: 20px; flex-wrap: wrap; justify-content: flex-start; }
     .resume-btn { margin-left: 0; margin-top: 15px; width: 100%; justify-content: center; }
-    
     .bento-grid { grid-template-columns: 1fr; }
     .card-wide, .card-tall, .card-large { grid-column: span 1; grid-row: span 1; }
-    
-    /* Neon Borders stay active, but we remove the annoying 3D Scroll on phone */
     .card { transform: none !important; }
-    
-    /* Hide Gears on mobile (too distracting on small screen) */
-    .gear-container { opacity: 0.05; }
-    .gear-1 { width: 300px; height: 300px; }
-    .gear-2 { width: 200px; height: 200px; }
-
-    /* Hide custom cursor */
     .cursor-dot, .cursor-outline { display: none !important; }
     body { cursor: auto; }
-    
     h1 { font-size: 2.5rem; }
+    .gear-container { opacity: 0.3; } /* Gears visible but faint */
+    .gear-1 { width: 300px; height: 300px; right: -80px; }
+    .gear-2 { width: 200px; height: 200px; left: -50px; }
 }
