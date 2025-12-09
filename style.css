@@ -122,10 +122,17 @@ h1:hover { animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both inf
 
 /* --- 3. BENTO GRID & NEON CARDS --- */
 .bento-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 16px; grid-auto-flow: dense;
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px; 
+    grid-auto-flow: dense;
+    
+    /* NEW: Physics Enablers */
+    transform-style: preserve-3d; /* Allows 3D tilting */
+    transform-origin: center center; /* Rotates from the middle */
+    will-change: transform; /* Optimizes performance for browsers */
+    transition: transform 0.1s linear; /* Smooths out small jitters */
 }
-
 /* NEON CARD STYLE */
 .card {
     background-color: rgba(10, 10, 10, 0.8);
