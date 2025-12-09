@@ -1,5 +1,5 @@
 /* Prajwal E. Portfolio - Main JavaScript
-   Features: FEA Mesh, Synchro-Gears, Mech-Audio, Boot Sequence, Decipher Text
+   Features: Boot Sequence, FEA Mesh, Synchro-Gears, Mech-Audio, HUD, Decipher Text
 */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -257,7 +257,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* =========================================
-       7. TYPEWRITER EFFECT
+       7. HUD DATA TRACKING (Coordinates & Scroll)
+       ========================================= */
+    const coordDisplay = document.getElementById('mouse-coords');
+    const scrollBar = document.getElementById('scroll-progress');
+
+    // Track Mouse Coordinates
+    if (coordDisplay) {
+        window.addEventListener('mousemove', (e) => {
+            const x = e.clientX.toString().padStart(3, '0');
+            const y = e.clientY.toString().padStart(3, '0');
+            coordDisplay.innerText = `${x}, ${y}`;
+        });
+    }
+
+    // Track Scroll Progress
+    if (scrollBar) {
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollBar.style.width = `${scrollPercent}%`;
+        });
+    }
+
+    /* =========================================
+       8. TYPEWRITER EFFECT
        ========================================= */
     const subtitle = document.querySelector(".subtitle");
     if (subtitle) {
@@ -275,7 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* =========================================
-       8. MAGNETIC BUTTONS
+       9. MAGNETIC BUTTONS
        ========================================= */
     const magneticBtns = document.querySelectorAll('.contact-links a');
     if (window.innerWidth > 768) {
@@ -293,7 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* =========================================
-       9. SPOTLIGHT & 3D TILT
+       10. SPOTLIGHT & 3D TILT
        ========================================= */
     const cardsContainer = document.getElementById("cards");
     const cards = document.querySelectorAll(".card");
@@ -310,7 +335,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* =========================================
-       10. MODAL & GALLERY
+       11. MODAL & GALLERY
        ========================================= */
     const modal = document.getElementById('project-modal');
     const closeBtn = document.querySelector('.close-modal');
@@ -354,7 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* =========================================
-       11. EDUCATION TRACKER
+       12. EDUCATION TRACKER
        ========================================= */
     const eduCard = document.getElementById('edu-card');
     if (eduCard) {
@@ -370,7 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* =========================================
-       12. SCROLL REVEAL & COUNTERS
+       13. SCROLL REVEAL & COUNTERS
        ========================================= */
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -404,7 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /* =========================================
-       13. SYSTEM TIME & ICONS
+       14. SYSTEM TIME & ICONS
        ========================================= */
     function updateTime() {
         const timeDisplay = document.getElementById('system-time');
