@@ -1,5 +1,5 @@
 /* Prajwal E. Portfolio - Main JavaScript
-   Features: Boot Sequence, FEA Mesh, Synchro-Gears, Mech-Audio, Decipher Text
+   Features: Boot Sequence, FEA Mesh, Synchro-Gears, Mech-Audio, Decipher Text, Tab Ticker
 */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -414,4 +414,20 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTime();
 
     if (typeof feather !== 'undefined') feather.replace();
+
+    /* =========================================
+       14. TAB TITLE TICKER
+       ========================================= */
+    const titleAlt = ["System Online", "Engineer", "Creator", "Open for Internships"];
+    let titleIndex = 0;
+
+    setInterval(() => {
+        if (document.hidden) {
+            document.title = "⚠️ Connection Lost..."; 
+        } else {
+            titleIndex = (titleIndex + 1) % titleAlt.length;
+            document.title = `Prajwal E. | ${titleAlt[titleIndex]}`;
+        }
+    }, 2500);
+
 });
