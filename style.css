@@ -1,6 +1,6 @@
 /* =========================================
-   PRAJWAL E. PORTFOLIO - ADVANCED STYLE
-   Features: Neon Flow, FEA Mesh, Mech-UI, Gears
+   PRAJWAL E. PORTFOLIO - FINAL ADVANCED STYLE
+   Features: Neon Flow, FEA Mesh, Mech-Audio, Gears, Holo-Profile
    ========================================= */
 
 :root {
@@ -42,27 +42,54 @@ header {
 
 .profile-header { display: flex; align-items: center; gap: 20px; }
 
-.profile-avatar {
-    width: 100px; height: 100px; border-radius: 50%; object-fit: cover;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 20px rgba(74, 222, 128, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* HOLOGRAPHIC PROFILE PICTURE */
+.profile-img-container {
+    position: relative; width: 100px; height: 100px; z-index: 2;
 }
-.profile-avatar:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(74, 222, 128, 0.5); }
 
-/* Glitch Title */
+.profile-avatar {
+    width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.2); position: relative; z-index: 10;
+    transition: transform 0.3s;
+}
+
+/* RGB Split Layers */
+.profile-img-container::before,
+.profile-img-container::after {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 50%; background: url('assets/profile.jpg'); /* Match your image name */
+    background-size: cover; opacity: 0.5; z-index: -1; pointer-events: none;
+    mix-blend-mode: screen; transition: transform 0.3s;
+}
+.profile-img-container::before { filter: drop-shadow(0 0 5px #ff00c1); }
+.profile-img-container::after { filter: drop-shadow(0 0 5px #00fff9); }
+
+/* Hover Glitch Effect */
+.profile-img-container:hover .profile-avatar { transform: translate(0, 0); box-shadow: 0 0 30px rgba(74, 222, 128, 0.6); }
+.profile-img-container:hover::before { transform: translate(4px, -2px); animation: glitch-anim-1 2s infinite linear alternate-reverse; }
+.profile-img-container:hover::after { transform: translate(-4px, 2px); animation: glitch-anim-2 3s infinite linear alternate-reverse; }
+
+@keyframes glitch-anim-1 {
+    0% { clip-path: inset(20% 0 80% 0); } 20% { clip-path: inset(60% 0 10% 0); }
+    40% { clip-path: inset(40% 0 50% 0); } 60% { clip-path: inset(80% 0 5% 0); }
+    80% { clip-path: inset(10% 0 70% 0); } 100% { clip-path: inset(30% 0 20% 0); }
+}
+@keyframes glitch-anim-2 {
+    0% { clip-path: inset(10% 0 60% 0); } 20% { clip-path: inset(30% 0 20% 0); }
+    40% { clip-path: inset(70% 0 10% 0); } 60% { clip-path: inset(20% 0 50% 0); }
+    80% { clip-path: inset(50% 0 30% 0); } 100% { clip-path: inset(0% 0 80% 0); }
+}
+
+/* Glitch Text Title */
 h1 {
     font-size: 3.5rem; font-weight: 600; letter-spacing: -0.04em;
     color: #fff; position: relative; transition: color 0.1s;
 }
 h1:hover { animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite; }
 @keyframes glitch-anim {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); text-shadow: 2px 0 #ff00c1; }
-    40% { transform: translate(-2px, -2px); text-shadow: -2px 0 #00fff9; }
-    60% { transform: translate(2px, 2px); text-shadow: 2px 0 #ff00c1; }
-    80% { transform: translate(2px, -2px); text-shadow: -2px 0 #00fff9; }
-    100% { transform: translate(0); }
+    0% { transform: translate(0); } 20% { transform: translate(-2px, 2px); text-shadow: 2px 0 #ff00c1; }
+    40% { transform: translate(-2px, -2px); text-shadow: -2px 0 #00fff9; } 60% { transform: translate(2px, 2px); text-shadow: 2px 0 #ff00c1; }
+    80% { transform: translate(2px, -2px); text-shadow: -2px 0 #00fff9; } 100% { transform: translate(0); }
 }
 
 .subtitle { color: var(--text-muted); font-size: 1.2rem; margin-top: 0.5rem; }
@@ -108,12 +135,14 @@ h1:hover { animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both inf
     height: 100%; border: none; z-index: 1;
     backdrop-filter: blur(5px);
 }
+/* The Animated Border */
 .card::after {
     content: ''; position: absolute;
     top: -50%; left: -50%; width: 200%; height: 200%;
     background: conic-gradient(transparent, transparent, transparent, var(--accent-green));
     animation: rotate-border 4s linear infinite; z-index: -2;
 }
+/* The Inner Black Box */
 .card::before {
     content: ''; position: absolute; inset: 2px;
     background: #0f0f0f; border-radius: 14px; z-index: -1;
