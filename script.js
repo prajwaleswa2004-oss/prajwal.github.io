@@ -1,13 +1,11 @@
-
-/* Prajwal E. Portfolio - Ultimate JavaScript
-   Features: FEA Mesh, Synchro-Gears, Decipher Text, Audio Engine, 
-   Boot Sequence, and Advanced Animations.
+/* Prajwal E. Portfolio - Main JavaScript
+   Features: FEA Mesh, Synchro-Gears, Mech-Audio, Boot Sequence, Decipher Text
 */
 
 document.addEventListener("DOMContentLoaded", () => {
 
     /* =========================================
-       1. SYSTEM BOOT SEQUENCE (Robust Fail-Safe)
+       1. SYSTEM BOOT SEQUENCE (Professional + Fail-Safe)
        ========================================= */
     const bootScreen = document.getElementById('boot-screen');
     const bootText = document.getElementById('boot-text');
@@ -60,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
     canvas.style.width = '100%';
     canvas.style.height = '100%';
     canvas.style.zIndex = '-1'; 
-    // Dark radial gradient
     canvas.style.background = 'radial-gradient(circle at center, #1a1a1a 0%, #000000 100%)'; 
     document.body.appendChild(canvas);
 
@@ -96,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (this.y < 0 || this.y > height) this.vy *= -1;
         }
         draw() {
-            ctx.fillStyle = 'rgba(74, 222, 128, 0.5)'; // Tech Green
+            ctx.fillStyle = 'rgba(74, 222, 128, 0.5)'; 
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fill();
@@ -109,8 +106,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let mouse = { x: null, y: null };
     window.addEventListener('mousemove', (e) => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
+        mouse.x = e.x;
+        mouse.y = e.y;
     });
     window.addEventListener('touchmove', (e) => {
         mouse.x = e.touches[0].clientX;
@@ -122,7 +119,6 @@ document.addEventListener("DOMContentLoaded", () => {
         particles.forEach((p, index) => {
             p.update();
             p.draw();
-            // Connect Particles
             for (let j = index; j < particles.length; j++) {
                 const dx = p.x - particles[j].x;
                 const dy = p.y - particles[j].y;
@@ -137,7 +133,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     ctx.stroke();
                 }
             }
-            // Connect Mouse
             if (mouse.x != null) {
                 const dx = p.x - mouse.x;
                 const dy = p.y - mouse.y;
@@ -158,7 +153,45 @@ document.addEventListener("DOMContentLoaded", () => {
     animate();
 
     /* =========================================
-       3. SYNCHRO-GEAR SCROLL ENGINE
+       3. AUDIO FEEDBACK SYSTEM (Mech-UI)
+       ========================================= */
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    
+    const playSound = (type) => {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        if (type === 'hover') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.05);
+            gainNode.gain.setValueAtTime(0.02, audioCtx.currentTime); 
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.05);
+        } else if (type === 'click') {
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.1);
+            gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+    };
+
+    const interactiveElements = document.querySelectorAll('a, button, .card, .project-card, .resume-btn');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => playSound('hover'));
+        el.addEventListener('mousedown', () => playSound('click'));
+    });
+
+    /* =========================================
+       4. SYNCHRO-GEAR SCROLL ENGINE
        ========================================= */
     const gear1 = document.querySelector('.gear-1');
     const gear2 = document.querySelector('.gear-2');
@@ -166,15 +199,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (gear1 && gear2) {
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
-            // Gear 1: Clockwise, Slow
             gear1.style.transform = `rotate(${scrollY / 10}deg)`;
-            // Gear 2: Counter-Clockwise, Fast
             gear2.style.transform = `rotate(${scrollY / -5}deg)`;
         });
     }
 
     /* =========================================
-       4. DECIPHER TEXT EFFECT (Hover)
+       5. DECIPHER TEXT EFFECT (Hacker Style)
        ========================================= */
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     const headers = document.querySelectorAll('.card h3'); 
@@ -194,47 +225,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     .join("");
                 
                 if(iterations >= originalText.length) clearInterval(interval);
-                iterations += 1 / 3;
+                iterations += 1 / 3; 
             }, 30);
         });
-    });
-
-    /* =========================================
-       5. AUDIO FEEDBACK SYSTEM (Mech-UI)
-       ========================================= */
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    
-    const playSound = (type) => {
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        
-        const osc = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        osc.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-        
-        if (type === 'hover') {
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.05);
-            gainNode.gain.setValueAtTime(0.02, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.05);
-        } else if (type === 'click') {
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.1);
-            gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.1);
-        }
-    };
-
-    const interactiveElements = document.querySelectorAll('a, button, .card, .project-card, .resume-btn');
-    interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => playSound('hover'));
-        el.addEventListener('mousedown', () => playSound('click'));
     });
 
     /* =========================================
@@ -282,7 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* =========================================
-       8. MAGNETIC BUTTONS (Desktop)
+       8. MAGNETIC BUTTONS
        ========================================= */
     const magneticBtns = document.querySelectorAll('.contact-links a');
     if (window.innerWidth > 768) {
@@ -300,7 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* =========================================
-       9. SPOTLIGHT (Desktop)
+       9. SPOTLIGHT & 3D TILT
        ========================================= */
     const cardsContainer = document.getElementById("cards");
     const cards = document.querySelectorAll(".card");
