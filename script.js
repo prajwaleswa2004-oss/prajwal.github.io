@@ -431,3 +431,60 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 2500);
 
 });
+/* =========================================
+       19. KINETIC SCROLL PHYSICS (Inertia & Skew)
+       ========================================= */
+    const gridContainer = document.querySelector('.bento-grid');
+    let lastScrollY = window.scrollY;
+    let currentSkew = 0;
+    let targetSkew = 0;
+
+    const animateScrollPhysics = () => {
+        const currentScrollY = window.scrollY;
+        
+        // Calculate Velocity (Speed of scroll)
+        // We limit it to max 10 degrees to prevent motion sickness
+        const velocity = currentScrollY - lastScrollY;
+        targetSkew = velocity * 0.15; // Sensitivity factor
+        
+        // Clamp the max tilt to +/- 7 degrees
+        targetSkew = Math.max(Math.min(targetSkew, 7), -7);
+
+        // Smooth Interpolation (Ease-out effect)
+        // This makes it feel "heavy" rather than instant
+        currentSkew += (targetSkew - currentSkew) * 0.1;
+
+        if (gridContainer) {
+            // Apply 3D Rotation based on speed
+            // rotateX: Tilts the grid forward/back
+            // scale: Shrinks slightly when moving fast to simulate depth
+            const scale = 1 - Math.abs(currentSkew) * 0.005;
+            gridContainer.style.transform = `perspective(1000px) rotateX(${-currentSkew}deg) scale(${scale})`;
+        }
+
+        lastScrollY = currentScrollY;
+        requestAnimationFrame(animateScrollPhysics);
+    };
+
+    // Start the physics loop
+    animateScrollPhysics();
+/* =========================================
+       20. BLUEPRINT MODE TOGGLE
+       ========================================= */
+    const bpToggle = document.getElementById('blueprint-toggle');
+    if (bpToggle) {
+        bpToggle.addEventListener('click', () => {
+            document.body.classList.toggle('blueprint-active');
+            if (document.body.classList.contains('blueprint-active')) {
+                bpToggle.innerText = "SCHEMATIC";
+                bpToggle.style.background = "transparent";
+                bpToggle.style.color = "#fff";
+                bpToggle.style.border = "1px solid #fff";
+            } else {
+                bpToggle.innerText = "RENDER";
+                bpToggle.style.background = "#4ade80";
+                bpToggle.style.color = "#000";
+                bpToggle.style.border = "none";
+            }
+        });
+    }
