@@ -1,323 +1,526 @@
-/* PRAJWAL E. | NEURAL ENGINE CORE v2.0
-   Architecture: Monolithic 3D Rendering & Interaction System
-   Modules: 3D Projection, Audio Synthesis, Kinetic DOM, Parallax
+/* Prajwal E. Portfolio - Main JavaScript (Multi-Page Version)
+   Features: Smart Boot, FEA Mesh, Synchro-Gears, Mech-Audio, Page Specific Logic
 */
 
 document.addEventListener("DOMContentLoaded", () => {
-    
-    // --- MODULE 1: SYSTEM BOOT (BIOS SEQUENCE) ---
+
+    /* =========================================
+       1. SYSTEM BOOT SEQUENCE (Smart Logic)
+    ========================================= */
     const bootScreen = document.getElementById('boot-screen');
     const bootText = document.getElementById('boot-text');
-    const bootLog = [
-        "> KERNEL_INIT: SUCCESS",
-        "> LOADING_NEURAL_MESH...",
-        "> CALIBRATING_PHYSICS_ENGINE...",
-        "> 3D_RENDERING_CONTEXT: ACTIVE",
-        "> ESTABLISHING_SECURE_CONNECTION...",
-        "> ACCESS_GRANTED: WELCOME_USER_PRAJWAL"
+
+    const bootMessages = [
+        "> INITIALIZING PORTFOLIO...",
+        "> LOADING PROJECT ARCHIVES...",
+        "> RENDERING VISUAL ASSETS...",
+        "> WELCOME, PRAJWAL."
     ];
 
     if (bootScreen && bootText) {
-        let logIndex = 0;
-        const printLog = () => {
-            if (logIndex < bootLog.length) {
-                const line = document.createElement('div');
-                line.className = 'boot-line';
-                line.innerHTML = `<span class="sys-prefix">[SYSTEM]</span> ${bootLog[logIndex]}`;
-                bootText.appendChild(line);
-                logIndex++;
-                // Randomized typing speed for realism
-                setTimeout(printLog, Math.random() * 200 + 50);
-            } else {
-                setTimeout(() => {
-                    bootScreen.classList.add('fade-out');
-                    document.body.style.overflow = 'auto'; // Unlock scroll
-                    // Safety cleanup
-                    setTimeout(() => bootScreen.style.display = 'none', 1000);
-                }, 800);
-            }
-        };
-        // Safety Fallback: Remove screen after 4.5s even if script hangs
-        setTimeout(() => {
-            if(bootScreen.style.display !== 'none') {
-                bootScreen.style.opacity = 0;
-                document.body.style.overflow = 'auto';
-                setTimeout(() => bootScreen.style.display = 'none', 500);
-            }
-        }, 4500);
-        
-        printLog();
+        // Check if the user has already seen the boot screen in this session
+        const hasBooted = sessionStorage.getItem('systemBooted');
+
+        if (hasBooted) {
+            // SKIP ANIMATION: User has been here before
+            bootScreen.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        } else {
+            // RUN ANIMATION: First time visit
+            let lineIndex = 0;
+
+            const typeLine = () => {
+                if (lineIndex < bootMessages.length) {
+                    const line = document.createElement('div');
+                    line.className = 'boot-line';
+                    line.textContent = bootMessages[lineIndex];
+                    bootText.appendChild(line);
+                    lineIndex++;
+                    setTimeout(typeLine, 200);
+                } else {
+                    setTimeout(() => {
+                        bootScreen.classList.add('fade-out');
+                        document.body.style.overflow = 'auto';
+                        setTimeout(() => {
+                            bootScreen.style.display = 'none';
+                            // Set the flag so it doesn't run again
+                            sessionStorage.setItem('systemBooted', 'true');
+                        }, 500);
+                    }, 500);
+                }
+            };
+
+            typeLine();
+
+            // Fail-Safe: Force remove screen after 4 seconds if stuck
+            setTimeout(() => {
+                if (bootScreen.style.display !== 'none') {
+                    bootScreen.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    sessionStorage.setItem('systemBooted', 'true');
+                }
+            }, 4000);
+        }
     }
 
-    // --- MODULE 2: "NEURAL SPHERE" 3D ENGINE ---
-    // This replaces the flat mesh with a true rotating 3D globe of nodes
-    
+    /* =========================================
+       2. FEA MESH NETWORK (Background)
+    ========================================= */
     const canvas = document.createElement('canvas');
-    Object.assign(canvas.style, {
-        position: 'fixed', top: '0', left: '0', 
-        width: '100%', height: '100%', zIndex: '-1',
-        background: 'radial-gradient(circle at center, #0a0a0a 0%, #000 100%)'
-    });
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '-1';
+    // Dark radial gradient
+    canvas.style.background = 'radial-gradient(circle at center, #1a1a1a 0%, #000000 100%)';
     document.body.appendChild(canvas);
-    
+
     const ctx = canvas.getContext('2d');
     let width, height;
-    
-    // Engine Config
-    const SPHERE_RADIUS = 350; // Size of the globe
-    const PARTICLE_COUNT = window.innerWidth < 768 ? 60 : 150; // Optimize for mobile
-    const CONNECTION_DIST = 50;
-    const ROTATION_SPEED_BASE = 0.002;
-    
-    let rotationX = 0;
-    let rotationY = 0;
-    let mouseX = 0;
-    let mouseY = 0;
+    let particles = [];
 
-    // 3D Point Class
-    class Point3D {
-        constructor() {
-            // Random point on a sphere surface (Spherical coordinates)
-            this.theta = Math.random() * Math.PI * 2; // Longitude
-            this.phi = Math.acos((Math.random() * 2) - 1); // Latitude
-            
-            this.x = SPHERE_RADIUS * Math.sin(this.phi) * Math.cos(this.theta);
-            this.y = SPHERE_RADIUS * Math.sin(this.phi) * Math.sin(this.theta);
-            this.z = SPHERE_RADIUS * Math.cos(this.phi);
-            
-            this.baseSize = Math.random() * 1.5 + 0.5;
-            this.glow = Math.random() > 0.9; // 10% chance to be a "core" node
-        }
+    // Optimization for mobile
+    const isMobile = window.innerWidth <= 768;
+    const particleCount = isMobile ? 40 : 80;
+    const connectionDistance = isMobile ? 100 : 150;
+    const mouseDistance = 200;
 
-        rotate(angleX, angleY) {
-            // Rotation Matrix Logic (Math!)
-            // Rotate around Y axis
-            let cosY = Math.cos(angleY);
-            let sinY = Math.sin(angleY);
-            let x1 = this.x * cosY - this.z * sinY;
-            let z1 = this.z * cosY + this.x * sinY;
-            
-            // Rotate around X axis
-            let cosX = Math.cos(angleX);
-            let sinX = Math.sin(angleX);
-            let y1 = this.y * cosX - z1 * sinX;
-            let z2 = z1 * cosX + this.y * sinX;
-            
-            this.x = x1;
-            this.y = y1;
-            this.z = z2;
-        }
-
-        project() {
-            // Perspective Projection: Map 3D to 2D
-            // FOV (Field of View) factor
-            const fov = 400; 
-            const scale = fov / (fov + this.z); 
-            
-            return {
-                x: width / 2 + this.x * scale,
-                y: height / 2 + this.y * scale,
-                scale: scale,
-                alpha: (this.z + SPHERE_RADIUS) / (2 * SPHERE_RADIUS) // Fade out back nodes
-            };
-        }
-    }
-
-    const points = [];
-    for(let i=0; i<PARTICLE_COUNT; i++) points.push(new Point3D());
-
-    const resize = () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; };
+    const resize = () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    };
     window.addEventListener('resize', resize);
     resize();
 
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 1.5;
+            this.vy = (Math.random() - 0.5) * 1.5;
+            this.size = Math.random() * 2 + 1;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > width) this.vx *= -1;
+            if (this.y < 0 || this.y > height) this.vy *= -1;
+        }
+        draw() {
+            ctx.fillStyle = 'rgba(74, 222, 128, 0.5)';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+
+    let mouse = { x: null, y: null };
     window.addEventListener('mousemove', (e) => {
-        // Map mouse position to rotation speed
-        mouseX = (e.clientX - width/2) * 0.0001;
-        mouseY = (e.clientY - height/2) * 0.0001;
+        mouse.x = e.x;
+        mouse.y = e.y;
+    });
+    window.addEventListener('touchmove', (e) => {
+        mouse.x = e.touches[0].clientX;
+        mouse.y = e.touches[0].clientY;
     });
 
-    // Render Loop
-    const render = () => {
+    const animate = () => {
         ctx.clearRect(0, 0, width, height);
-        
-        // Auto rotate + Mouse influence
-        rotationY = ROTATION_SPEED_BASE + mouseX;
-        rotationX = ROTATION_SPEED_BASE + mouseY;
+        particles.forEach((p, index) => {
+            p.update();
+            p.draw();
 
-        // Sort points by Z-depth so front points draw over back points
-        points.sort((a, b) => b.z - a.z);
-
-        // Update & Draw
-        points.forEach(p => {
-            p.rotate(rotationX, rotationY);
-            const proj = p.project();
-            
-            // Draw Connections (Triangulation)
-            // Only connect points that are close in 3D space AND screen space
-            points.forEach(p2 => {
-                const dist = Math.hypot(p.x - p2.x, p.y - p2.y, p.z - p2.z);
-                if(dist < CONNECTION_DIST) {
-                    const proj2 = p2.project();
+            // Connect particles
+            for (let j = index; j < particles.length; j++) {
+                const dx = p.x - particles[j].x;
+                const dy = p.y - particles[j].y;
+                const distance = Math.hypot(dx, dy);
+                if (distance < connectionDistance) {
                     ctx.beginPath();
-                    ctx.moveTo(proj.x, proj.y);
-                    ctx.lineTo(proj2.x, proj2.y);
-                    const opacity = (1 - dist/CONNECTION_DIST) * proj.alpha * 0.3;
-                    ctx.strokeStyle = `rgba(74, 222, 128, ${opacity})`;
-                    ctx.lineWidth = 0.5;
+                    const opacity = 1 - (distance / connectionDistance);
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.15})`;
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
                     ctx.stroke();
                 }
-            });
+            }
 
-            // Draw Node
-            ctx.beginPath();
-            ctx.arc(proj.x, proj.y, p.baseSize * proj.scale, 0, Math.PI * 2);
-            ctx.fillStyle = p.glow ? '#fff' : `rgba(74, 222, 128, ${proj.alpha})`;
-            ctx.fill();
-            
-            if(p.glow) {
-                // Add extra glow for special nodes
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = '#4ade80';
-                ctx.fill();
-                ctx.shadowBlur = 0;
+            // Connect to mouse
+            if (mouse.x != null) {
+                const dx = p.x - mouse.x;
+                const dy = p.y - mouse.y;
+                const distance = Math.hypot(dx, dy);
+                if (distance < mouseDistance) {
+                    ctx.beginPath();
+                    const opacity = 1 - (distance / mouseDistance);
+                    ctx.strokeStyle = `rgba(74, 222, 128, ${opacity * 0.4})`;
+                    ctx.lineWidth = 2;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.stroke();
+                }
             }
         });
-        
-        requestAnimationFrame(render);
+        requestAnimationFrame(animate);
     };
-    render();
+    animate();
 
-    // --- MODULE 3: KINETIC PARALLAX SCROLL ---
-    // Makes layers move at different speeds
-    const cards = document.querySelectorAll('.card');
-    const header = document.querySelector('header');
-    
-    window.addEventListener('scroll', () => {
-        const scrolled = window.scrollY;
-        
-        // Background Parallax (The blob moves slow)
-        const blob = document.querySelector('.background-blob');
-        if(blob) blob.style.transform = `translate(-50%, ${-50 + scrolled * 0.1}%) scale(${1 + scrolled * 0.0005})`;
+    /* =========================================
+       3. AUDIO FEEDBACK SYSTEM (Mech-UI)
+    ========================================= */
+    const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
 
-        // Header Parallax (Fades and moves up fast)
-        if(header) {
-            header.style.transform = `translateY(${scrolled * 0.5}px)`;
-            header.style.opacity = 1 - (scrolled / 500);
+    const playSound = (type) => {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        if (type === 'hover') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.05);
+            gainNode.gain.setValueAtTime(0.02, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.05);
+        } else if (type === 'click') {
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.1);
+            gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
         }
+    };
 
-        // Card Staggered Parallax
-        cards.forEach((card, index) => {
-            const rate = (index % 2 === 0) ? 0.05 : 0.02; // Even cards move faster
-            card.style.transform = `translateY(${scrolled * rate}px)`;
-        });
-        
-        // Synchro-Gears Logic (Re-implemented for compatibility)
-        const gear1 = document.querySelector('.gear-1');
-        const gear2 = document.querySelector('.gear-2');
-        if (gear1 && gear2) {
-            gear1.style.transform = `rotate(${scrolled * 0.1}deg)`;
-            gear2.style.transform = `rotate(${scrolled * -0.2}deg)`;
-        }
+    // Apply sound to all interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, .card, .project-card, .resume-btn');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => playSound('hover'));
+        el.addEventListener('mousedown', () => playSound('click'));
     });
 
-    // --- MODULE 4: HOLOGRAPHIC TILT (GLASS PHYSICS) ---
-    // Applies a 3D glass effect relative to mouse position within the card
-    if(window.innerWidth > 768) {
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                // Calculate Rotation
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const rotateX = ((y - centerY) / centerY) * -10; // Max 10deg
-                const rotateY = ((x - centerX) / centerX) * 10;
-                
-                // Set Custom Properties for CSS Glow
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
-                
-                // Apply Transform
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
-            });
+    /* =========================================
+       4. SYNCHRO-GEAR SCROLL ENGINE
+    ========================================= */
+    const gear1 = document.querySelector('.gear-1');
+    const gear2 = document.querySelector('.gear-2');
+
+    if (gear1 && gear2) {
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            gear1.style.transform = `rotate(${scrollY / 10}deg)`;
+            gear2.style.transform = `rotate(${scrollY / -5}deg)`;
         });
     }
 
-    // --- MODULE 5: AUDIO SYNTHESIS ENGINE (THE MECH-UI) ---
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const masterGain = audioCtx.createGain();
-    masterGain.connect(audioCtx.destination);
-    masterGain.gain.value = 0.3; // Master Volume
+    /* =========================================
+       5. DECIPHER TEXT EFFECT (Headers)
+    ========================================= */
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    // Target both Card Headers and Section Headers
+    const headers = document.querySelectorAll('.card h3, h1, .header-title');
 
-    const playTone = (freq, type, duration) => {
-        if(audioCtx.state === 'suspended') audioCtx.resume();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        
-        gain.connect(masterGain);
-        osc.connect(gain);
-        
-        osc.start();
-        gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
-        osc.stop(audioCtx.currentTime + duration);
-    };
-
-    const interactables = document.querySelectorAll('a, button, .card, .project-card');
-    interactables.forEach(el => {
-        el.addEventListener('mouseenter', () => playTone(800, 'sine', 0.1)); // High chirp
-        el.addEventListener('mousedown', () => playTone(150, 'square', 0.15)); // Low click
-    });
-
-    // --- MODULE 6: DECIPHER TEXT (HACKER TEXT) ---
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>";
-    document.querySelectorAll('h1, h2, h3').forEach(header => {
-        header.dataset.original = header.innerText;
+    headers.forEach(header => {
         header.addEventListener('mouseenter', event => {
             let iterations = 0;
-            const original = header.dataset.original;
+            const originalText = event.target.dataset.value || event.target.innerText;
+            if (!event.target.dataset.value) event.target.dataset.value = event.target.innerText;
+
             const interval = setInterval(() => {
-                event.target.innerText = original.split("").map((letter, index) => {
-                    if(index < iterations) return original[index];
-                    return letters[Math.floor(Math.random() * letters.length)];
-                }).join("");
-                if(iterations >= original.length) clearInterval(interval);
-                iterations += 1/2; 
+                event.target.innerText = originalText.split("")
+                    .map((letter, index) => {
+                        if (index < iterations) return originalText[index];
+                        return letters[Math.floor(Math.random() * 36)];
+                    })
+                    .join("");
+
+                if (iterations >= originalText.length) clearInterval(interval);
+                iterations += 1 / 3;
             }, 30);
         });
     });
 
-    // --- MODULE 7: UTILITIES (Time, Icons, Gallery, Tracker) ---
-    if (typeof feather !== 'undefined') feather.replace();
-    
-    // System Time
-    setInterval(() => {
-        const timeEl = document.getElementById('system-time');
-        if(timeEl) timeEl.innerText = new Date().toLocaleTimeString('en-US', {hour12:false});
-    }, 1000);
+    /* =========================================
+       6. CUSTOM PRECISION CURSOR
+    ========================================= */
+    if (window.matchMedia("(min-width: 768px)").matches) {
+        const cursorDot = document.createElement('div');
+        const cursorOutline = document.createElement('div');
+        cursorDot.className = 'cursor-dot';
+        cursorOutline.className = 'cursor-outline';
+        document.body.appendChild(cursorDot);
+        document.body.appendChild(cursorOutline);
 
-    // Gallery Logic
-    window.changeSlide = function(dir) {
-        // (Simplified for brevity, assuming existing logic or new implementation)
-        const img = document.getElementById('gallery-img');
-        if(img) {
-            img.style.opacity = 0;
-            setTimeout(() => {
-                // In a real scenario, array logic here
-                img.style.opacity = 1; 
-            }, 200);
+        window.addEventListener("mousemove", (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Using animate for smooth trailing
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, {
+                duration: 500,
+                fill: "forwards"
+            });
+        });
+
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+    }
+
+    /* =========================================
+       7. TYPEWRITER EFFECT (Only if Subtitle exists)
+    ========================================= */
+    const subtitle = document.querySelector(".subtitle");
+    if (subtitle) {
+        const text = "Mechanical Engineer & Visual Storyteller";
+        subtitle.textContent = "";
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                subtitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 40);
+            } else {
+                // Reset loop after delay
+                setTimeout(() => {
+                    subtitle.textContent = "";
+                    i = 0;
+                    typeWriter();
+                }, 5000);
+            }
         }
+        setTimeout(typeWriter, 2500);
+    }
+
+    /* =========================================
+       8. SPOTLIGHT & 3D TILT
+    ========================================= */
+    const cardsContainer = document.querySelector(".bento-grid");
+    const cards = document.querySelectorAll(".card");
+
+    if (cardsContainer && window.innerWidth > 768) {
+        cardsContainer.addEventListener("mousemove", (e) => {
+            for (const card of cards) {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty("--mouse-x", `${x}px`);
+                card.style.setProperty("--mouse-y", `${y}px`);
+            }
+        });
+    }
+
+    /* =========================================
+       9. MODAL & GALLERY (Safe Check)
+    ========================================= */
+    const modal = document.getElementById('project-modal');
+    const closeBtn = document.querySelector('.close-modal');
+    // We use a class to identify any card that triggers the modal
+    const projectTriggers = document.querySelectorAll('.project-card'); 
+
+    // Define images globally or per project logic (Simplified for now)
+    const projectImages = [
+        "assets/IMG-20251206-WA0058.jpg",
+        "assets/IMG-20251206-WA0058.jpg", // Add more unique paths if available
+        "assets/IMG-20251206-WA0058.jpg"
+    ];
+    let currentSlide = 0;
+    const galleryImg = document.getElementById('gallery-img');
+    const counterDisplay = document.getElementById('current-slide');
+
+    window.changeSlide = function(direction) {
+        if (!galleryImg) return;
+        galleryImg.style.opacity = 0;
+        setTimeout(() => {
+            currentSlide += direction;
+            if (currentSlide >= projectImages.length) currentSlide = 0;
+            if (currentSlide < 0) currentSlide = projectImages.length - 1;
+            galleryImg.src = projectImages[currentSlide];
+            if (counterDisplay) counterDisplay.innerText = currentSlide + 1;
+            galleryImg.style.opacity = 1;
+        }, 300);
     };
-    
-    // Education Tracker Trigger
+
+    if (modal && closeBtn) {
+        projectTriggers.forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        const closeModal = () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+        });
+    }
+
+    /* =========================================
+       10. EDUCATION TRACKER (Safe Check)
+    ========================================= */
     const eduCard = document.getElementById('edu-card');
-    if(eduCard) eduCard.addEventListener('click', () => eduCard.classList.toggle('tracking'));
-});
+    if (eduCard) {
+        // Automatically trigger tracking if on Education Page
+        if (window.location.href.includes('education') || window.location.href.includes('about')) {
+            setTimeout(() => {
+                 eduCard.classList.add('tracking');
+            }, 500);
+        }
+
+        eduCard.addEventListener('click', () => {
+            eduCard.classList.toggle('tracking');
+            const hint = eduCard.querySelector('.click-hint');
+            if (hint) {
+                hint.textContent = eduCard.classList.contains('tracking') ?
+                    "Tracking History..." :
+                    "(Click to track)";
+            }
+        });
+    }
+
+    /* =========================================
+       11. SCROLL REVEAL & COUNTERS
+    ========================================= */
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                if (entry.target.classList.contains('hidden-element')) {
+                    entry.target.classList.add('show-element');
+                }
+
+                // Counters logic
+                const counters = entry.target.querySelectorAll('.counter');
+                if (counters.length > 0) {
+                    counters.forEach(counter => {
+                        const target = +counter.getAttribute('data-target');
+                        const updateCount = () => {
+                            const count = +counter.innerText;
+                            const inc = target / 100;
+                            if (count < target) {
+                                counter.innerText = Math.ceil(count + inc);
+                                setTimeout(updateCount, 25);
+                            } else {
+                                counter.innerText = target;
+                            }
+                        };
+                        updateCount();
+                    });
+                }
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    document.querySelectorAll('.hidden-element').forEach((el) => observer.observe(el));
+    document.querySelectorAll('.card').forEach((el) => {
+        if (el.querySelector('.counter')) observer.observe(el);
+    });
+
+    /* =========================================
+       12. SYSTEM TIME
+    ========================================= */
+    function updateTime() {
+        const timeDisplay = document.getElementById('system-time');
+        if (timeDisplay) {
+            timeDisplay.innerText = new Date().toLocaleTimeString('en-US', {
+                hour12: false
+            });
+        }
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    if (typeof feather !== 'undefined') feather.replace();
+
+    /* =========================================
+       13. TAB TITLE TICKER
+    ========================================= */
+    const titleAlt = ["System Online", "Engineer", "Creator", "Open for Internships"];
+    let titleIndex = 0;
+    const defaultTitle = document.title;
+
+    setInterval(() => {
+        if (document.hidden) {
+            document.title = "⚠️ Connection Lost...";
+        } else {
+            // Only rotate if on Home, otherwise keep page specific title usually
+            // But for style, we can append:
+            titleIndex = (titleIndex + 1) % titleAlt.length;
+            // Optional: Keep it simple or rotate
+            // document.title = `Prajwal E. | ${titleAlt[titleIndex]}`;
+        }
+    }, 2500);
+
+    /* =========================================
+       14. KINETIC SCROLL PHYSICS
+    ========================================= */
+    const gridContainer = document.querySelector('.bento-grid');
+    let lastScrollY = window.scrollY;
+    let currentSkew = 0;
+    let targetSkew = 0;
+
+    const animateScrollPhysics = () => {
+        const currentScrollY = window.scrollY;
+        const velocity = currentScrollY - lastScrollY;
+        targetSkew = velocity * 0.15;
+        targetSkew = Math.max(Math.min(targetSkew, 7), -7);
+
+        currentSkew += (targetSkew - currentSkew) * 0.1;
+
+        if (gridContainer) {
+            const scale = 1 - Math.abs(currentSkew) * 0.005;
+            gridContainer.style.transform = `perspective(1000px) rotateX(${-currentSkew}deg) scale(${scale})`;
+        }
+
+        lastScrollY = currentScrollY;
+        requestAnimationFrame(animateScrollPhysics);
+    };
+    animateScrollPhysics();
+
+    /* =========================================
+       15. BLUEPRINT MODE TOGGLE
+    ========================================= */
+    const bpToggle = document.getElementById('blueprint-toggle');
+    if (bpToggle) {
+        bpToggle.addEventListener('click', () => {
+            document.body.classList.toggle('blueprint-active');
+            if (document.body.classList.contains('blueprint-active')) {
+                bpToggle.innerText = "SCHEMATIC";
+                bpToggle.style.background = "transparent";
+                bpToggle.style.color = "#fff";
+                bpToggle.style.border = "1px solid #fff";
+            } else {
+                bpToggle.innerText = "RENDER";
+                bpToggle.style.background = "#4ade80";
+                bpToggle.style.color = "#000";
+        
