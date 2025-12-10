@@ -1,262 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prajwal E. | System_Root</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/feather-icons"></script>
-
-    <style>
-        /* Make cards act like buttons */
-        .card-link {
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-            cursor: pointer;
-        }
-
-        .card-link:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(74, 222, 128, 0.15);
-            border: 1px solid var(--accent-green) !important;
-        }
-
-        .card-link:hover h3 {
-            color: var(--accent-green);
-        }
-
-        /* "Access Terminal" text effect */
-        .access-text {
-            margin-top: 15px;
-            font-size: 0.75rem;
-            color: var(--accent-green);
-            font-family: 'Courier New', monospace;
-            opacity: 0;
-            transform: translateX(-10px);
-            transition: all 0.3s ease;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .card-link:hover .access-text {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* Button for Education Card */
-        .system-btn {
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px 15px;
-            border-radius: 8px;
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s;
-        }
-
-        .system-btn:hover {
-            background: rgba(74, 222, 128, 0.1);
-            border-color: var(--accent-green);
-            transform: translateX(5px);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prajwal E. | Engineer & Creator</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/feather-icons"></script>
 </head>
 
 <body>
 
-    <div id="boot-screen">
-        <div class="terminal-container">
-            <div id="boot-text"></div>
-            <span class="cursor-blink">_</span>
-        </div>
+<div id="boot-screen">
+  <div class="terminal-container">
+    <div id="boot-text"></div>
+    <span class="cursor-blink">_</span>
+  </div>
+</div>
+
+<div class="noise-overlay"></div>
+
+<div class="gear-container">
+  <svg class="mech-gear gear-1" viewBox="0 0 100 100">
+    <path d="M94.1 58.6c-0.6-2.5-1.4-4.9-2.5-7.2l7.1-5.1c0.7-0.5 0.9-1.4 0.5-2.2l-4.8-8.3c-0.4-0.8-1.4-1.1-2.2-0.7l-7.7 3.9c-1.9-1.7-4-3.2-6.2-4.5l0.8-8.7c0.1-0.9-0.5-1.7-1.4-1.8l-9.6-1.3c-0.9-0.1-1.7 0.5-1.8 1.4l-1.1 8.6c-2.4 0-4.9 0.3-7.2 0.9L55 26.6c-0.5-0.7-1.4-0.9-2.2-0.5l-8.3 4.8c-0.8 0.4-1.1 1.4-0.7 2.2l3.9 7.7c-1.7 1.9-3.2 4-4.5 6.2l-8.7-0.8c-0.9-0.1-1.7 0.5-1.8 1.4l-1.3 9.6c-0.1 0.9 0.5 1.7 1.4 1.8l8.6 1.1c0 2.4 0.3 4.9 0.9 7.2L35.2 75c-0.7 0.5-0.9 1.4-0.5 2.2l4.8 8.3c0.4 0.8 1.4 1.1 2.2 0.7l7.7-3.9c1.9 1.7 4 3.2 6.2 4.5l-0.8 8.7c-0.1 0.9 0.5 1.7 1.4 1.8l9.6 1.3c0.9 0.1 1.7-0.5 1.8-1.4l1.1-8.6c2.4 0 4.9-0.3 7.2-0.9l2.8 7c0.5 0.7 1.4 0.9 2.2 0.5l8.3-4.8c0.8-0.4 1.1-1.4 0.7-2.2l-3.9-7.7c1.7-1.9 3.2-4 4.5-6.2l8.7 0.8c0.9 0.1 1.7-0.5 1.8-1.4l1.3-9.6c0.2-0.8-0.4-1.6-1.1-1.7z M50 67c-9.4 0-17-7.6-17-17s7.6-17 17-17s17 7.6 17 17S59.4 67 50 67z" />
+  </svg>
+
+  <svg class="mech-gear gear-2" viewBox="0 0 100 100">
+    <path d="M88.2 55.4c-0.8-2.3-1.9-4.5-3.2-6.5l6.3-4.6c0.6-0.5 0.8-1.3 0.4-1.9l-4.3-7.4c-0.4-0.7-1.2-0.9-1.9-0.6l-6.8 3.5c-1.7-1.5-3.5-2.9-5.5-4l0.7-7.7c0.1-0.8-0.4-1.5-1.2-1.6l-8.5-1.2c-0.8-0.1-1.5 0.4-1.6 1.2l-1 7.6c-2.1 0-4.3 0.3-6.4 0.8l-2.5-6.3c-0.5-0.6-1.2-0.8-1.9-0.4L43.5 30c-0.7 0.4-0.9 1.2-0.6 1.9l3.5 6.8c-1.5 1.7-2.9 3.5-4 5.5l-7.7-0.7c-0.8-0.1-1.5 0.4-1.6 1.2l-1.2 8.5c-0.1 0.8 0.4 1.5 1.2 1.6l7.6 1c0 2.1 0.3 4.3 0.8 6.4l-6.3 2.5c-0.6 0.5-0.8 1.2-0.4 1.9l4.3 7.4c0.4 0.7 1.2 0.9 1.9 0.6l6.8-3.5c1.7 1.5 3.5 2.9 5.5 4l-0.7 7.7c-0.1 0.8 0.4 1.5 1.2 1.6l8.5 1.2c0.8 0.1 1.5-0.4 1.6-1.2l1-7.6c2.1 0 4.3-0.3 6.4-0.8l2.5 6.3c0.5 0.6 1.2 0.8 1.9 0.4l7.4-4.3c0.7-0.4 0.9-1.2 0.6-1.9l-3.5-6.8c1.5-1.7 2.9-3.5 4-5.5l7.7 0.7c0.8 0.1 1.5-0.4 1.6-1.2l1.2-8.5c0.6-0.9 0-1.7-0.8-1.8z M45 61c-8.3 0-15-6.7-15-15s6.7-15 15-15 15 6.7 15 15-6.7 15-15 15z"/>
+  </svg>
+</div>
+
+<main class="main-container">
+
+<header class="fade-in hidden-element">
+  <div class="profile-header">
+    <div class="profile-img-container">
+      <img src="assets/profile.jpg" alt="Prajwal E." class="profile-avatar" onerror="this.style.display='none'">
     </div>
 
-    <div class="noise-overlay"></div>
-    <div class="gear-container">
-        <svg class="mech-gear gear-1" viewBox="0 0 100 100">
-            <path d="M94.1 58.6c-0.6-2.5-1.4-4.9-2.5-7.217.1-5.1c0.7-0.5 0.9-1.4 0.5-2.21-4.8-8.3c-0.4-0.8-1.4-1.1-2.2-0.71-7.7 3.9c-1.9-1.7-4-3.2-6.2-4.510.8-8.7c0.1-0.9-0.5-1.7-1.4-1.81-9.6-1.3c-0.9-0.1-1.7 0.5-1.8 1.41-1.1 8.6c-2.4 0-4.9 0.3-7.2 0.9L55 26.6c-0.5-0.7-1.4-0.9-2.2-0.51-8.3 4.8c-0.8 0.4-1.1 1.4-0.7 2.213.9 7.7c-1.7 1.9-3.2 4-4.5 6.21-8.7-0.8c-0.9-0.1-1.7 0.5-1.8 1.41-1.3 9.6c-0.1 0.9 0.5 1.7 1.4 1.818.6 1.1c0 2.4 0.3 4.9 0.9 7.2L35.2 75c-0.7 0.5-0.9 1.4-0.5 2.214.8 8.3c0.4 0.8 1.4 1.1 2.2 0.717.7-3.9c1.9 1.7 4 3.2 6.2 4.51-0.8 8.7c-0.1 0.9 0.5 1.7 1.4 1.819.6 1.3c0.9 0.1 1.7-0.5 1.8-1.411.1-8.6c2.40 4.9-0.3 7.2-0.912.8 7c0.5 0.7 1.4 0.9 2.2 0.518.3-4.8c0.8-0.4 1.1-1.4 0.7-2.21-3.9-7.7c1.7-1.9 3.2-4 4.5-6.218.7 0.8c0.9 0.1 1.7-0.5 1.8-1.411.3-9.6C95.9 60.1 95.3 59.3 94.4 59.2L94.1 58.6z M50 67c-9.40-17-7.6-17-17s7.6-17 17-17s17 7.6 17 17S59.4 67 50 67z" />
-        </svg>
-        <svg class="mech-gear gear-2" viewBox="0 0 100 100">
-            <path d="M88.2 55.4c-0.8-2.3-1.9-4.5-3.2-6.516.3-4.6c0.6-0.5 0.8-1.3 0.4-1.91-4.3-7.4c-0.4-0.7-1.2-0.9-1.9-0.61-6.8 3.5c-1.7-1.5-3.5-2.9-5.5-410.7-7.7c0.1-0.8-0.4-1.5-1.2-1.61-8.5-1.2c-0.8-0.1-1.5 0.4-1.6 1.21-1 7.6c-2.1 0-4.3 0.3-6.4 0.81-2.5-6.3c-0.5-0.6-1.2-0.8-1.9-0.4L43.5 30c-0.7 0.4-0.9 1.2-0.6 1.913.5 6.8c-1.5 1.7-2.9 3.5-4 5.51-7.7-0.7c-0.8-0.1-1.5 0.4-1.6 1.21-1.2 8.5c-0.1 0.8 0.4 1.5 1.2 1.617.6 1c0 2.1 0.3 4.3 0.8 6.41-6.3 2.5c-0.6 0.5-0.8 1.2-0.4 1.914.3 7.4c0.4 0.7 1.2 0.9 1.9 0.616.8-3.5c1.7 1.5 3.5 2.9 5.5 41-0.7 7.7c-0.1 0.8 0.4 1.5 1.2 1.618.5 1.2c0.8 0.1 1.5-0.4 1.6-1.211-7.6c2.10 4.3-0.3 6.4-0.812.5 6.3c0.5 0.6 1.2 0.8 1.9 0.417.4-4.3c0.7-0.4 0.9-1.2 0.6-1.91-3.5-6.8c1.5-1.7 2.9-3.5 4-5.517.7 0.7c0.8 0.1 1.5-0.4 1.6-1.211.2-8.5C89.8 56.8 89.2 56 88.4 55.9L88.2 55.4z M45 61c-8.30-15-6.7-15-15s6.7-15 15-15s15 6.7 15 15S53.3 61 45 61z" />
-        </svg>
+    <div>
+      <h1>Prajwal E.</h1>
+      <p class="subtitle">Mechanical Engineer & Visual Storyteller</p>
+      <div class="status-pill"><span class="dot"></span> Open for Internships</div>
     </div>
+  </div>
 
-    <main class="main-container">
+  <div class="contact-links">
+    <a href="mailto:prajwaleswa2004@gmail.com">Email</a>
+    <a href="https://linkedin.com/in/prajwal-esvi-0a9514321">LinkedIn</a>
+    <a href="assets/Prajwal_E_Resume.pdf" target="_blank" class="resume-btn" title="Download Resume">
+      <span>Resume</span>
+      <i data-feather="download"></i>
+    </a>
+  </div>
+</header>
 
-        <header class="fade-in hidden-element">
-            <div class="profile-header">
-                <div class="profile-img-container">
-                    <img src="assets/profile.jpg" alt="Prajwal E." class="profile-avatar" onerror="this.style.display='none'">
-                </div>
-                <div>
-                    <h1>Prajwal E.</h1>
-                    <p class="subtitle">Mechanical Engineer & Visual Storyteller</p>
-                    <div class="status-pill">
-                        <span class="dot"></span> Open for Internships
-                    </div>
-                </div>
-            </div>
+<!-- BENTO GRID STARTS -->
 
-            <div class="contact-links">
-                <a href="mailto:prajwaleswa2004@gmail.com">Email</a>
-                <a href="https://linkedin.com/in/prajwal-esvi-0a9514321">LinkedIn</a>
-                <a href="assets/Prajwal_E_Resume.pdf" target="_blank" class="resume-btn" title="Download Resume">
-                    <span>Resume</span>
-                    <i data-feather="download"></i>
-                </a>
-            </div>
-        </header>
+<div class="bento-grid hidden-element" id="cards">
 
-        <div class="bento-grid hidden-element" id="cards">
+  <div class="card card-large">
+    <div class="card-content">
+      <div class="icon-box"><i data-feather="user"></i></div>
+      <h3>The Profile</h3>
+      <p>3rd Year Mechanical Engineering student at JNTUA. Passionate about smart product design, automation, and visual storytelling.</p>
+    </div>
+  </div>
 
-            <div class="card card-large">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="user"></i></div>
-                    <h3>The Profile</h3>
-                    <p>3rd Year Mechanical Engineering student at JNTUA. Passionate about smart product design, automation, and visual storytelling.</p>
-                </div>
-            </div>
+  <div class="card card-wide project-card">
+    <div class="card-bg-image" style="background-image: url('assets/IMG-20251206-WA0058.jpg');"></div>
+    <div class="card-content overlay-dark">
+      <div class="badge">Major Project</div>
+      <h3>Automated Curry Maker</h3>
+      <p>Designed in Fusion 360. Features rotating spoon mechanism, slotted lid timing, and ingredient-release systems.</p>
+    </div>
+  </div>
 
-            <a href="projects.html" class="card card-wide project-card card-link">
-                <div class="card-bg-image" style="background-image: url('assets/IMG-20251206-WA0058.jpg');"></div>
-                <div class="card-content overlay-dark">
-                    <div class="badge">FEATURED</div>
-                    <h3>Project Archives</h3>
-                    <p>Automated Curry Maker, Ornithopters, and Fusion 360 Designs.</p>
-                    <div class="access-text">>> INITIALIZE GALLERY</div>
-                </div>
-            </a>
+  <div class="card">
+    <div class="card-content">
+      <div class="icon-box"><i data-feather="tool"></i></div>
+      <h3>Engineering</h3>
+      <ul class="skill-list">
+        <li>Fusion 360</li>
+        <li>AutoCAD & UG NX</li>
+        <li>Hypermesh</li>
+        <li>3D Printing</li>
+      </ul>
+    </div>
+  </div>
 
-            <a href="engineering.html" class="card card-link">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="tool"></i></div>
-                    <h3>Engineering</h3>
-                    <ul class="skill-list">
-                        <li>Fusion 360</li>
-                        <li>AutoCAD</li>
-                        <li>Hypermesh</li>
-                    </ul>
-                    <div class="access-text">>> VIEW TECHNICAL SPECS</div>
-                </div>
-            </a>
+  <div class="card">
+    <div class="card-content">
+      <div class="icon-box"><i data-feather="camera"></i></div>
+      <h3>Creative</h3>
+      <ul class="skill-list">
+        <li>Video Editing</li>
+        <li>Photography</li>
+        <li>Short Films</li>
+        <li>Sketching</li>
+      </ul>
+    </div>
+  </div>
 
-            <a href="creative.html" class="card card-link">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="camera"></i></div>
-                    <h3>Creative</h3>
-                    <ul class="skill-list">
-                        <li>Video Editing</li>
-                        <li>Photography</li>
-                        <li>Short Films</li>
-                    </ul>
-                    <div class="access-text">>> OPEN PORTFOLIO</div>
-                </div>
-            </a>
+  <div class="card card-tall">
+    <div class="card-content">
+      <div class="icon-box"><i data-feather="code"></i></div>
+      <h3>Programming</h3>
+      <p>Bridging the gap between hardware and software.</p>
+      <div class="tags"><span>Python</span><span>Java</span><span>C Language</span></div>
+    </div>
+  </div>
 
-            <a href="tech.html" class="card card-tall card-link">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="code"></i></div>
-                    <h3>Programming</h3>
-                    <p>Bridging the gap between hardware and software.</p>
-                    <div class="tags">
-                        <span>Python</span>
-                        <span>Java</span>
-                        <span>C Language</span>
-                    </div>
-                    <div class="access-text">>> ACCESS TERMINAL</div>
-                </div>
-            </a>
+  <div class="card" id="edu-card" style="cursor: pointer;">
+    <div class="card-content">
+      <div class="icon-box"><i data-feather="book"></i></div>
+      <h3>Education Journey</h3>
+      <p class="click-hint">(Click to track)</p>
 
-            <div class="card" id="edu-card" style="cursor: pointer;">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="book"></i></div>
-                    <h3>Education Journey</h3>
-                    
-                    <div class="tracker-container">
-                        <div class="tracker-line-bg"></div>
-                        <div class="tracker-line-fill"></div>
-                        
-                        <div class="tracker-item">
-                            <div class="tracker-dot"></div>
-                            <div class="tracker-info">
-                                <span class="date">2023 - 2027</span>
-                                <strong>B.Tech Mechanical</strong>
-                            </div>
-                        </div>
-                        
-                        <div class="tracker-item">
-                            <div class="tracker-dot"></div>
-                            <div class="tracker-info">
-                                <span class="date">2021-2023</span>
-                                <strong>Intermediate</strong>
-                            </div>
-                        </div>
-                    </div>
+      <div class="tracker-container">
+        <div class="tracker-line-bg"></div>
+        <div class="tracker-line-fill"></div>
 
-                    <a href="education.html" class="system-btn">
-                        <span>FULL TRANSCRIPTS</span>
-                        <i data-feather="arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <a href="impact.html" class="card card-link">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="heart"></i></div>
-                    <h3>Social Impact</h3>
-                    <div class="impact-item">
-                        <span class="impact-label">CRPF Mega Drive</span>
-                        <p class="impact-stat">10,000+ Trees</p>
-                    </div>
-                    <div class="access-text">>> VIEW REPORT</div>
-                </div>
-            </a>
-
-            <a href="certifications.html" class="card card-wide card-link">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="cpu"></i></div>
-                    <h3>Workshops & Certifications</h3>
-                    <div class="workshop-grid">
-                        <div class="badge-holo">Ornithopter Design</div>
-                        <div class="badge-holo">Ethical Hacking</div>
-                        <div class="badge-holo">Fusion 360</div>
-                    </div>
-                    <div class="access-text">>> VIEW CERTIFICATES</div>
-                </div>
-            </a>
-
+        <div class="tracker-item">
+          <div class="tracker-dot"></div>
+          <div class="tracker-info">
+            <span class="date">2023 - 2027</span><strong>B.Tech Mechanical</strong><span class="school">JNTUA College</span>
+          </div>
         </div>
 
-        <footer>
-            <div class="system-status">
-                <span id="system-time">00:00:00</span> // 
-                <span>SYSTEM: ONLINE</span> // 
-                <span>LOC: INDIA</span>
-            </div>
-        </footer>
+        <div class="tracker-item">
+          <div class="tracker-dot"></div>
+          <div class="tracker-info">
+            <span class="date">2021 - 2023</span><strong>Intermediate</strong><span class="school">Narayana Junior College</span>
+          </div>
+        </div>
 
-    </main>
+        <div class="tracker-item">
+          <div class="tracker-dot"></div>
+          <div class="tracker-info">
+            <span class="date">2021</span><strong>SSC</strong><span class="school">ZPHS School</span>
+          </div>
+        </div>
 
-    <div class="blueprint-controls">
-        <label class="switch-label">VIEW MODE:</label>
-        <button id="blueprint-toggle" class="bp-btn">RENDER</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-content">
+      <div class="icon-box"><i data-feather="heart"></i></div>
+      <h3>Social Impact</h3>
+
+      <div class="impact-item">
+        <span class="impact-label">CRPF Mega Drive</span>
+        <p class="impact-stat"><span class="counter" data-target="10000">0</span>+ Trees</p>
+        <p class="impact-role">Active Volunteer Participant</p>
+      </div>
+
+      <div class="spacer"></div>
+
+      <div class="impact-item">
+        <span class="impact-label">Student Leadership</span>
+        <p class="impact-stat"><span class="counter" data-target="2">0</span> Semesters</p>
+        <p class="impact-role">Class Representative</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card card-wide">
+    <div class="card-content">
+      <div class="icon-box"><i data-feather="cpu"></i></div>
+      <h3>Workshops & Certifications</h3>
+      <div class="workshop-grid">
+        <div class="badge-holo">Ornithopter Design</div>
+        <div class="badge-holo">Ethical Hacking</div>
+        <div class="badge-holo">Fusion 360 Certified</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="system-status">
+    <span id="system-time">00:00:00</span> //
+    <span>SYSTEM: ONLINE</span> //
+    <span>LOC: INDIA</span>
+  </div>
+</footer>
+
+</main>
+
+<!-- Modal -->
+<div id="project-modal" class="modal-overlay">
+  <div class="modal-content">
+    <button class="close-modal">&times;</button>
+
+    <div class="modal-header">
+      <div class="gallery-container">
+        <button class="nav-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
+        <img src="assets/IMG-20251206-WA0058.jpg" id="gallery-img" alt="Project Detail">
+        <button class="nav-btn next-btn" onclick="changeSlide(1)">&#10095;</button>
+        <div class="image-counter">IMG <span id="current-slide">1</span> / 3</div>
+      </div>
+
+      <div class="modal-title">
+        <h2>Automated Curry Maker</h2>
+        <div class="tags"><span>Fusion 360</span><span>Mechanism Design</span><span>Automation</span></div>
+      </div>
     </div>
 
-    <script src="script.js"></script>
-    <script>
-        // Feather Icons Init
-        feather.replace();
-    </script>
+    <div class="modal-body">
+      <h3>The Problem</h3>
+      <p>Cooking consistently requires precise timing and stirring. Manual methods are labor-intensive.</p>
+
+      <h3>The Solution</h3>
+      <p>I designed a smart cooking machine that automates the entire process using low-cost mechanical components.</p>
+
+      <h3>Key Mechanisms</h3>
+      <ul>
+        <li><strong>Rotating Spoon:</strong> A custom gear-driven assembly to ensure even mixing.</li>
+        <li><strong>Slotted Lid Timing:</strong> Automated ingredient release.</li>
+        <li><strong>Cost Optimization:</strong> Built using basic electronic controls.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="blueprint-controls">
+  <label class="switch-label">VIEW MODE:</label>
+  <button id="blueprint-toggle" class="bp-btn">RENDER</button>
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
