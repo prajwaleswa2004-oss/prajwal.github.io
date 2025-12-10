@@ -638,3 +638,27 @@ footer {
   }
   .nav-link { font-size: 0.75rem; }
 }
+/* --- CRITICAL MOBILE FIX --- */
+/* Force boot screen to disappear after 4s using pure CSS as a backup */
+#boot-screen {
+    animation: forceHide 0.1s forwards; 
+    animation-delay: 4.5s; /* Wait 4.5s then force hide */
+    pointer-events: all;
+}
+
+@keyframes forceHide {
+    to {
+        visibility: hidden;
+        opacity: 0;
+        z-index: -999;
+        pointer-events: none;
+    }
+}
+
+/* Ensure content is visible on mobile even if Scroll Reveal fails */
+@media (max-width: 768px) {
+    .hidden-element {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
