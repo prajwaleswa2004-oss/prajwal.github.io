@@ -57,8 +57,6 @@
   </div>
 </header>
 
-<!-- BENTO GRID STARTS -->
-
 <div class="bento-grid hidden-element" id="cards">
 
   <div class="card card-large">
@@ -69,16 +67,17 @@
     </div>
   </div>
 
-  <div class="card card-wide project-card">
+  <div class="card card-wide project-card clickable-card" data-expand="curry-maker">
     <div class="card-bg-image" style="background-image: url('assets/IMG-20251206-WA0058.jpg');"></div>
     <div class="card-content overlay-dark">
       <div class="badge">Major Project</div>
       <h3>Automated Curry Maker</h3>
       <p>Designed in Fusion 360. Features rotating spoon mechanism, slotted lid timing, and ingredient-release systems.</p>
+      <div class="expand-hint">_ACCESS_BLUEPRINTS</div>
     </div>
   </div>
 
-  <div class="card">
+  <div class="card clickable-card" data-expand="engineering">
     <div class="card-content">
       <div class="icon-box"><i data-feather="tool"></i></div>
       <h3>Engineering</h3>
@@ -88,10 +87,11 @@
         <li>Hypermesh</li>
         <li>3D Printing</li>
       </ul>
+      <div class="expand-hint">_READ_DATA</div>
     </div>
   </div>
 
-  <div class="card">
+  <div class="card clickable-card" data-expand="creative">
     <div class="card-content">
       <div class="icon-box"><i data-feather="camera"></i></div>
       <h3>Creative</h3>
@@ -101,15 +101,17 @@
         <li>Short Films</li>
         <li>Sketching</li>
       </ul>
+      <div class="expand-hint">_VIEW_GALLERY</div>
     </div>
   </div>
 
-  <div class="card card-tall">
+  <div class="card card-tall clickable-card" data-expand="programming">
     <div class="card-content">
       <div class="icon-box"><i data-feather="code"></i></div>
       <h3>Programming</h3>
       <p>Bridging the gap between hardware and software.</p>
       <div class="tags"><span>Python</span><span>Java</span><span>C Language</span></div>
+      <div class="expand-hint">_EXECUTE_CODE</div>
     </div>
   </div>
 
@@ -143,7 +145,6 @@
             <span class="date">2021</span><strong>SSC</strong><span class="school">ZPHS School</span>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -166,7 +167,6 @@
         <p class="impact-stat"><span class="counter" data-target="2">0</span> Semesters</p>
         <p class="impact-role">Class Representative</p>
       </div>
-
     </div>
   </div>
 
@@ -194,7 +194,6 @@
 
 </main>
 
-<!-- Modal -->
 <div id="project-modal" class="modal-overlay">
   <div class="modal-content">
     <button class="close-modal">&times;</button>
@@ -202,31 +201,17 @@
     <div class="modal-header">
       <div class="gallery-container">
         <button class="nav-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
-        <img src="assets/IMG-20251206-WA0058.jpg" id="gallery-img" alt="Project Detail">
+        <img src="" id="gallery-img" alt="Detail View" style="display: none;">
         <button class="nav-btn next-btn" onclick="changeSlide(1)">&#10095;</button>
-        <div class="image-counter">IMG <span id="current-slide">1</span> / 3</div>
+        <div class="image-counter" id="current-slide"></div>
       </div>
 
       <div class="modal-title">
-        <h2>Automated Curry Maker</h2>
-        <div class="tags"><span>Fusion 360</span><span>Mechanism Design</span><span>Automation</span></div>
-      </div>
+        <h2></h2> <div class="tags"></div> </div>
     </div>
 
     <div class="modal-body">
-      <h3>The Problem</h3>
-      <p>Cooking consistently requires precise timing and stirring. Manual methods are labor-intensive.</p>
-
-      <h3>The Solution</h3>
-      <p>I designed a smart cooking machine that automates the entire process using low-cost mechanical components.</p>
-
-      <h3>Key Mechanisms</h3>
-      <ul>
-        <li><strong>Rotating Spoon:</strong> A custom gear-driven assembly to ensure even mixing.</li>
-        <li><strong>Slotted Lid Timing:</strong> Automated ingredient release.</li>
-        <li><strong>Cost Optimization:</strong> Built using basic electronic controls.</li>
-      </ul>
-    </div>
+      </div>
   </div>
 </div>
 
