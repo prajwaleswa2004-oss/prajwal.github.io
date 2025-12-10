@@ -5,63 +5,68 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     /* =========================================
-       1. SYSTEM BOOT SEQUENCE (Smart Logic)
-    ========================================= */
-    const bootScreen = document.getElementById('boot-screen');
-    const bootText = document.getElementById('boot-text');
+   1. SYSTEM BOOT SEQUENCE (Mobile Safe Version)
+========================================= */
+const bootScreen = document.getElementById('boot-screen');
+const bootText = document.getElementById('boot-text');
 
-    const bootMessages = [
-        "> INITIALIZING PORTFOLIO...",
-        "> LOADING PROJECT ARCHIVES...",
-        "> RENDERING VISUAL ASSETS...",
-        "> WELCOME, PRAJWAL."
-    ];
+// Detect Mobile
+const isMobileDevice = window.innerWidth <= 768;
 
-    if (bootScreen && bootText) {
-        // Check if the user has already seen the boot screen in this session
-        const hasBooted = sessionStorage.getItem('systemBooted');
+const bootMessages = [
+    "> INITIALIZING...",
+    "> LOADING ASSETS...",
+    "> SYSTEM READY."
+];
 
-        if (hasBooted) {
-            // SKIP ANIMATION: User has been here before
+// IMMEDIATE REMOVAL FUNCTION
+const killBootScreen = () => {
+    if (bootScreen) {
+        bootScreen.style.opacity = '0';
+        bootScreen.style.pointerEvents = 'none';
+        document.body.style.overflow = 'auto';
+        
+        // Physically remove from display after fade
+        setTimeout(() => {
             bootScreen.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        } else {
-            // RUN ANIMATION: First time visit
-            let lineIndex = 0;
+        }, 500);
+        
+        sessionStorage.setItem('systemBooted', 'true');
+    }
+};
 
-            const typeLine = () => {
-                if (lineIndex < bootMessages.length) {
+if (bootScreen) {
+    const hasBooted = sessionStorage.getItem('systemBooted');
+
+    // 1. If already visited OR if it's mobile (optional speedup), skip animation
+    if (hasBooted) {
+        bootScreen.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    } else {
+        // 2. Run Animation
+        let lineIndex = 0;
+        const typeLine = () => {
+            if (lineIndex < bootMessages.length) {
+                if (bootText) {
                     const line = document.createElement('div');
                     line.className = 'boot-line';
                     line.textContent = bootMessages[lineIndex];
                     bootText.appendChild(line);
-                    lineIndex++;
-                    setTimeout(typeLine, 200);
-                } else {
-                    setTimeout(() => {
-                        bootScreen.classList.add('fade-out');
-                        document.body.style.overflow = 'auto';
-                        setTimeout(() => {
-                            bootScreen.style.display = 'none';
-                            // Set the flag so it doesn't run again
-                            sessionStorage.setItem('systemBooted', 'true');
-                        }, 500);
-                    }, 500);
                 }
-            };
+                lineIndex++;
+                // Faster typing on mobile to prevent boredom/lag
+                setTimeout(typeLine, isMobileDevice ? 100 : 200); 
+            } else {
+                setTimeout(killBootScreen, 500);
+            }
+        };
+        typeLine();
 
-            typeLine();
-
-            // Fail-Safe: Force remove screen after 4 seconds if stuck
-            setTimeout(() => {
-                if (bootScreen.style.display !== 'none') {
-                    bootScreen.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                    sessionStorage.setItem('systemBooted', 'true');
-                }
-            }, 4000);
-        }
+        // 3. HARD FAIL-SAFE (The Black Screen Killer)
+        // If animation hangs, this forces removal after 3.5 seconds
+        setTimeout(killBootScreen, 3500);
     }
+}
 
     /* =========================================
        2. FEA MESH NETWORK (Background)
