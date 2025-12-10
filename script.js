@@ -88,7 +88,8 @@ if (bootScreen) {
 
     // Optimization for mobile
     const isMobile = window.innerWidth <= 768;
-    const particleCount = isMobile ? 40 : 80;
+    // Drastically reduce particles on mobile to prevent rendering crash
+    const particleCount = isMobile ? 15 : 80; 
     const connectionDistance = isMobile ? 100 : 150;
     const mouseDistance = 200;
 
