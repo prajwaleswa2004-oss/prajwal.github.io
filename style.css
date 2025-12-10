@@ -1,178 +1,451 @@
-/* PRAJWAL E. | TITANIUM STYLE CORE
-   Theme: Dark Matter, Neon Green, Holographic Glass
+/* Prajwal E. Portfolio - Main JavaScript
+   Features: Boot Sequence, FEA Mesh, Synchro-Gears, Mech-Audio, Page Navigation
 */
 
-:root {
-    --bg-deep: #030303;
-    --glass-surface: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --neon-green: #4ade80;
-    --neon-blue: #3b82f6;
-    --text-primary: #ffffff;
-    --text-secondary: #94a3b8;
-    --font-stack: 'Space Grotesk', system-ui, sans-serif;
-    --font-mono: 'Courier New', monospace;
-}
+document.addEventListener("DOMContentLoaded", () => {
 
-* { box-sizing: border-box; margin: 0; padding: 0; cursor: none; } /* Hide default cursor */
+    /* =========================================
+       1. SYSTEM BOOT SEQUENCE (Professional + Fail-Safe)
+       ========================================= */
+    const bootScreen = document.getElementById('boot-screen');
+    const bootText = document.getElementById('boot-text');
 
-body {
-    background-color: var(--bg-deep);
-    color: var(--text-primary);
-    font-family: var(--font-stack);
-    overflow-x: hidden;
-    min-height: 200vh; /* Allow scrolling for parallax */
-}
+    const bootMessages = [
+        "> INITIALIZING PORTFOLIO...",
+        "> LOADING PROJECT ARCHIVES...",
+        "> RENDERING VISUAL ASSETS...",
+        "> WELCOME, PRAJWAL."
+    ];
 
-/* --- 1. THE VOID (Backgrounds) --- */
-.noise-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 0;
-}
+    if (bootScreen && bootText) {
+        // FAIL-SAFE: Force remove screen after 4 seconds
+        setTimeout(() => {
+            if (bootScreen.style.display !== 'none') {
+                bootScreen.classList.add('fade-out');
+                document.body.style.overflow = 'auto';
+                setTimeout(() => { bootScreen.style.display = 'none'; }, 500);
+            }
+        }, 4000);
 
-/* Animated Gears (Faint Background Machinery) */
-.gear-container { position: fixed; width: 100%; height: 100%; pointer-events: none; z-index: -1; opacity: 0.15; }
-.mech-gear { position: absolute; fill: none; stroke: rgba(255,255,255,0.2); stroke-width: 1; }
-.gear-1 { width: 600px; height: 600px; top: -150px; right: -200px; }
-.gear-2 { width: 400px; height: 400px; bottom: -100px; left: -150px; }
+        // Typing Animation
+        let lineIndex = 0;
+        const typeLine = () => {
+            if (lineIndex < bootMessages.length) {
+                const line = document.createElement('div');
+                line.className = 'boot-line';
+                line.textContent = bootMessages[lineIndex];
+                bootText.appendChild(line);
+                lineIndex++;
+                setTimeout(typeLine, 200); 
+            } else {
+                setTimeout(() => {
+                    bootScreen.classList.add('fade-out');
+                    document.body.style.overflow = 'auto';
+                    setTimeout(() => { bootScreen.style.display = 'none'; }, 500);
+                }, 500);
+            }
+        };
+        typeLine();
+    }
 
-/* --- 2. CUSTOM CURSOR (Targeting System) --- */
-.cursor-dot {
-    width: 6px; height: 6px; background: var(--neon-green);
-    position: fixed; border-radius: 50%; pointer-events: none; z-index: 9999;
-    box-shadow: 0 0 10px var(--neon-green);
-}
-.cursor-outline {
-    width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.5);
-    position: fixed; border-radius: 50%; pointer-events: none; z-index: 9999;
-    transition: width 0.1s, height 0.1s, background 0.2s;
-    transform: translate(-50%, -50%); /* Javascript handles position */
-}
-body:hover .cursor-outline { width: 30px; height: 30px; } /* Shrink on focus */
+    /* =========================================
+       2. FEA MESH NETWORK (Background Simulation)
+       ========================================= */
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '-1'; 
+    canvas.style.background = 'radial-gradient(circle at center, #1a1a1a 0%, #000000 100%)'; 
+    document.body.appendChild(canvas);
 
-/* --- 3. SYSTEM BOOT SCREEN --- */
-#boot-screen {
-    position: fixed; inset: 0; background: #000; z-index: 10000;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-mono); font-size: 0.9rem;
-}
-.terminal-container { width: 90%; max-width: 600px; color: var(--neon-green); }
-.boot-line { margin-bottom: 5px; opacity: 0; animation: fadeIn 0.1s forwards; }
-@keyframes fadeIn { to { opacity: 1; } }
-.sys-prefix { color: var(--neon-blue); margin-right: 10px; }
-.fade-out { opacity: 0; pointer-events: none; transition: opacity 0.8s ease; }
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
 
-/* --- 4. LAYOUT & TYPOGRAPHY --- */
-.main-container {
-    max-width: 1400px; margin: 0 auto; padding: 6rem 2rem; position: relative; z-index: 2;
-}
+    // OPTIMIZATION: Less particles on mobile
+    const isMobile = window.innerWidth <= 768;
+    const particleCount = isMobile ? 40 : 80; 
+    const connectionDistance = isMobile ? 100 : 150; 
+    const mouseDistance = 200;
 
-header {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    margin-bottom: 6rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 2rem;
-}
+    const resize = () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', resize);
+    resize();
 
-h1 {
-    font-size: clamp(3rem, 8vw, 6rem); font-weight: 700; line-height: 0.9;
-    background: linear-gradient(to right, #fff, #aaa); -webkit-background-clip: text; color: transparent;
-    margin-bottom: 1rem;
-}
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 1.5; 
+            this.vy = (Math.random() - 0.5) * 1.5; 
+            this.size = Math.random() * 2 + 1;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > width) this.vx *= -1;
+            if (this.y < 0 || this.y > height) this.vy *= -1;
+        }
+        draw() {
+            ctx.fillStyle = 'rgba(74, 222, 128, 0.5)'; 
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
 
-.subtitle {
-    font-family: var(--font-mono); color: var(--neon-green); letter-spacing: 0.05em;
-    text-transform: uppercase; font-size: 0.9rem;
-}
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
 
-/* Holographic Profile Pic */
-.profile-avatar {
-    width: 120px; height: 120px; border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.1);
-    filter: grayscale(100%); transition: all 0.5s;
-}
-.profile-img-container:hover .profile-avatar { filter: grayscale(0%); box-shadow: 0 0 30px var(--neon-green); }
+    let mouse = { x: null, y: null };
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.x;
+        mouse.y = e.y;
+    });
+    window.addEventListener('touchmove', (e) => {
+        mouse.x = e.touches[0].clientX;
+        mouse.y = e.touches[0].clientY;
+    });
 
-/* --- 5. BENTO GRID (The Glass Panels) --- */
-.bento-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px; perspective: 1000px;
-}
+    const animate = () => {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach((p, index) => {
+            p.update();
+            p.draw();
+            for (let j = index; j < particles.length; j++) {
+                const dx = p.x - particles[j].x;
+                const dy = p.y - particles[j].y;
+                const distance = Math.hypot(dx, dy);
+                if (distance < connectionDistance) {
+                    ctx.beginPath();
+                    const opacity = 1 - (distance / connectionDistance);
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.15})`;
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+            if (mouse.x != null) {
+                const dx = p.x - mouse.x;
+                const dy = p.y - mouse.y;
+                const distance = Math.hypot(dx, dy);
+                if (distance < mouseDistance) {
+                    ctx.beginPath();
+                    const opacity = 1 - (distance / mouseDistance);
+                    ctx.strokeStyle = `rgba(74, 222, 128, ${opacity * 0.4})`;
+                    ctx.lineWidth = 2;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.stroke();
+                }
+            }
+        });
+        requestAnimationFrame(animate);
+    };
+    animate();
 
-.card {
-    background: var(--glass-surface);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(12px);
-    border-radius: 20px; padding: 30px;
-    position: relative; overflow: hidden;
-    transition: transform 0.1s, border-color 0.3s;
-    display: flex; flex-direction: column;
-}
+    /* =========================================
+       3. AUDIO FEEDBACK SYSTEM (Mech-UI)
+       ========================================= */
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    
+    const playSound = (type) => {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        if (type === 'hover') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.05);
+            gainNode.gain.setValueAtTime(0.02, audioCtx.currentTime); 
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.05);
+        } else if (type === 'click') {
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.1);
+            gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+    };
 
-/* Neon Flow Border Animation */
-.card::before {
-    content: ''; position: absolute; inset: 0; border-radius: 20px; padding: 2px;
-    background: linear-gradient(45deg, transparent, var(--glass-border), transparent);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor; mask-composite: exclude;
-    pointer-events: none;
-}
-.card:hover { border-color: rgba(255,255,255,0.3); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5); }
+    const interactiveElements = document.querySelectorAll('a, button, .card, .project-card, .resume-btn');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => playSound('hover'));
+        el.addEventListener('mousedown', () => playSound('click'));
+    });
 
-/* Card Spans */
-.card-wide { grid-column: span 2; }
-.card-tall { grid-row: span 2; }
-@media (max-width: 900px) { .card-wide, .card-tall { grid-column: span 1; grid-row: span 1; } }
+    /* =========================================
+       4. SYNCHRO-GEAR SCROLL ENGINE
+       ========================================= */
+    const gear1 = document.querySelector('.gear-1');
+    const gear2 = document.querySelector('.gear-2');
+    
+    if (gear1 && gear2) {
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            gear1.style.transform = `rotate(${scrollY / 10}deg)`;
+            gear2.style.transform = `rotate(${scrollY / -5}deg)`;
+        });
+    }
 
-/* Content Styling */
-.icon-box { margin-bottom: 1.5rem; color: var(--text-secondary); }
-.card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; color: #fff; }
-.card p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
+    /* =========================================
+       5. DECIPHER TEXT EFFECT
+       ========================================= */
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const headers = document.querySelectorAll('.card h3'); 
 
-/* --- 6. ADVANCED COMPONENTS --- */
+    headers.forEach(header => {
+        header.addEventListener('mouseenter', event => {
+            let iterations = 0;
+            const originalText = event.target.dataset.value || event.target.innerText;
+            if (!event.target.dataset.value) event.target.dataset.value = event.target.innerText;
 
-/* Tech Pills (Skills) */
-.skill-list { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin-top: auto; }
-.skill-list li {
-    background: rgba(255,255,255,0.05); padding: 6px 14px; border-radius: 100px;
-    font-size: 0.8rem; color: #ccc; border: 1px solid transparent; transition: 0.3s;
-}
-.skill-list li:hover { border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 15px rgba(74, 222, 128, 0.2); }
+            const interval = setInterval(() => {
+                event.target.innerText = originalText.split("")
+                    .map((letter, index) => {
+                        if(index < iterations) return originalText[index];
+                        return letters[Math.floor(Math.random() * 36)];
+                    })
+                    .join("");
+                
+                if(iterations >= originalText.length) clearInterval(interval);
+                iterations += 1 / 3; 
+            }, 30);
+        });
+    });
 
-/* Resume Button (Pill Style) */
-.resume-btn {
-    display: flex; align-items: center; gap: 10px;
-    background: #fff; color: #000; padding: 10px 24px;
-    border-radius: 100px; text-decoration: none; font-weight: 600;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-.resume-btn:hover { transform: translateY(-3px); box-shadow: 0 0 20px rgba(255,255,255,0.4); }
+    /* =========================================
+       6. CUSTOM PRECISION CURSOR
+       ========================================= */
+    if (window.matchMedia("(min-width: 768px)").matches) {
+        const cursorDot = document.createElement('div');
+        const cursorOutline = document.createElement('div');
+        cursorDot.className = 'cursor-dot';
+        cursorOutline.className = 'cursor-outline';
+        document.body.appendChild(cursorDot);
+        document.body.appendChild(cursorOutline);
 
-/* Education Tracker (Vertical Timeline) */
-.tracker-container { margin-top: 20px; position: relative; padding-left: 20px; }
-.tracker-line-bg { position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,0.1); }
-.tracker-line-fill { position: absolute; left: 0; bottom: 0; width: 2px; height: 0%; background: var(--neon-green); transition: height 1s ease; }
-.tracker-item { margin-bottom: 20px; opacity: 0.5; transition: 0.3s; position: relative; padding-left: 15px; }
-.tracker-dot { position: absolute; left: -24px; top: 5px; width: 10px; height: 10px; background: #000; border: 2px solid #555; border-radius: 50%; z-index: 2; }
-/* Active State */
-.card.tracking .tracker-line-fill { height: 100%; }
-.card.tracking .tracker-item { opacity: 1; }
-.card.tracking .tracker-dot { background: var(--neon-green); border-color: var(--neon-green); box-shadow: 0 0 10px var(--neon-green); }
+        window.addEventListener("mousemove", (e) => {
+            cursorDot.style.left = `${e.clientX}px`;
+            cursorDot.style.top = `${e.clientY}px`;
+            cursorOutline.animate({
+                left: `${e.clientX}px`,
+                top: `${e.clientY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+        
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+    }
 
-/* Footer System Status */
-footer {
-    margin-top: 8rem; padding-top: 2rem; border-top: 1px solid var(--glass-border);
-    text-align: center; color: var(--text-secondary); font-family: var(--font-mono); font-size: 0.8rem;
-}
+    /* =========================================
+       7. TYPEWRITER EFFECT
+       ========================================= */
+    const subtitle = document.querySelector(".subtitle");
+    if (subtitle) {
+        const text = "Mechanical Engineer & Visual Storyteller";
+        subtitle.textContent = "";
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                subtitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 40);
+            }
+        }
+        setTimeout(typeWriter, 2500);
+    }
 
-/* --- 7. MOBILE OPTIMIZATIONS --- */
-@media (max-width: 768px) {
-    .main-container { padding: 4rem 1.5rem; }
-    h1 { font-size: 2.5rem; }
-    header { flex-direction: column; align-items: flex-start; gap: 2rem; }
-    .contact-links { flex-wrap: wrap; width: 100%; }
-    /* Disable expensive filters on mobile */
-    .card { backdrop-filter: none; background: rgba(20,20,20,0.95); }
-    /* Hide custom cursor on touch */
-    .cursor-dot, .cursor-outline { display: none; }
-    * { cursor: auto; }
-}
+    /* =========================================
+       8. MAGNETIC BUTTONS
+       ========================================= */
+    const magneticBtns = document.querySelectorAll('.contact-links a');
+    if (window.innerWidth > 768) {
+        magneticBtns.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const position = btn.getBoundingClientRect();
+                const x = e.clientX - position.left - position.width / 2;
+                const y = e.clientY - position.top - position.height / 2;
+                btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0px, 0px)';
+            });
+        });
+    }
+
+    /* =========================================
+       9. SPOTLIGHT & 3D TILT
+       ========================================= */
+    const cardsContainer = document.getElementById("cards");
+    const cards = document.querySelectorAll(".card");
+    if (cardsContainer && window.innerWidth > 768) {
+        cardsContainer.addEventListener("mousemove", (e) => {
+            for (const card of cards) {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty("--mouse-x", `${x}px`);
+                card.style.setProperty("--mouse-y", `${y}px`);
+            }
+        });
+    }
+
+    /* =========================================
+       10. MODAL (Project Card) & GALLERY
+       ========================================= */
+    const modal = document.getElementById('project-modal');
+    const closeBtn = document.querySelector('.close-modal');
+    const projectCard = document.querySelector('.project-card');
+
+    const projectImages = [
+        "assets/IMG-20251206-WA0058.jpg",
+        "assets/IMG-20251206-WA0058.jpg",
+        "assets/IMG-20251206-WA0058.jpg"
+    ];
+    let currentSlide = 0;
+    const galleryImg = document.getElementById('gallery-img');
+    const counterDisplay = document.getElementById('current-slide');
+
+    // Make global for HTML onclick
+    window.changeSlide = function(direction) {
+        if (!galleryImg) return;
+        galleryImg.style.opacity = 0;
+        setTimeout(() => {
+            currentSlide += direction;
+            if (currentSlide >= projectImages.length) currentSlide = 0;
+            if (currentSlide < 0) currentSlide = projectImages.length - 1;
+            galleryImg.src = projectImages[currentSlide];
+            if (counterDisplay) counterDisplay.innerText = currentSlide + 1;
+            galleryImg.style.opacity = 1;
+        }, 300);
+    };
+
+    if (projectCard && modal && closeBtn) {
+        projectCard.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        const closeModal = () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('active')) closeModal(); });
+    }
+
+    /* =========================================
+       11. EDUCATION TRACKER
+       ========================================= */
+    const eduCard = document.getElementById('edu-card');
+    if (eduCard) {
+        eduCard.addEventListener('click', () => {
+            eduCard.classList.toggle('tracking');
+            const hint = eduCard.querySelector('.click-hint');
+            if (hint) {
+                hint.textContent = eduCard.classList.contains('tracking') 
+                    ? "Tracking History..." 
+                    : "(Click to track)";
+            }
+        });
+    }
+
+    /* =========================================
+       12. SCROLL REVEAL & COUNTERS
+       ========================================= */
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                if (entry.target.classList.contains('hidden-element')) {
+                    entry.target.classList.add('show-element');
+                }
+                const counters = entry.target.querySelectorAll('.counter');
+                if (counters.length > 0) {
+                    counters.forEach(counter => {
+                        const target = +counter.getAttribute('data-target');
+                        const updateCount = () => {
+                            const count = +counter.innerText;
+                            const inc = target / 100;
+                            if (count < target) {
+                                counter.innerText = Math.ceil(count + inc);
+                                setTimeout(updateCount, 25);
+                            } else counter.innerText = target;
+                        };
+                        updateCount();
+                    });
+                }
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.hidden-element').forEach((el) => observer.observe(el));
+    document.querySelectorAll('.card').forEach((el) => {
+        if(el.querySelector('.counter')) observer.observe(el);
+    });
+
+    /* =========================================
+       13. SYSTEM TIME & ICONS
+       ========================================= */
+    function updateTime() {
+        const timeDisplay = document.getElementById('system-time');
+        if (timeDisplay) timeDisplay.innerText = new Date().toLocaleTimeString('en-US', { hour12: false });
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    if (typeof feather !== 'undefined') feather.replace();
+
+    /* =========================================
+       14. PAGE NAVIGATION (New Full Layers)
+       ========================================= */
+    
+    // We attach these to 'window' so HTML onclick="" can find them
+    window.openPage = function(pageId) {
+        const page = document.getElementById(pageId);
+        if (page) {
+            page.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
+        }
+    };
+
+    window.closePage = function(pageId) {
+        const page = document.getElementById(pageId);
+        if (page) {
+            page.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Resume scrolling
+        }
+    };
+
+    // Close on Escape Key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.full-page-layer').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+});
+           
