@@ -479,7 +479,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 openInfoModal(
                     "The Profile",
                     ["Mechanical Engineer", "Designer", "Innovator"],
-                    `<p>I am a 3rd Year Mechanical Engineering student with a deep passion for smart product design and automation. My work sits at the intersection of physical mechanics and digital storytelling.</p>
+                    `<p>I am an aspiring Mechanical Engineer skilled in CAD modelling, mechanism design, and automation. Seeking an internship to apply practical engineering skills in real-world product development and smart machine projects.
+</p>
                      <br>
                      <h3>Core Focus</h3>
                      <ul>
