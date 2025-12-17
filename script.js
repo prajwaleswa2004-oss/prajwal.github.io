@@ -355,22 +355,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ====== 
-       11. EDUCATION TRACKER (Animation Only)
-       Note: Click functionality moved to Generic Modal System
+       11. EDUCATION TRACKER (Visual Only)
     ====== */
     const eduCard = document.getElementById('edu-card');
     if (eduCard) {
-        // We keep the logic to animate the line if needed, or we can let the modal handle it.
-        // For now, let's allow the "tracking" class to toggle for visual effect when clicked,
-        // but the modal will also open.
         eduCard.addEventListener('click', () => {
             eduCard.classList.toggle('tracking');
-            const hint = eduCard.querySelector('.click-hint');
-            if (hint) {
-                hint.textContent = eduCard.classList.contains('tracking') 
-                    ? "Tracking History..." 
-                    : "(Click for Details)";
-            }
         });
     }
 
@@ -443,7 +433,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const infoTitle = document.getElementById('info-title');
     const infoBody = document.getElementById('info-body');
     const infoTags = document.getElementById('info-tags');
-    // Select the close button inside the specific generic modal
     const closeInfoBtn = infoModal ? infoModal.querySelector('.close-modal') : null;
 
     if (infoModal && closeInfoBtn) {
@@ -470,142 +459,120 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // --- ATTACH EVENT LISTENERS TO CARDS ---
-
         // 1. Profile Card
-        const profileCard = document.getElementById('profile-card');
-        if (profileCard) {
-            profileCard.addEventListener('click', () => {
-                openInfoModal(
-                    "The Profile",
-                    ["Mechanical Engineer", "Designer", "Innovator"],
-                    `<p>I am an aspiring Mechanical Engineer skilled in CAD modelling, mechanism design, and automation. Seeking an internship to apply practical engineering skills in real-world product development and smart machine projects.
-</p>
-                     <br>
-                     <h3>Core Focus</h3>
-                     <ul>
-                        <li>Designing automated systems using Fusion 360</li>
-                        <li>Merging hardware with software logic</li>
-                        <li>Visualizing complex engineering concepts</li>
-                     </ul>`
-                );
-            });
-        }
+        document.getElementById('profile-card')?.addEventListener('click', () => {
+            openInfoModal(
+                "The Profile",
+                ["Mechanical Engineer", "Designer", "Innovator"],
+                `<p>I am an aspiring Mechanical Engineer skilled in CAD modelling, mechanism design, and automation. Seeking an internship to apply practical engineering skills in real-world product development and smart machine projects.</p>
+                 <br>
+                 <h3>Core Focus</h3>
+                 <ul>
+                    <li>Designing automated systems using Fusion 360</li>
+                    <li>Merging hardware with software logic</li>
+                    <li>Visualizing complex engineering concepts</li>
+                 </ul>`
+            );
+        });
 
         // 2. Engineering Card
-        const engCard = document.getElementById('engineering-card');
-        if (engCard) {
-            engCard.addEventListener('click', () => {
-                openInfoModal(
-                    "Engineering Skills",
-                    ["CAD", "Manufacturing", "Analysis"],
-                    `<p>My engineering toolkit is built for prototyping and production.</p>
-                     <ul>
-                        <li><strong>Fusion 360:</strong> Advanced parametric modeling and assembly.</li>
-                        <li><strong>AutoCAD & UG NX:</strong> Industry-standard drafting.</li>
-                        <li><strong>Hypermesh:</strong> Finite Element Analysis (FEA).</li>
-                        <li><strong>3D Printing:</strong> Rapid prototyping from digital mesh to physical object.</li>
-                     </ul>`
-                );
-            });
-        }
+        document.getElementById('engineering-card')?.addEventListener('click', () => {
+            openInfoModal(
+                "Engineering Skills",
+                ["CAD", "Manufacturing", "Analysis"],
+                `<p>My engineering toolkit is built for prototyping and production.</p>
+                 <ul>
+                    <li><strong>Fusion 360:</strong> Advanced parametric modeling and assembly.</li>
+                    <li><strong>AutoCAD & UG NX:</strong> Industry-standard drafting.</li>
+                    <li><strong>Hypermesh:</strong> Finite Element Analysis (FEA).</li>
+                    <li><strong>3D Printing:</strong> Rapid prototyping from digital mesh to physical object.</li>
+                 </ul>`
+            );
+        });
 
         // 3. Creative Card
-        const creativeCard = document.getElementById('creative-card');
-        if (creativeCard) {
-            creativeCard.addEventListener('click', () => {
-                openInfoModal(
-                    "Creative Works",
-                    ["Filmmaking", "Photography", "Design"],
-                    `<p>Engineering builds the product; creativity tells its story. I specialize in:</p>
-                     <ul>
-                        <li><strong>Video Editing:</strong> Creating compelling narratives using Davinci Resolve.</li>
-                        <li><strong>Short Films:</strong> Directing and shooting visual stories.</li>
-                        <li><strong>Photography:</strong> Capturing industrial and natural aesthetics.</li>
-                        <li><strong>Sketching:</strong> Concept art and visualization.</li>
-                     </ul>`
-                );
-            });
-        }
+        document.getElementById('creative-card')?.addEventListener('click', () => {
+            openInfoModal(
+                "Creative Works",
+                ["Filmmaking", "Photography", "Design"],
+                `<p>Engineering builds the product; creativity tells its story. I specialize in:</p>
+                 <ul>
+                    <li><strong>Video Editing:</strong> Creating compelling narratives using Davinci Resolve.</li>
+                    <li><strong>Short Films:</strong> Directing and shooting visual stories.</li>
+                    <li><strong>Photography:</strong> Capturing industrial and natural aesthetics.</li>
+                    <li><strong>Sketching:</strong> Concept art and visualization.</li>
+                 </ul>`
+            );
+        });
 
         // 4. Programming Card
-        const progCard = document.getElementById('programming-card');
-        if (progCard) {
-            progCard.addEventListener('click', () => {
-                openInfoModal(
-                    "Programming Stack",
-                    ["Automation", "Logic", "Embedded"],
-                    `<p>I use code to control machinery and analyze data.</p>
-                     <ul>
-                        <li><strong>Python:</strong> Automation scripts and data processing.</li>
-                        <li><strong>C Language:</strong> Embedded programming for microcontrollers.</li>
-                        <li><strong>Java:</strong> Object-oriented software development.</li>
-                     </ul>
-                     <p>Currently integrating IoT solutions with mechanical designs.</p>`
-                );
-            });
-        }
+        document.getElementById('programming-card')?.addEventListener('click', () => {
+            openInfoModal(
+                "Programming Stack",
+                ["Automation", "Logic", "Embedded"],
+                `<p>I use code to control machinery and analyze data.</p>
+                 <ul>
+                    <li><strong>Python:</strong> Automation scripts and data processing.</li>
+                    <li><strong>C Language:</strong> Embedded programming for microcontrollers.</li>
+                    <li><strong>Java:</strong> Object-oriented software development.</li>
+                 </ul>
+                 <p>Currently integrating IoT solutions with mechanical designs.</p>`
+            );
+        });
 
         // 5. Social Impact Card
-        const socialCard = document.getElementById('social-card');
-        if (socialCard) {
-            socialCard.addEventListener('click', () => {
-                openInfoModal(
-                    "Social Impact",
-                    ["Volunteering", "Leadership"],
-                    `<p>Engineering serves society. My contributions include:</p>
-                     <h3>CRPF Mega Plantation Drive</h3>
-                     <p>Volunteered in a massive drive planting over 10,000 trees, managing logistics and irrigation planning.</p>
-                     <br>
-                     <h3>Student Leadership</h3>
-                     <p>Served as Class Representative for 2 semesters, bridging the gap between faculty and students and organizing technical workshops.</p>`
-                );
-            });
-        }
-
-        // 6. Education Card (New Modal integration)
-        const eduCardModal = document.getElementById('edu-card');
-        if (eduCardModal) {
-            eduCardModal.addEventListener('click', () => {
-                openInfoModal(
-                    "Education Journey",
-                    ["Academics", "Timeline"],
-                    `<div class="tracker-container" style="opacity:1; margin-top:0;">
-                        <div class="tracker-line-bg"></div>
-                        
-                        <div class="tracker-item" style="opacity:1;">
-                            <div class="tracker-dot" style="background:#4ade80; box-shadow:0 0 10px #4ade80;"></div>
-                            <div class="tracker-info">
-                                <span class="date">2023 - Present</span>
-                                <strong>B.Tech Mechanical Engineering</strong>
-                                <span class="school">JNTUA College</span>
-                                <p style="font-size:0.85rem; color:#888; margin-top:5px;">Focusing on CAD, Thermodynamics, and Kinematics. Active member of the Robotics Club.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="tracker-item" style="opacity:1;">
-                            <div class="tracker-dot"></div>
-                            <div class="tracker-info">
-                                <span class="date">2021 - 2023</span>
-                                <strong>Intermediate (MPC)</strong>
-                                <span class="school">Narayana Junior College</span>
-                                <p style="font-size:0.85rem; color:#888; margin-top:5px;">Foundation in Mathematics, Physics, and Chemistry.</p>
-                            </div>
-                        </div>
-
-                        <div class="tracker-item" style="opacity:1;">
-                            <div class="tracker-dot"></div>
-                            <div class="tracker-info">
-                                <span class="date">2021</span>
-                                <strong>Secondary School (SSC)</strong>
-                                <span class="school">ZPHS School</span>
-                            </div>
-                        </div>
-                    </div>`
-                );
-            });
-        }
+        document.getElementById('social-card')?.addEventListener('click', () => {
+            openInfoModal(
+                "Social Impact",
+                ["Volunteering", "Leadership"],
+                `<p>Engineering serves society. My contributions include:</p>
+                 <h3>CRPF Mega Plantation Drive</h3>
+                 <p>Volunteered in a massive drive planting over 10,000 trees, managing logistics and irrigation planning.</p>
+                 <br>
+                 <h3>Student Leadership</h3>
+                 <p>Served as Class Representative for 2 semesters, bridging the gap between faculty and students and organizing technical workshops.</p>`
+            );
+        });
     }
+
+    /* =========================================
+       16. EDUCATION FULLSCREEN MODAL LOGIC (WHITE MODE)
+    ========================================= */
+    const eduCardModal = document.getElementById('edu-card');
+    const eduModal = document.getElementById('education-modal');
+    const closeEdu = document.querySelector('.close-education');
+    const eduItems = document.querySelectorAll('.edu-item');
+
+    if (eduCardModal && eduModal) {
+        eduCardModal.addEventListener('click', () => {
+            eduModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Reveal animation for timeline items
+            eduItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('show');
+                }, index * 300);
+            });
+        });
+    }
+
+    const closeEducation = () => {
+        if (eduModal) eduModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        // Reset animations so they play again next time
+        eduItems.forEach(item => item.classList.remove('show'));
+    };
+
+    if (closeEdu) closeEdu.addEventListener('click', closeEducation);
+    if (eduModal) eduModal.addEventListener('click', (e) => {
+        if (e.target === eduModal) closeEducation();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && eduModal && eduModal.classList.contains('active')) {
+            closeEducation();
+        }
+    });
 
     /* ====== 
        19. KINETIC SCROLL PHYSICS (Inertia & Skew)
