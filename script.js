@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "> INITIALIZING PORTFOLIO...",
         "> LOADING PROJECT ARCHIVES...",
         "> RENDERING VISUAL ASSETS...",
-        "> WELCOME, PRAJWAL."
+        "> WELCOME"
     ];
 
     if (bootScreen && bootText) {
@@ -224,32 +224,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 30);
         });
     });
-
-    /* ====== 
-       6. CUSTOM PRECISION CURSOR
-    ====== */
-    if (window.matchMedia("(min-width: 768px)").matches) {
-        const cursorDot = document.createElement('div');
-        const cursorOutline = document.createElement('div');
-        cursorDot.className = 'cursor-dot';
-        cursorOutline.className = 'cursor-outline';
-        document.body.appendChild(cursorDot);
-        document.body.appendChild(cursorOutline);
-
-        window.addEventListener("mousemove", (e) => {
-            cursorDot.style.left = `${e.clientX}px`;
-            cursorDot.style.top = `${e.clientY}px`;
-            cursorOutline.animate({
-                left: `${e.clientX}px`,
-                top: `${e.clientY}px`
-            }, { duration: 500, fill: "forwards" });
-        });
-
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
-        });
-    }
 
     /* ====== 
        7. TYPEWRITER EFFECT
