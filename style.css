@@ -370,15 +370,20 @@ body.blueprint-active canvas {
 }
 
 /* =========================================
-   EDUCATION FULLSCREEN TIMELINE — WHITE MODE
+   EDUCATION FULLSCREEN TIMELINE (WHITE MODE)
    ========================================= */
 
+.education-modal {
+    backdrop-filter: blur(12px);
+}
+  
 .education-container {
     width: 100%;
     height: 100%;
     background: #050505;
     padding: 80px 20px;
     overflow-y: auto;
+    position: relative;
 }
   
 .close-education {
@@ -386,20 +391,22 @@ body.blueprint-active canvas {
     top: 30px;
     right: 40px;
     font-size: 2rem;
-    background: none;
+    background: transparent;
     border: none;
     color: #fff;
     cursor: pointer;
+    z-index: 10;
 }
   
 .education-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 80px;
 }
   
 .education-header h2 {
-    color: #fff;
+    font-size: 2.2rem;
     letter-spacing: 2px;
+    color: #fff;
 }
   
 .edu-subtitle {
@@ -408,21 +415,9 @@ body.blueprint-active canvas {
     letter-spacing: 2px;
 }
   
-.edu-counter {
-    text-align: center;
-    font-family: monospace;
-    color: #fff;
-    margin-bottom: 60px;
-}
-  
-.edu-counter span {
-    font-size: 2rem;
-    margin: 0 6px;
-}
-  
 .education-timeline {
-    max-width: 720px;
-    margin: auto;
+    max-width: 700px;
+    margin: 0 auto;
     position: relative;
     padding-left: 30px;
 }
@@ -454,11 +449,17 @@ body.blueprint-active canvas {
 .edu-dot {
     width: 12px;
     height: 12px;
-    background: #fff;
     border-radius: 50%;
+    background: #fff;
     margin-left: -36px;
     margin-top: 6px;
-    box-shadow: 0 0 10px rgba(255,255,255,0.4);
+    box-shadow: 0 0 12px rgba(255,255,255,0.4);
+}
+  
+.edu-content h3 {
+    color: #fff;
+    font-size: 1.1rem;
+    margin: 5px 0;
 }
   
 .edu-date {
@@ -467,35 +468,14 @@ body.blueprint-active canvas {
     color: #ccc;
 }
   
-.edu-content h3 {
-    color: #fff;
-    margin: 6px 0;
-}
-  
 .edu-content p,
 .edu-content li {
     color: #aaa;
     font-size: 0.85rem;
 }
   
-.edu-focus {
+.edu-content ul {
     margin-top: 10px;
-    font-size: 0.75rem;
-    color: #fff;
-    letter-spacing: 1px;
-}
-  
-.edu-skills {
-    margin-top: 12px;
     padding-left: 18px;
-}
-  
-.edu-footer {
-    text-align: center;
-    margin-top: 60px;
-    font-family: monospace;
-    font-size: 0.75rem;
-    color: #aaa;
-    line-height: 1.6;
-   }
-
+               }
+   
