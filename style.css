@@ -481,4 +481,28 @@ body.blueprint-active canvas {
     background: #fff;
     margin-left: -36px;
     margin-top: 6px;
-    box-shadow: 0 0 12px rgba
+    box-shadow: 0 0 12px rgba(255,255,255,0.4);
+}
+  
+.edu-content h3 {
+    color: #fff;
+    font-size: 1.1rem;
+    margin: 5px 0;
+}
+  
+.edu-date {
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: #ccc;
+}
+  
+.edu-content p,
+.edu-content li {
+    color: #aaa;
+    font-size: 0.85rem;
+}
+  
+.edu-content ul {
+    margin-top: 10px;
+    padding-left: 18px;
+}
