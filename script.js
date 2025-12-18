@@ -354,15 +354,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /* ====== 
-       11. EDUCATION TRACKER (Visual Only)
-    ====== */
-    const eduCard = document.getElementById('edu-card');
-    if (eduCard) {
-        eduCard.addEventListener('click', () => {
-            eduCard.classList.toggle('tracking');
+const eduCard = document.getElementById('edu-card');
+const eduModal = document.getElementById('education-modal');
+
+if (eduCard && eduModal) {
+    eduCard.addEventListener('click', () => {
+        eduModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        document.querySelectorAll('.edu-item').forEach((item, i) => {
+            setTimeout(() => item.classList.add('show'), i * 250);
         });
-    }
+    });
+}
 
     /* ====== 
        12. SCROLL REVEAL & COUNTERS
