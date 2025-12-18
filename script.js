@@ -1,6 +1,5 @@
-
 /* Prajwal E. Portfolio Main JavaScript 
-   Features: Boot Sequence, FEA Mesh, Synchro-Gears, Mech-Audio, Decipher Text, Tab Ticker, Modals, 3D Tilt
+   Features: Boot Sequence, FEA Mesh, Synchro-Gears, Mech-Audio, Decipher Text, Tab Ticker, Modals
 */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -289,52 +288,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ====== 
-       9. HOLOGRAPHIC 3D TILT EFFECT
+       9. SPOTLIGHT (Simple 2D Version)
     ====== */
-    if (window.innerWidth > 768) {
-        const cards = document.querySelectorAll(".card");
-        cards.forEach(card => {
-            // Inject Glare Div if it doesn't exist
-            if (!card.querySelector('.card-glare')) {
-                const glare = document.createElement("div");
-                glare.classList.add("card-glare");
-                card.appendChild(glare);
-            }
-            const glare = card.querySelector('.card-glare');
-
-            card.addEventListener("mousemove", (e) => {
+    const cardsContainer = document.getElementById("cards");
+    const cards = document.querySelectorAll(".card");
+    if (cardsContainer && window.innerWidth > 768) {
+        cardsContainer.addEventListener("mousemove", (e) => {
+            for (const card of cards) {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                
-                // Tilt Math
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                // Max tilt 10 degrees
-                const rotateX = ((y - centerY) / centerY) * -10; 
-                const rotateY = ((x - centerX) / centerX) * 10;
-                
-                // Apply Transform
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                
-                // Glare Math
-                if(glare) {
-                    glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.2), transparent 40%)`;
-                    glare.style.opacity = "1";
-                }
-                
-                // 3D Pop for content
-                const content = card.querySelector('.card-content');
-                if(content) content.style.transform = 'translateZ(30px)';
-            });
-
-            card.addEventListener("mouseleave", () => {
-                card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
-                if(glare) glare.style.opacity = "0";
-                const content = card.querySelector('.card-content');
-                if(content) content.style.transform = 'translateZ(0px)';
-            });
+                card.style.setProperty("--mouse-x", `${x}px`);
+                card.style.setProperty("--mouse-y", `${y}px`);
+            }
         });
     }
 
@@ -461,7 +427,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 2500);
 
     /* ====== 
-       15. GENERIC INFO MODAL SYSTEM (UPDATED)
+       15. GENERIC INFO MODAL SYSTEM
     ====== */
     const infoModal = document.getElementById('info-modal');
     const infoTitle = document.getElementById('info-title');
@@ -508,6 +474,7 @@ document.addEventListener("DOMContentLoaded", () => {
                  </ul>`
             );
         });
+
         // 2. Engineering Card
         document.getElementById('engineering-card')?.addEventListener('click', () => {
             openInfoModal(
