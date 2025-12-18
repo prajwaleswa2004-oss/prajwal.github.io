@@ -353,20 +353,19 @@ document.addEventListener("DOMContentLoaded", () => {
             if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
         });
     }
+    const eduCard = document.getElementById('edu-card');
+    const eduModal = document.getElementById('education-modal');
 
-const eduCard = document.getElementById('edu-card');
-const eduModal = document.getElementById('education-modal');
-
-if (eduCard && eduModal) {
-    eduCard.addEventListener('click', () => {
-        eduModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-
-        document.querySelectorAll('.edu-item').forEach((item, i) => {
-            setTimeout(() => item.classList.add('show'), i * 250);
-        });
-    });
-}
+    if (eduCard && eduModal) {
+       eduCard.addEventListener('click', () => {
+          eduModal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+          
+          document.querySelectorAll('.edu-item').forEach((item, i) => {
+             setTimeout(() => item.classList.add('show'), i * 250);
+          });
+       });
+    }
 
     /* ====== 
        12. SCROLL REVEAL & COUNTERS
