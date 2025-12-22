@@ -305,12 +305,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ====== 
-       10. PROJECT MODAL (Open Logic)
+       10. ORIGINAL PROJECT MODAL & GALLERY
     ====== */
+    const modal = document.getElementById('project-modal');
+    const closeBtn = document.querySelector('.close-modal');
     const projectCard = document.querySelector('.project-card');
-    const projectModal = document.getElementById('project-modal');
-    
-    // Project Slider Logic
+
     const projectImages = [
         "assets/IMG-20251206-WA0058.jpg",
         "assets/IMG-20251206-WA0058.jpg",
@@ -333,73 +333,42 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 300);
     };
 
-    if (projectCard && projectModal) {
+    if (projectCard && modal && closeBtn) {
         projectCard.addEventListener('click', (e) => {
             e.preventDefault();
-            projectModal.classList.add('active');
+            modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
-    }
 
-    /* ====== 
-       11. EDUCATION MODAL (Open Logic - Simplified)
-    ====== */
+        const closeModal = () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+        });
+    }
     const eduCard = document.getElementById('edu-card');
     const eduModal = document.getElementById('education-modal');
-    const eduItems = document.querySelectorAll('.edu-item');
 
     if (eduCard && eduModal) {
-        eduCard.addEventListener('click', () => {
-            eduModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-
-            // Trigger Animation Cascade
-            eduItems.forEach((item, index) => {
-                item.classList.remove('show');
-                setTimeout(() => item.classList.add('show'), index * 300);
-            });
-        });
+       eduCard.addEventListener('click', () => {
+          eduModal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+          
+          document.querySelectorAll('.edu-item').forEach((item, i) => {
+             setTimeout(() => item.classList.add('show'), i * 250);
+          });
+       });
     }
 
-    /* =========================================
-       12. UNIFIED MODAL CLOSE HANDLER (NEW & ROBUST)
-       Handles: Project, Education, and Info Modals
-    ========================================= */
-    const allModals = document.querySelectorAll('.modal-overlay');
-
-    // Helper to close specific modal
-    const closeGenericModal = (modal) => {
-        modal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-
-        // Reset Education Animations if present
-        const items = modal.querySelectorAll('.edu-item.show');
-        items.forEach(i => i.classList.remove('show'));
-    };
-
-    allModals.forEach(modal => {
-        // 1. Close Button Click
-        const closeBtn = modal.querySelector('.close-modal, .close-education');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => closeGenericModal(modal));
-        }
-
-        // 2. Click Outside (Background)
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeGenericModal(modal);
-        });
-    });
-
-    // 3. Global ESC Key Handler
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            const activeModal = document.querySelector('.modal-overlay.active');
-            if (activeModal) closeGenericModal(activeModal);
-        }
-    });
-
     /* ====== 
-       13. SCROLL REVEAL & COUNTERS
+       12. SCROLL REVEAL & COUNTERS
     ====== */
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -435,7 +404,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /* ====== 
-       14. SYSTEM TIME & ICONS
+       13. SYSTEM TIME & ICONS
     ====== */
     function updateTime() {
         const timeDisplay = document.getElementById('system-time');
@@ -447,7 +416,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof feather !== 'undefined') feather.replace();
 
     /* ====== 
-       15. TAB TITLE TICKER
+       14. TAB TITLE TICKER
     ====== */
     const titleAlt = ["System Online", "Engineer", "Creator", "Open for Internships"];
     let titleIndex = 0;
@@ -461,14 +430,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 2500);
 
     /* ====== 
-       16. GENERIC INFO MODAL SYSTEM (Populator)
+       15. GENERIC INFO MODAL SYSTEM
     ====== */
     const infoModal = document.getElementById('info-modal');
     const infoTitle = document.getElementById('info-title');
     const infoBody = document.getElementById('info-body');
     const infoTags = document.getElementById('info-tags');
+    const closeInfoBtn = infoModal ? infoModal.querySelector('.close-modal') : null;
 
-    if (infoModal) {
+    if (infoModal && closeInfoBtn) {
         const openInfoModal = (title, tags = [], bodyHTML = "") => {
             infoTitle.innerText = title;
             infoTags.innerHTML = tags.map(t => `<span>${t}</span>`).join('');
@@ -476,6 +446,21 @@ document.addEventListener("DOMContentLoaded", () => {
             infoModal.classList.add('active');
             document.body.style.overflow = 'hidden';
         };
+
+        const closeInfoModal = () => {
+            infoModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        closeInfoBtn.addEventListener('click', closeInfoModal);
+        infoModal.addEventListener('click', (e) => {
+            if (e.target === infoModal) closeInfoModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && infoModal.classList.contains('active')) {
+                closeInfoModal();
+            }
+        });
 
         // 1. Profile Card
         document.getElementById('profile-card')?.addEventListener('click', () => {
@@ -552,9 +537,223 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         });
     }
+    /* Prajwal E. Portfolio Main JavaScript
+   SAFE + DEFENSIVE VERSION
+   All original effects preserved
+*/
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* =========================================
+     1. SYSTEM BOOT SEQUENCE (FAIL-SAFE)
+  ========================================= */
+  const bootScreen = document.getElementById("boot-screen");
+  const bootText = document.getElementById("boot-text");
+
+  const bootMessages = [
+    "> INITIALIZING PORTFOLIO...",
+    "> LOADING PROJECT ARCHIVES...",
+    "> RENDERING VISUAL ASSETS...",
+    "> WELCOME, PRAJWAL."
+  ];
+
+  if (bootScreen && bootText) {
+    let lineIndex = 0;
+
+    const typeLine = () => {
+      if (lineIndex < bootMessages.length) {
+        const line = document.createElement("div");
+        line.className = "boot-line";
+        line.textContent = bootMessages[lineIndex++];
+        bootText.appendChild(line);
+        setTimeout(typeLine, 200);
+      } else {
+        setTimeout(() => {
+          bootScreen.classList.add("fade-out");
+          document.body.style.overflow = "auto";
+          setTimeout(() => (bootScreen.style.display = "none"), 500);
+        }, 500);
+      }
+    };
+    typeLine();
+
+    // Absolute failsafe
+    setTimeout(() => {
+      if (bootScreen.style.display !== "none") {
+        bootScreen.classList.add("fade-out");
+        document.body.style.overflow = "auto";
+        setTimeout(() => (bootScreen.style.display = "none"), 500);
+      }
+    }, 4500);
+  }
+
+  /* =========================================
+     2. FEA MESH BACKGROUND (SAFE)
+  ========================================= */
+  const canvas = document.createElement("canvas");
+  canvas.style.cssText =
+    "position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:radial-gradient(circle at center,#1a1a1a,#000)";
+  document.body.appendChild(canvas);
+
+  const ctx = canvas.getContext("2d");
+  let w, h;
+  const resize = () => {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  };
+  resize();
+  window.addEventListener("resize", resize);
+
+  const particles = [];
+  const count = window.innerWidth <= 768 ? 40 : 80;
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * w;
+      this.y = Math.random() * h;
+      this.vx = (Math.random() - 0.5) * 1.5;
+      this.vy = (Math.random() - 0.5) * 1.5;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < 0 || this.x > w) this.vx *= -1;
+      if (this.y < 0 || this.y > h) this.vy *= -1;
+    }
+    draw() {
+      ctx.fillStyle = "rgba(74,222,128,0.5)";
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < count; i++) particles.push(new Particle());
+
+  const animate = () => {
+    ctx.clearRect(0, 0, w, h);
+    particles.forEach(p => {
+      p.update();
+      p.draw();
+    });
+    requestAnimationFrame(animate);
+  };
+  animate();
+
+  /* =========================================
+     3. AUDIO FEEDBACK SYSTEM (SAFE)
+  ========================================= */
+  let audioCtx;
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  } catch (e) {}
+
+  const playSound = type => {
+    if (!audioCtx) return;
+    if (audioCtx.state === "suspended") audioCtx.resume();
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    if (type === "hover") {
+      osc.frequency.value = 600;
+      gain.gain.value = 0.02;
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.05);
+    } else {
+      osc.frequency.value = 150;
+      gain.gain.value = 0.05;
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.1);
+    }
+  };
+
+  document.querySelectorAll("a,button,.card").forEach(el => {
+    el.addEventListener("mouseenter", () => playSound("hover"));
+    el.addEventListener("mousedown", () => playSound("click"));
+  });
+
+  /* =========================================
+     4. PROJECT MODAL (SAFE)
+  ========================================= */
+  const projectModal = document.getElementById("project-modal");
+  const projectCard = document.querySelector(".project-card");
+  const closeProject = projectModal?.querySelector(".close-modal");
+
+  if (projectCard && projectModal) {
+    projectCard.addEventListener("click", e => {
+      e.preventDefault();
+      projectModal.classList.add("active");
+      document.body.style.overflow = "hidden";
+    });
+  }
+
+  const closeProjectModal = () => {
+    projectModal?.classList.remove("active");
+    document.body.style.overflow = "auto";
+  };
+
+  closeProject?.addEventListener("click", closeProjectModal);
+  projectModal?.addEventListener("click", e => {
+    if (e.target === projectModal) closeProjectModal();
+  });
+
+  /* =========================================
+     5. EDUCATION MODAL (WHITE MODE – SAFE)
+  ========================================= */
+  const eduCard = document.getElementById("edu-card");
+  const eduModal = document.getElementById("education-modal");
+  const closeEdu = eduModal?.querySelector(".close-education");
+  const eduItems = document.querySelectorAll(".edu-item");
+
+  if (eduCard && eduModal) {
+    eduCard.addEventListener("click", () => {
+      eduModal.classList.add("active");
+      document.body.style.overflow = "hidden";
+      eduItems.forEach((item, i) =>
+        setTimeout(() => item.classList.add("show"), i * 300)
+      );
+    });
+  }
+
+  const closeEducation = () => {
+    eduModal?.classList.remove("active");
+    document.body.style.overflow = "auto";
+    eduItems.forEach(i => i.classList.remove("show"));
+  };
+
+  closeEdu?.addEventListener("click", closeEducation);
+  eduModal?.addEventListener("click", e => {
+    if (e.target === eduModal) closeEducation();
+  });
+
+  /* =========================================
+     6. FEATHER ICONS (FAIL-SAFE)
+  ========================================= */
+  if (window.feather) {
+    try {
+      feather.replace();
+    } catch (e) {}
+  }
+
+  /* =========================================
+     7. ESC GLOBAL CLOSE
+  ========================================= */
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+      closeProjectModal();
+      closeEducation();
+    }
+  });
+});
+
+
+
 
     /* ====== 
-       17. KINETIC SCROLL PHYSICS (Inertia & Skew)
+       19. KINETIC SCROLL PHYSICS (Inertia & Skew)
     ====== */
     const gridContainer = document.querySelector('.bento-grid');
     let lastScrollY = window.scrollY;
@@ -579,7 +778,7 @@ document.addEventListener("DOMContentLoaded", () => {
     animateScrollPhysics();
 
     /* ====== 
-       18. BLUEPRINT MODE TOGGLE
+       20. BLUEPRINT MODE TOGGLE
     ====== */
     const bpToggle = document.getElementById('blueprint-toggle');
     if (bpToggle) {
