@@ -1,5 +1,5 @@
 /* PRAJWAL E. PORTFOLIO - FINAL ADVANCED STYLE
-   Features: Neon Flow, FEA Mesh, Mech-Audio, Gears, Holo-Profile
+   Features: Neon Flow, FEA Mesh, Gears, Holo-Profile
 */
 
 :root {
@@ -18,7 +18,7 @@ body {
     font-family: 'Space Grotesk', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
-    cursor: none; /* Hide default cursor for custom one */
+    /* REMOVED: cursor: none; -> Natural mouse restored */
 }
 
 /* --- 1. BACKGROUND LAYERS */
@@ -142,6 +142,7 @@ h1:hover { animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both inf
     display: flex; flex-direction: column; justify-content: space-between;
     height: 100%; border: none; z-index: 1;
     backdrop-filter: blur(5px);
+    cursor: pointer; /* Ensure clickable cursor */
 }
 
 /* The Animated Border */
@@ -197,24 +198,6 @@ h1:hover { animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both inf
 }
 .skill-list li:hover { background: rgba(255, 255, 255, 0.15); color: #fff; transform: translateY(-2px); border-color: rgba(255, 255, 255, 0.3); }
 .tags span { display: inline-block; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; margin-right: 5px; margin-top: 10px; }
-
-/* Education Tracker */
-.click-hint { font-size: 0.7rem; color: var(--accent-green); margin-bottom: 10px; opacity: 0.7; }
-.tracker-container { position: relative; padding-left: 20px; margin-top: 15px; display: flex; flex-direction: column; }
-.tracker-line-bg { position: absolute; left: 4px; top: 5px; bottom: 5px; width: 2px; background: rgba(255, 255, 255, 0.1); }
-.tracker-line-fill {
-    position: absolute; left: 4px; bottom: 5px; width: 2px; height: 0%; background: var(--accent-green);
-    box-shadow: 0 0 10px var(--accent-green); transition: height 1.5s ease-in-out; z-index: 1;
-}
-.tracker-item { position: relative; margin-bottom: 25px; padding-left: 15px; opacity: 0.5; transition: opacity 0.5s; }
-.tracker-dot { position: absolute; left: -20px; top: 0; width: 10px; height: 10px; border-radius: 50%; background: #333; border: 2px solid #555; z-index: 2; transition: all 0.3s; }
-
-.card.tracking .tracker-line-fill { height: 95%; }
-.card.tracking .tracker-item { opacity: 1; }
-.card.tracking .tracker-dot { background: #000; border-color: var(--accent-green); box-shadow: 0 0 10px var(--accent-green); }
-.card.tracking .tracker-item:nth-child(5) .tracker-dot { transition-delay: 0.1s; }
-.card.tracking .tracker-item:nth-child(4) .tracker-dot { transition-delay: 0.7s; }
-.card.tracking .tracker-item:nth-child(3) .tracker-dot { transition-delay: 1.4s; }
 
 /* Stats & Badges */
 .impact-item { margin-bottom: 10px; border-left: 2px solid rgba(255, 255, 255, 0.1); padding-left: 12px; }
@@ -294,17 +277,7 @@ h1:hover { animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both inf
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 .fade-out { opacity: 0; pointer-events: none; transition: opacity 0.5s ease-out; }
 
-/* --- 6. UTILS & CURSOR --- */
-.cursor-dot, .cursor-outline {
-    position: fixed; top: 0; left: 0; border-radius: 50%; z-index: 9999; pointer-events: none;
-}
-.cursor-dot { width: 5px; height: 5px; background-color: white; }
-.cursor-outline {
-    width: 30px; height: 30px; border: 1px solid rgba(255, 255, 255, 0.5);
-    transition: width 0.2s, height 0.2s, background-color 0.2s; transform: translate(-50%, -50%);
-}
-body.hovering .cursor-outline { width: 50px; height: 50px; background-color: rgba(255, 255, 255, 0.1); border-color: #fff; }
-
+/* --- 6. UTILS (Cleaned up) --- */
 footer { margin-top: 4rem; border-top: 1px solid var(--border-color); padding-top: 2rem; color: var(--text-muted); font-size: 0.8rem; text-align: center; }
 
 .hidden-element { opacity: 0; transform: perspective(1000px) rotateX(20deg) translateY(100px) scale(0.9); transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
@@ -319,7 +292,6 @@ footer { margin-top: 4rem; border-top: 1px solid var(--border-color); padding-to
     .bento-grid { grid-template-columns: 1fr; }
     .card-wide, .card-tall, .card-large { grid-column: span 1; grid-row: span 1; }
     .card { transform: none !important; }
-    .cursor-dot, .cursor-outline { display: none !important; }
     body { cursor: auto; }
     h1 { font-size: 2.5rem; }
     .gear-container { opacity: 0.3; }
@@ -341,7 +313,7 @@ footer { margin-top: 4rem; border-top: 1px solid var(--border-color); padding-to
     border-radius: 4px; cursor: pointer; min-width: 60px;
 }
 
-/* THE WIREFRAME MODE (Activated by JS) */
+/* THE WIREFRAME MODE */
 body.blueprint-active {
     background-color: #001a33; 
     background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
@@ -364,13 +336,8 @@ body.blueprint-active canvas {
     display: none !important;
 }
 
-/* --- CLICKABLE CARD CURSOR FIX --- */
-#profile-card, #engineering-card, #creative-card, #programming-card, #social-card, #edu-card {
-    cursor: pointer;
-}
-
 /* =========================================
-   EDUCATION FULLSCREEN TIMELINE (WHITE MODE)
+   EDUCATION FULLSCREEN TIMELINE (UNIFIED)
    ========================================= */
 
 .education-modal {
