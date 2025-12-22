@@ -1,11 +1,19 @@
 /* Prajwal E. Portfolio Main JavaScript 
-   Features: Boot Sequence, FEA Mesh, Synchro-Gears, Mech-Audio, Decipher Text, Tab Ticker, Modals
+   Aligned with Index.html & Style.css
 */
 
 document.addEventListener("DOMContentLoaded", () => {
 
     /* ====== 
-       1. SYSTEM BOOT SEQUENCE (Professional Fail-Safe)
+       0. NATURAL CURSOR RESTORATION
+       (Overrides CSS 'cursor: none' for natural feel)
+    ====== */
+    document.body.style.cursor = 'default';
+    const linksAndBtns = document.querySelectorAll('a, button, .card, .trigger-modal');
+    linksAndBtns.forEach(el => el.style.cursor = 'pointer');
+
+    /* ====== 
+       1. SYSTEM BOOT SEQUENCE
     ====== */
     const bootScreen = document.getElementById('boot-screen');
     const bootText = document.getElementById('boot-text');
@@ -13,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const bootMessages = [
         "> INITIALIZING PORTFOLIO...",
         "> LOADING PROJECT ARCHIVES...",
-        "> RENDERING VISUAL ASSETS...",
         "> WELCOME, PRAJWAL."
     ];
 
@@ -152,44 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
     animate();
 
     /* ====== 
-       3. AUDIO FEEDBACK SYSTEM (Mech-UI)
-    ====== */
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-    const playSound = (type) => {
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        const osc = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        osc.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-
-        if (type === 'hover') {
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.05);
-            gainNode.gain.setValueAtTime(0.02, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.05);
-        } else if (type === 'click') {
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.1);
-            gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.1);
-        }
-    };
-
-    const interactiveElements = document.querySelectorAll('a, button, .card, .trigger-modal, .resume-btn');
-    interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => playSound('hover'));
-        el.addEventListener('mousedown', () => playSound('click'));
-    });
-
-    /* ====== 
-       4. SYNCHRO-GEAR SCROLL ENGINE
+       3. SYNCHRO-GEAR SCROLL ENGINE
     ====== */
     const gear1 = document.querySelector('.gear-1');
     const gear2 = document.querySelector('.gear-2');
@@ -202,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ====== 
-       5. DECIPHER TEXT EFFECT (Hacker Style)
+       4. DECIPHER TEXT EFFECT (Hacker Style)
     ====== */
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     const headers = document.querySelectorAll('.card h3');
@@ -226,33 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /* ====== 
-       6. CUSTOM PRECISION CURSOR
-    ====== */
-    if (window.matchMedia("(min-width: 768px)").matches) {
-        const cursorDot = document.createElement('div');
-        const cursorOutline = document.createElement('div');
-        cursorDot.className = 'cursor-dot';
-        cursorOutline.className = 'cursor-outline';
-        document.body.appendChild(cursorDot);
-        document.body.appendChild(cursorOutline);
-
-        window.addEventListener("mousemove", (e) => {
-            cursorDot.style.left = `${e.clientX}px`;
-            cursorDot.style.top = `${e.clientY}px`;
-            cursorOutline.animate({
-                left: `${e.clientX}px`,
-                top: `${e.clientY}px`
-            }, { duration: 500, fill: "forwards" });
-        });
-
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
-        });
-    }
-
-    /* ====== 
-       7. TYPEWRITER EFFECT
+       5. TYPEWRITER EFFECT
     ====== */
     const subtitle = document.querySelector(".subtitle");
     if (subtitle) {
@@ -270,25 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ====== 
-       8. MAGNETIC BUTTONS
-    ====== */
-    const magneticBtns = document.querySelectorAll('.contact-links a');
-    if (window.innerWidth > 768) {
-        magneticBtns.forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const position = btn.getBoundingClientRect();
-                const x = e.clientX - position.left - position.width / 2;
-                const y = e.clientY - position.top - position.height / 2;
-                btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-            });
-            btn.addEventListener('mouseleave', () => {
-                btn.style.transform = 'translate(0px, 0px)';
-            });
-        });
-    }
-
-    /* ====== 
-       9. SPOTLIGHT (Simple 2D Version)
+       6. SPOTLIGHT (Card Hover Effect)
     ====== */
     const cardsContainer = document.getElementById("cards");
     const cards = document.querySelectorAll(".card");
@@ -305,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ====== 
-       10. PROJECT MODAL (Open Logic)
+       7. PROJECT MODAL & SLIDER
     ====== */
     const projectCard = document.querySelector('.project-card');
     const projectModal = document.getElementById('project-modal');
@@ -342,7 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ====== 
-       11. EDUCATION MODAL (Open Logic - Simplified)
+       8. EDUCATION MODAL (Standardized Logic)
     ====== */
     const eduCard = document.getElementById('edu-card');
     const eduModal = document.getElementById('education-modal');
@@ -353,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
             eduModal.classList.add('active');
             document.body.style.overflow = 'hidden';
 
-            // Trigger Animation Cascade
+            // Trigger Timeline Animation
             eduItems.forEach((item, index) => {
                 item.classList.remove('show');
                 setTimeout(() => item.classList.add('show'), index * 300);
@@ -362,12 +288,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* =========================================
-       12. UNIFIED MODAL CLOSE HANDLER (NEW & ROBUST)
+       9. UNIFIED MODAL CLOSE HANDLER
        Handles: Project, Education, and Info Modals
     ========================================= */
     const allModals = document.querySelectorAll('.modal-overlay');
 
-    // Helper to close specific modal
     const closeGenericModal = (modal) => {
         modal.classList.remove('active');
         document.body.style.overflow = 'auto';
@@ -399,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /* ====== 
-       13. SCROLL REVEAL & COUNTERS
+       10. SCROLL REVEAL & COUNTERS
     ====== */
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -413,7 +338,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         const target = +counter.getAttribute('data-target');
                         const updateCount = () => {
                             const count = +counter.innerText;
-                            const inc = target / 100;
+                            const inc = Math.max(1, target / 100);
                             if (count < target) {
                                 counter.innerText = Math.ceil(count + inc);
                                 setTimeout(updateCount, 25);
@@ -435,33 +360,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /* ====== 
-       14. SYSTEM TIME & ICONS
-    ====== */
-    function updateTime() {
-        const timeDisplay = document.getElementById('system-time');
-        if (timeDisplay) timeDisplay.innerText = new Date().toLocaleTimeString('en-US', { hour12: false });
-    }
-    setInterval(updateTime, 1000);
-    updateTime();
-
-    if (typeof feather !== 'undefined') feather.replace();
-
-    /* ====== 
-       15. TAB TITLE TICKER
-    ====== */
-    const titleAlt = ["System Online", "Engineer", "Creator", "Open for Internships"];
-    let titleIndex = 0;
-    setInterval(() => {
-        if (document.hidden) {
-            document.title = "Connection Lost...";
-        } else {
-            titleIndex = (titleIndex + 1) % titleAlt.length;
-            document.title = `Prajwal E. | ${titleAlt[titleIndex]}`;
-        }
-    }, 2500);
-
-    /* ====== 
-       16. GENERIC INFO MODAL SYSTEM (Populator)
+       11. GENERIC INFO MODAL SYSTEM (Populator)
     ====== */
     const infoModal = document.getElementById('info-modal');
     const infoTitle = document.getElementById('info-title');
@@ -477,7 +376,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.body.style.overflow = 'hidden';
         };
 
-        // 1. Profile Card
+        // Profile Card
         document.getElementById('profile-card')?.addEventListener('click', () => {
             openInfoModal(
                 "The Profile",
@@ -493,7 +392,7 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         });
 
-        // 2. Engineering Card
+        // Engineering Card
         document.getElementById('engineering-card')?.addEventListener('click', () => {
             openInfoModal(
                 "Engineering Skills",
@@ -508,7 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         });
 
-        // 3. Creative Card
+        // Creative Card
         document.getElementById('creative-card')?.addEventListener('click', () => {
             openInfoModal(
                 "Creative Works",
@@ -523,7 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         });
 
-        // 4. Programming Card
+        // Programming Card
         document.getElementById('programming-card')?.addEventListener('click', () => {
             openInfoModal(
                 "Programming Stack",
@@ -538,7 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         });
 
-        // 5. Social Impact Card
+        // Social Impact Card
         document.getElementById('social-card')?.addEventListener('click', () => {
             openInfoModal(
                 "Social Impact",
@@ -554,32 +453,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ====== 
-       17. KINETIC SCROLL PHYSICS (Inertia & Skew)
+       12. SYSTEM TIME & ICONS
     ====== */
-    const gridContainer = document.querySelector('.bento-grid');
-    let lastScrollY = window.scrollY;
-    let currentSkew = 0;
-    let targetSkew = 0;
+    function updateTime() {
+        const timeDisplay = document.getElementById('system-time');
+        if (timeDisplay) timeDisplay.innerText = new Date().toLocaleTimeString('en-US', { hour12: false });
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
 
-    const animateScrollPhysics = () => {
-        const currentScrollY = window.scrollY;
-        const velocity = currentScrollY - lastScrollY;
-        targetSkew = velocity * 0.15;
-        targetSkew = Math.max(Math.min(targetSkew, 7), -7);
-        currentSkew += (targetSkew - currentSkew) * 0.1;
-
-        if (gridContainer) {
-            const scale = 1 - Math.abs(currentSkew) * 0.005;
-            gridContainer.style.transform = `perspective(1000px) rotateX(${-currentSkew}deg) scale(${scale})`;
-        }
-
-        lastScrollY = currentScrollY;
-        requestAnimationFrame(animateScrollPhysics);
-    };
-    animateScrollPhysics();
+    if (typeof feather !== 'undefined') feather.replace();
 
     /* ====== 
-       18. BLUEPRINT MODE TOGGLE
+       13. TAB TITLE TICKER
+    ====== */
+    const titleAlt = ["System Online", "Engineer", "Creator", "Open for Internships"];
+    let titleIndex = 0;
+    setInterval(() => {
+        if (document.hidden) {
+            document.title = "Connection Lost...";
+        } else {
+            titleIndex = (titleIndex + 1) % titleAlt.length;
+            document.title = `Prajwal E. | ${titleAlt[titleIndex]}`;
+        }
+    }, 2500);
+
+    /* ====== 
+       14. BLUEPRINT MODE TOGGLE
     ====== */
     const bpToggle = document.getElementById('blueprint-toggle');
     if (bpToggle) {
