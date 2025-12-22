@@ -537,38 +537,37 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         });
     }
-   
+   // Education card
    const eduCard = document.getElementById('edu-card');
    const eduModal = document.getElementById('education-modal');
-   const closeEdu = eduModal ? eduModal.querySelector('.close-education') : null;
+   const closeEduBtn = eduModal ? eduModal.querySelector('.close-education') : null;
    const eduItems = eduModal ? eduModal.querySelectorAll('.edu-item') : [];
-   if (eduCard && eduModal) {
-      eduCard.addEventListener('click', () => {
-         eduModal.classList.add('active');
-         document.body.style.overflow = 'hidden';
-         eduItems.forEach((item, index) => {
-            item.classList.remove('show'); // reset
-            setTimeout(() => {
-               item.classList.add('show');
-            }, index * 300);
-         });
+   const openEducation = () => {
+      if (!eduModal) return;
+      eduModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      eduItems.forEach((item, i) => {
+         item.classList.remove('show');
+         setTimeout(() => item.classList.add('show'), i * 300);
       });
-   }
+   };
    const closeEducation = () => {
       if (!eduModal) return;
       eduModal.classList.remove('active');
       document.body.style.overflow = 'auto';
       eduItems.forEach(item => item.classList.remove('show'));
    };
-   closeEdu && closeEdu.addEventListener('click', closeEducation);
+   eduCard && eduCard.addEventListener('click', openEducation);
+   closeEduBtn && closeEduBtn.addEventListener('click', closeEducation);
    eduModal && eduModal.addEventListener('click', (e) => {
-  if (e.target === eduModal) closeEducation();
+      if (e.target === eduModal) closeEducation();
    });
    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && eduModal && eduModal.classList.contains('active')) {
+      if (e.key === 'Escape' && eduModal?.classList.contains('active')) {
          closeEducation();
       }
    });
+
 
 
 
