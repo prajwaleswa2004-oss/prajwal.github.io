@@ -305,12 +305,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ====== 
-       10. ORIGINAL PROJECT MODAL & GALLERY
+       10. PROJECT MODAL (Open Logic)
     ====== */
-    const modal = document.getElementById('project-modal');
-    const closeBtn = document.querySelector('.close-modal');
     const projectCard = document.querySelector('.project-card');
-
+    const projectModal = document.getElementById('project-modal');
+    
+    // Project Slider Logic
     const projectImages = [
         "assets/IMG-20251206-WA0058.jpg",
         "assets/IMG-20251206-WA0058.jpg",
@@ -333,42 +333,73 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 300);
     };
 
-    if (projectCard && modal && closeBtn) {
+    if (projectCard && projectModal) {
         projectCard.addEventListener('click', (e) => {
             e.preventDefault();
-            modal.classList.add('active');
+            projectModal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
-
-        const closeModal = () => {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        };
-
-        closeBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
-        });
-    }
-    const eduCard = document.getElementById('edu-card');
-    const eduModal = document.getElementById('education-modal');
-
-    if (eduCard && eduModal) {
-       eduCard.addEventListener('click', () => {
-          eduModal.classList.add('active');
-          document.body.style.overflow = 'hidden';
-          
-          document.querySelectorAll('.edu-item').forEach((item, i) => {
-             setTimeout(() => item.classList.add('show'), i * 250);
-          });
-       });
     }
 
     /* ====== 
-       12. SCROLL REVEAL & COUNTERS
+       11. EDUCATION MODAL (Open Logic - Simplified)
+    ====== */
+    const eduCard = document.getElementById('edu-card');
+    const eduModal = document.getElementById('education-modal');
+    const eduItems = document.querySelectorAll('.edu-item');
+
+    if (eduCard && eduModal) {
+        eduCard.addEventListener('click', () => {
+            eduModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Trigger Animation Cascade
+            eduItems.forEach((item, index) => {
+                item.classList.remove('show');
+                setTimeout(() => item.classList.add('show'), index * 300);
+            });
+        });
+    }
+
+    /* =========================================
+       12. UNIFIED MODAL CLOSE HANDLER (NEW & ROBUST)
+       Handles: Project, Education, and Info Modals
+    ========================================= */
+    const allModals = document.querySelectorAll('.modal-overlay');
+
+    // Helper to close specific modal
+    const closeGenericModal = (modal) => {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+
+        // Reset Education Animations if present
+        const items = modal.querySelectorAll('.edu-item.show');
+        items.forEach(i => i.classList.remove('show'));
+    };
+
+    allModals.forEach(modal => {
+        // 1. Close Button Click
+        const closeBtn = modal.querySelector('.close-modal, .close-education');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => closeGenericModal(modal));
+        }
+
+        // 2. Click Outside (Background)
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeGenericModal(modal);
+        });
+    });
+
+    // 3. Global ESC Key Handler
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const activeModal = document.querySelector('.modal-overlay.active');
+            if (activeModal) closeGenericModal(activeModal);
+        }
+    });
+
+    /* ====== 
+       13. SCROLL REVEAL & COUNTERS
     ====== */
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -404,7 +435,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /* ====== 
-       13. SYSTEM TIME & ICONS
+       14. SYSTEM TIME & ICONS
     ====== */
     function updateTime() {
         const timeDisplay = document.getElementById('system-time');
@@ -416,7 +447,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof feather !== 'undefined') feather.replace();
 
     /* ====== 
-       14. TAB TITLE TICKER
+       15. TAB TITLE TICKER
     ====== */
     const titleAlt = ["System Online", "Engineer", "Creator", "Open for Internships"];
     let titleIndex = 0;
@@ -430,15 +461,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 2500);
 
     /* ====== 
-       15. GENERIC INFO MODAL SYSTEM
+       16. GENERIC INFO MODAL SYSTEM (Populator)
     ====== */
     const infoModal = document.getElementById('info-modal');
     const infoTitle = document.getElementById('info-title');
     const infoBody = document.getElementById('info-body');
     const infoTags = document.getElementById('info-tags');
-    const closeInfoBtn = infoModal ? infoModal.querySelector('.close-modal') : null;
 
-    if (infoModal && closeInfoBtn) {
+    if (infoModal) {
         const openInfoModal = (title, tags = [], bodyHTML = "") => {
             infoTitle.innerText = title;
             infoTags.innerHTML = tags.map(t => `<span>${t}</span>`).join('');
@@ -446,21 +476,6 @@ document.addEventListener("DOMContentLoaded", () => {
             infoModal.classList.add('active');
             document.body.style.overflow = 'hidden';
         };
-
-        const closeInfoModal = () => {
-            infoModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        };
-
-        closeInfoBtn.addEventListener('click', closeInfoModal);
-        infoModal.addEventListener('click', (e) => {
-            if (e.target === infoModal) closeInfoModal();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && infoModal.classList.contains('active')) {
-                closeInfoModal();
-            }
-        });
 
         // 1. Profile Card
         document.getElementById('profile-card')?.addEventListener('click', () => {
@@ -537,42 +552,9 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         });
     }
-   // Education card
-   const eduCard = document.getElementById('edu-card');
-   const eduModal = document.getElementById('education-modal');
-   const closeEduBtn = eduModal ? eduModal.querySelector('.close-education') : null;
-   const eduItems = eduModal ? eduModal.querySelectorAll('.edu-item') : [];
-   const openEducation = () => {
-      if (!eduModal) return;
-      eduModal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      eduItems.forEach((item, i) => {
-         item.classList.remove('show');
-         setTimeout(() => item.classList.add('show'), i * 300);
-      });
-   };
-   const closeEducation = () => {
-      if (!eduModal) return;
-      eduModal.classList.remove('active');
-      document.body.style.overflow = 'auto';
-      eduItems.forEach(item => item.classList.remove('show'));
-   };
-   eduCard && eduCard.addEventListener('click', openEducation);
-   closeEduBtn && closeEduBtn.addEventListener('click', closeEducation);
-   eduModal && eduModal.addEventListener('click', (e) => {
-      if (e.target === eduModal) closeEducation();
-   });
-   document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && eduModal?.classList.contains('active')) {
-         closeEducation();
-      }
-   });
-
-
-
 
     /* ====== 
-       19. KINETIC SCROLL PHYSICS (Inertia & Skew)
+       17. KINETIC SCROLL PHYSICS (Inertia & Skew)
     ====== */
     const gridContainer = document.querySelector('.bento-grid');
     let lastScrollY = window.scrollY;
@@ -597,7 +579,7 @@ document.addEventListener("DOMContentLoaded", () => {
     animateScrollPhysics();
 
     /* ====== 
-       20. BLUEPRINT MODE TOGGLE
+       18. BLUEPRINT MODE TOGGLE
     ====== */
     const bpToggle = document.getElementById('blueprint-toggle');
     if (bpToggle) {
