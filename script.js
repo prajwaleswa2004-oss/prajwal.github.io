@@ -541,8 +541,6 @@ document.addEventListener("DOMContentLoaded", () => {
     /* =========================================
        16. EDUCATION FULLSCREEN MODAL LOGIC (WHITE MODE)
     ========================================= */
-    const eduCardModal = document.getElementById('edu-card');
-    const eduModal = document.getElementById('education-modal');
     const closeEdu = document.querySelector('.close-education');
     const eduItems = document.querySelectorAll('.edu-item');
 
