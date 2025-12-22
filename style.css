@@ -18,7 +18,7 @@ body {
     font-family: 'Space Grotesk', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
-    /* REMOVED: cursor: none; -> Natural mouse restored */
+    /* Natural mouse restored */
 }
 
 /* --- 1. BACKGROUND LAYERS */
@@ -127,7 +127,6 @@ h1:hover { animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both inf
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 16px;
     grid-auto-flow: dense;
-    /* Physics Enablers */
     transform-style: preserve-3d; 
     transform-origin: center center; 
     will-change: transform; 
@@ -142,7 +141,7 @@ h1:hover { animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both inf
     display: flex; flex-direction: column; justify-content: space-between;
     height: 100%; border: none; z-index: 1;
     backdrop-filter: blur(5px);
-    cursor: pointer; /* Ensure clickable cursor */
+    cursor: pointer;
 }
 
 /* The Animated Border */
@@ -173,7 +172,6 @@ h1:hover { animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both inf
 .card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
 
 /* --- 4. ANIMATED ELEMENTS --- */
-/* Project Card Scanner */
 .project-card { cursor: pointer; }
 .card-bg-image {
     position: absolute; top: 0; left: 0; right: 0; bottom: 0;
@@ -189,7 +187,6 @@ h1:hover { animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both inf
 .overlay-dark { background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 24px; justify-content: flex-end; }
 .badge { background: #fff; color: #000; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; align-self: flex-start; margin-bottom: 8px; }
 
-/* Skills Chips */
 .skill-list { list-style: none; padding: 0; margin-top: 15px; display: flex; flex-wrap: wrap; gap: 8px; }
 .skill-list li {
     font-size: 0.8rem; color: var(--text-muted);
@@ -199,7 +196,6 @@ h1:hover { animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both inf
 .skill-list li:hover { background: rgba(255, 255, 255, 0.15); color: #fff; transform: translateY(-2px); border-color: rgba(255, 255, 255, 0.3); }
 .tags span { display: inline-block; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; margin-right: 5px; margin-top: 10px; }
 
-/* Stats & Badges */
 .impact-item { margin-bottom: 10px; border-left: 2px solid rgba(255, 255, 255, 0.1); padding-left: 12px; }
 .impact-label { display: block; font-size: 0.85rem; color: #fff; font-weight: 500; }
 .impact-stat { font-size: 1.2rem; color: var(--accent-green); font-family: 'Courier New', monospace; font-weight: bold; margin: 2px 0; }
@@ -337,111 +333,80 @@ body.blueprint-active canvas {
 }
 
 /* =========================================
-   EDUCATION FULLSCREEN TIMELINE (UNIFIED)
+   EDUCATION TIMELINE (POPUP STYLE)
    ========================================= */
 
-.education-modal {
-    backdrop-filter: blur(12px);
-}
-  
-.education-container {
-    width: 100%;
-    height: 100%;
-    background: #050505;
-    padding: 80px 20px;
-    overflow-y: auto;
-    position: relative;
-}
-  
-.close-education {
-    position: fixed;
-    top: 30px;
-    right: 40px;
-    font-size: 2rem;
-    background: transparent;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    z-index: 10;
-}
-  
-.education-header {
-    text-align: center;
-    margin-bottom: 80px;
-}
-  
-.education-header h2 {
-    font-size: 2.2rem;
-    letter-spacing: 2px;
-    color: #fff;
-}
-  
-.edu-subtitle {
-    font-size: 0.7rem;
-    color: #aaa;
-    letter-spacing: 2px;
-}
-  
 .education-timeline {
-    max-width: 700px;
-    margin: 0 auto;
     position: relative;
-    padding-left: 30px;
+    padding-left: 25px; /* Space for the line */
+    margin-top: 10px;
 }
-  
+
+/* The vertical line */
 .education-timeline::before {
     content: "";
     position: absolute;
-    left: 5px;
-    top: 0;
+    left: 6px; /* Position line */
+    top: 5px;
     bottom: 0;
     width: 2px;
-    background: rgba(255,255,255,0.3);
+    background: rgba(255, 255, 255, 0.2);
 }
-  
+
 .edu-item {
-    display: flex;
-    gap: 25px;
-    margin-bottom: 70px;
+    position: relative;
+    margin-bottom: 40px;
     opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s ease;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
 }
-  
+
 .edu-item.show {
     opacity: 1;
     transform: translateY(0);
 }
-  
+
+/* The Dot */
 .edu-dot {
+    position: absolute;
+    left: -24px; /* Center dot on line */
+    top: 5px;
     width: 12px;
     height: 12px;
     border-radius: 50%;
     background: #fff;
-    margin-left: -36px;
-    margin-top: 6px;
-    box-shadow: 0 0 12px rgba(255,255,255,0.4);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    z-index: 2;
 }
-  
+
+/* Content adjustment */
 .edu-content h3 {
     color: #fff;
     font-size: 1.1rem;
-    margin: 5px 0;
+    margin: 0 0 5px 0;
 }
-  
+
 .edu-date {
+    display: block;
     font-family: monospace;
     font-size: 0.75rem;
-    color: #ccc;
+    color: var(--accent-green);
+    margin-bottom: 5px;
 }
-  
-.edu-content p,
-.edu-content li {
+
+.edu-content p {
     color: #aaa;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
 }
-  
+
 .edu-content ul {
-    margin-top: 10px;
     padding-left: 18px;
+    margin-top: 8px;
+}
+
+.edu-content li {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 4px;
 }
