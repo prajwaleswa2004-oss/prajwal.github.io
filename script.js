@@ -238,9 +238,9 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Project Slider Logic
     const projectImages = [
-        "assets/IMG-20251206-WA0058.jpg",
-        "assets/IMG-20251206-WA0058.jpg",
-        "assets/IMG-20251206-WA0058.jpg"
+        "assets/IMG-20251206-WA0055.jpg",
+        "assets/IMG-20251206-WA0056.jpg",
+        "assets/IMG-20251206-WA0057.jpg"
     ];
     let currentSlide = 0;
     const galleryImg = document.getElementById('gallery-img');
