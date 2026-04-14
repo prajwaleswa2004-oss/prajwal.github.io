@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const galleryImg = document.getElementById('gallery-img');
     const counterDisplay = document.getElementById('current-slide');
 
-    window.changeSlide = function (direction) {
+    const changeSlide = function (direction) {
         if (!galleryImg) return;
         galleryImg.style.opacity = 0;
         setTimeout(() => {
@@ -258,6 +258,12 @@ document.addEventListener("DOMContentLoaded", () => {
             galleryImg.style.opacity = 1;
         }, 300);
     };
+
+    // Attach slide navigation via event listeners (no inline onclick)
+    const prevBtn = document.getElementById('prev-slide-btn');
+    const nextBtn = document.getElementById('next-slide-btn');
+    if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); changeSlide(-1); });
+    if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); changeSlide(1); });
 
     if (projectCard && projectModal) {
         projectCard.addEventListener('click', (e) => {
@@ -368,12 +374,58 @@ document.addEventListener("DOMContentLoaded", () => {
     const infoTags = document.getElementById('info-tags');
 
     if (infoModal) {
-        const openInfoModal = (title, tags = [], bodyHTML = "") => {
-            infoTitle.innerText = title;
-            infoTags.innerHTML = tags.map(t => `<span>${t}</span>`).join('');
-            infoBody.innerHTML = bodyHTML;
+        const openInfoModal = (title, tags = [], bodyContent = null) => {
+            infoTitle.textContent = title;
+
+            // Build tags safely using DOM methods instead of innerHTML
+            infoTags.textContent = '';
+            tags.forEach(t => {
+                const span = document.createElement('span');
+                span.textContent = t;
+                infoTags.appendChild(span);
+            });
+
+            // Clear and append body content safely
+            infoBody.textContent = '';
+            if (bodyContent) {
+                infoBody.appendChild(bodyContent);
+            }
             infoModal.classList.add('active');
             document.body.style.overflow = 'hidden';
+        };
+
+        // Helper to build modal body content using safe DOM methods
+        const createModalBody = (sections) => {
+            const fragment = document.createDocumentFragment();
+            sections.forEach(section => {
+                if (section.type === 'p') {
+                    const p = document.createElement('p');
+                    p.textContent = section.text;
+                    fragment.appendChild(p);
+                } else if (section.type === 'h3') {
+                    const h3 = document.createElement('h3');
+                    h3.textContent = section.text;
+                    fragment.appendChild(h3);
+                } else if (section.type === 'ul') {
+                    const ul = document.createElement('ul');
+                    section.items.forEach(item => {
+                        const li = document.createElement('li');
+                        if (item.bold) {
+                            const strong = document.createElement('strong');
+                            strong.textContent = item.bold;
+                            li.appendChild(strong);
+                            li.appendChild(document.createTextNode(' ' + item.text));
+                        } else {
+                            li.textContent = item.text;
+                        }
+                        ul.appendChild(li);
+                    });
+                    fragment.appendChild(ul);
+                } else if (section.type === 'br') {
+                    fragment.appendChild(document.createElement('br'));
+                }
+            });
+            return fragment;
         };
 
         // Profile Card
@@ -381,14 +433,16 @@ document.addEventListener("DOMContentLoaded", () => {
             openInfoModal(
                 "The Profile",
                 ["Mechanical Engineer", "Designer", "Innovator"],
-                `<p>I am an aspiring Mechanical Engineer skilled in CAD modelling, mechanism design, and automation. Seeking an internship to apply practical engineering skills in real-world product development and smart machine projects.</p>
-                 <br>
-                 <h3>Core Focus</h3>
-                 <ul>
-                    <li>Designing automated systems using Fusion 360</li>
-                    <li>Merging hardware with software logic</li>
-                    <li>Visualizing complex engineering concepts</li>
-                 </ul>`
+                createModalBody([
+                    { type: 'p', text: 'I am an aspiring Mechanical Engineer skilled in CAD modelling, mechanism design, and automation. Seeking an internship to apply practical engineering skills in real-world product development and smart machine projects.' },
+                    { type: 'br' },
+                    { type: 'h3', text: 'Core Focus' },
+                    { type: 'ul', items: [
+                        { text: 'Designing automated systems using Fusion 360' },
+                        { text: 'Merging hardware with software logic' },
+                        { text: 'Visualizing complex engineering concepts' }
+                    ]}
+                ])
             );
         });
 
@@ -397,13 +451,15 @@ document.addEventListener("DOMContentLoaded", () => {
             openInfoModal(
                 "Engineering Skills",
                 ["CAD", "Manufacturing", "Analysis"],
-                `<p>My engineering toolkit is built for prototyping and production.</p>
-                 <ul>
-                    <li><strong>Fusion 360:</strong> Advanced parametric modeling and assembly.</li>
-                    <li><strong>AutoCAD & UG NX:</strong> Industry-standard drafting.</li>
-                    <li><strong>Hypermesh:</strong> Finite Element Analysis (FEA).</li>
-                    <li><strong>3D Printing:</strong> Rapid prototyping from digital mesh to physical object.</li>
-                 </ul>`
+                createModalBody([
+                    { type: 'p', text: 'My engineering toolkit is built for prototyping and production.' },
+                    { type: 'ul', items: [
+                        { bold: 'Fusion 360:', text: 'Advanced parametric modeling and assembly.' },
+                        { bold: 'AutoCAD & UG NX:', text: 'Industry-standard drafting.' },
+                        { bold: 'Hypermesh:', text: 'Finite Element Analysis (FEA).' },
+                        { bold: '3D Printing:', text: 'Rapid prototyping from digital mesh to physical object.' }
+                    ]}
+                ])
             );
         });
 
@@ -412,13 +468,15 @@ document.addEventListener("DOMContentLoaded", () => {
             openInfoModal(
                 "Creative Works",
                 ["Filmmaking", "Photography", "Design"],
-                `<p>Engineering builds the product; creativity tells its story. I specialize in:</p>
-                 <ul>
-                    <li><strong>Video Editing:</strong> Creating compelling narratives using Davinci Resolve.</li>
-                    <li><strong>Short Films:</strong> Directing and shooting visual stories.</li>
-                    <li><strong>Photography:</strong> Capturing industrial and natural aesthetics.</li>
-                    <li><strong>Sketching:</strong> Concept art and visualization.</li>
-                 </ul>`
+                createModalBody([
+                    { type: 'p', text: 'Engineering builds the product; creativity tells its story. I specialize in:' },
+                    { type: 'ul', items: [
+                        { bold: 'Video Editing:', text: 'Creating compelling narratives using Davinci Resolve.' },
+                        { bold: 'Short Films:', text: 'Directing and shooting visual stories.' },
+                        { bold: 'Photography:', text: 'Capturing industrial and natural aesthetics.' },
+                        { bold: 'Sketching:', text: 'Concept art and visualization.' }
+                    ]}
+                ])
             );
         });
 
@@ -427,13 +485,15 @@ document.addEventListener("DOMContentLoaded", () => {
             openInfoModal(
                 "Programming Stack",
                 ["Automation", "Logic", "Embedded"],
-                `<p>I use code to control machinery and analyze data.</p>
-                 <ul>
-                    <li><strong>Python:</strong> Automation scripts and data processing.</li>
-                    <li><strong>C Language:</strong> Embedded programming for microcontrollers.</li>
-                    <li><strong>Java:</strong> Object-oriented software development.</li>
-                 </ul>
-                 <p>Currently integrating IoT solutions with mechanical designs.</p>`
+                createModalBody([
+                    { type: 'p', text: 'I use code to control machinery and analyze data.' },
+                    { type: 'ul', items: [
+                        { bold: 'Python:', text: 'Automation scripts and data processing.' },
+                        { bold: 'C Language:', text: 'Embedded programming for microcontrollers.' },
+                        { bold: 'Java:', text: 'Object-oriented software development.' }
+                    ]},
+                    { type: 'p', text: 'Currently integrating IoT solutions with mechanical designs.' }
+                ])
             );
         });
 
@@ -442,12 +502,14 @@ document.addEventListener("DOMContentLoaded", () => {
             openInfoModal(
                 "Social Impact",
                 ["Volunteering", "Leadership"],
-                `<p>Engineering serves society. My contributions include:</p>
-                 <h3>CRPF Mega Plantation Drive</h3>
-                 <p>Volunteered in a massive drive planting over 10,000 trees, managing logistics and irrigation planning.</p>
-                 <br>
-                 <h3>Student Leadership</h3>
-                 <p>Served as Class Representative for 2 semesters, bridging the gap between faculty and students and organizing technical workshops.</p>`
+                createModalBody([
+                    { type: 'p', text: 'Engineering serves society. My contributions include:' },
+                    { type: 'h3', text: 'CRPF Mega Plantation Drive' },
+                    { type: 'p', text: 'Volunteered in a massive drive planting over 10,000 trees, managing logistics and irrigation planning.' },
+                    { type: 'br' },
+                    { type: 'h3', text: 'Student Leadership' },
+                    { type: 'p', text: 'Served as Class Representative for 2 semesters, bridging the gap between faculty and students and organizing technical workshops.' }
+                ])
             );
         });
     }
@@ -463,6 +525,14 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTime();
 
     if (typeof feather !== 'undefined') feather.replace();
+
+    // Graceful fallback for profile image (replaces inline onerror handler)
+    const profileImg = document.getElementById('profile-img');
+    if (profileImg) {
+        profileImg.addEventListener('error', function() {
+            this.style.display = 'none';
+        });
+    }
 
     /* ====== 
        13. TAB TITLE TICKER
