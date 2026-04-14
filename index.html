@@ -3,21 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prajwal E. | Engineer & Creator</title>
+    <title>Prajwal E. | Engineer &amp; Creator</title>
+    <meta name="description" content="Portfolio of Prajwal E. - Mechanical Engineer, CAD Designer, and Visual Storyteller.">
+    <meta name="keywords" content="Prajwal, Mechanical Engineer, Fusion 360, CAD, Portfolio, JNTUA, Automation">
+    <meta property="og:title" content="Prajwal E. | Engineer &amp; Creator">
+    <meta property="og:description" content="Mechanical Engineer and Visual Storyteller - Explore my projects, skills, and journey.">
+    <meta property="og:type" content="website">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
+    <div id="scroll-progress"></div>
+    <nav id="navbar" class="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">PE<span class="logo-dot">.</span></a>
+            <div class="nav-links">
+                <a href="#about" class="nav-link" data-section="about">About</a>
+                <a href="#skills" class="nav-link" data-section="skills">Skills</a>
+                <a href="#projects" class="nav-link" data-section="projects">Projects</a>
+                <a href="#education" class="nav-link" data-section="education">Education</a>
+                <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+            </div>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-nav-overlay" id="mobile-nav">
+        <div class="mobile-nav-links">
+            <a href="#about" class="mobile-nav-link">About</a>
+            <a href="#skills" class="mobile-nav-link">Skills</a>
+            <a href="#projects" class="mobile-nav-link">Projects</a>
+            <a href="#education" class="mobile-nav-link">Education</a>
+            <a href="#contact" class="mobile-nav-link">Contact</a>
+        </div>
+    </div>
     <div id="boot-screen">
         <div class="terminal-container">
             <div id="boot-text"></div>
             <span class="cursor-blink">_</span>
         </div>
     </div>
-
     <div class="noise-overlay"></div>
     <div class="gear-container">
         <svg class="mech-gear gear-1" viewBox="0 0 100 100">
@@ -27,271 +56,175 @@
             <path d="M88.2 55.4c-0.8-2.3-1.9-4.5-3.2-6.5l6.3-4.6c0.6-0.5 0.8-1.3 0.4-1.9l-4.3-7.4c-0.4-0.7-1.2-0.9-1.9-0.6l-6.8 3.5c-1.7-1.5-3.5-2.9-5.5-4l0.7-7.7c0.1-0.8-0.4-1.5-1.2-1.6l-8.5-1.2c-0.8-0.1-1.5 0.4-1.6 1.2l-1 7.6c-2.1 0-4.3 0.3-6.4 0.8l-2.5-6.3c-0.5-0.6-1.2-0.8-1.9-0.4L43.5 30c-0.7 0.4-0.9 1.2-0.6 1.9l3.5 6.8c-1.5 1.7-2.9 3.5-4 5.5l-7.7-0.7c-0.8-0.1-1.5 0.4-1.6 1.2l-1.2 8.5c-0.1 0.8 0.4 1.5 1.2 1.6l7.6 1c0 2.1 0.3 4.3 0.8 6.4l-6.3 2.5c-0.6 0.5-0.8 1.2-0.4 1.9l4.3 7.4c0.4 0.7 1.2 0.9 1.9 0.6l6.8-3.5c1.7 1.5 3.5 2.9 5.5 4l-0.7 7.7c-0.1 0.8 0.4 1.5 1.2 1.6l8.5 1.2c0.8 0.1 1.5-0.4 1.6-1.2l1-7.6c2.1 0 4.3-0.3 6.4-0.8l2.5 6.3c0.5 0.6 1.2 0.8 1.9 0.4l7.4-4.3c0.7-0.4 0.9-1.2 0.6-1.9l-3.5-6.8c1.5-1.7 2.9-3.5 4-5.5l7.7 0.7c0.8 0.1 1.5-0.4 1.6-1.2l1.2-8.5C89.8 56.8 89.2 56 88.4 55.9L88.2 55.4z M45 61c-8.3 0-15-6.7-15-15s6.7-15 15-15s15 6.7 15 15S53.3 61 45 61z" />
         </svg>
     </div>
-
     <main class="main-container">
-        <header class="fade-in hidden-element">
-            <div class="profile-header">
-                <div class="profile-img-container">
-                    <img src="assets/IMG-20260206-WA0130~5.jpg" alt="Prajwal E." class="profile-avatar" onerror="this.style.display='none'">
+        <section id="hero" class="hero-section fade-in hidden-element">
+            <div class="hero-content">
+                <div class="profile-header">
+                    <div class="profile-img-container">
+                        <img src="assets/IMG-20260206-WA0130~5.jpg" alt="Prajwal E." class="profile-avatar" loading="lazy" onerror="this.style.display='none'">
+                    </div>
+                    <div class="hero-text">
+                        <div class="hero-greeting">Hello, I'm</div>
+                        <h1>Prajwal E.</h1>
+                        <p class="subtitle">Mechanical Engineer</p>
+                        <div class="status-pill"><span class="dot"></span> Open for Internships</div>
+                    </div>
                 </div>
-                <div>
-                    <h1>Prajwal E.</h1>
-                    <p class="subtitle">Mechanical Engineer </p>
-                    <div class="status-pill">
-                        <span class="dot"></span> Open for Internships
+                <div class="hero-actions">
+                    <a href="#contact" class="btn-primary magnetic-btn"><span>Get in Touch</span><i data-feather="arrow-right"></i></a>
+                    <a href="assets/Prajwal resume.pdf" target="_blank" class="btn-secondary magnetic-btn" title="Download Resume"><span>Resume</span><i data-feather="download"></i></a>
+                    <div class="hero-socials">
+                        <a href="mailto:prajwaleswa2004@gmail.com" class="social-icon magnetic-btn" title="Email"><i data-feather="mail"></i></a>
+                        <a href="https://linkedin.com/in/prajwal-esvi-0a9514321" target="_blank" class="social-icon magnetic-btn" title="LinkedIn"><i data-feather="linkedin"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="contact-links">
-                <a href="mailto:prajwaleswa2004@gmail.com">Email</a>
-                <a href="https://linkedin.com/in/prajwal-esvi-0a9514321">LinkedIn</a>
-                <a href="assets/Prajwal resume.pdf" target="_blank" class="resume-btn" title="Download Resume">
-                    <span>Resume</span>
-                    <i data-feather="download"></i>
-                </a>
-            </div>
-        </header>
-
-        <div class="bento-grid hidden-element" id="cards">
-            
-            <div class="card card-large" id="profile-card">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="user"></i></div>
-                    <h3>The Profile</h3>
-                    <p>3rd Year Mechanical Engineering student at JNTUA. Passionate about smart product design, automation, and visual storytelling.</p>
+            <div class="scroll-indicator"><span>Scroll to explore</span><div class="scroll-arrow"><i data-feather="chevrons-down"></i></div></div>
+        </section>
+        <section id="about" class="section fade-in hidden-element">
+            <div class="section-header"><span class="section-number">01</span><h2 class="section-title">About Me</h2><div class="section-line"></div></div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p class="about-lead">I am an aspiring Mechanical Engineer skilled in CAD modelling, mechanism design, and automation.</p>
+                    <p>3rd Year Mechanical Engineering student at JNTUA College of Engineering. Passionate about smart product design, automation, and visual storytelling. I bridge the gap between hardware and software to create innovative engineering solutions.</p>
+                    <p>Currently seeking an internship to apply practical engineering skills in real-world product development and smart machine projects.</p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-card"><span class="stat-number counter" data-target="5">0</span><span class="stat-suffix">+</span><span class="stat-label">CAD Projects</span></div>
+                    <div class="stat-card"><span class="stat-number counter" data-target="3">0</span><span class="stat-label">Programming Languages</span></div>
+                    <div class="stat-card"><span class="stat-number counter" data-target="10000">0</span><span class="stat-suffix">+</span><span class="stat-label">Trees Planted</span></div>
+                    <div class="stat-card"><span class="stat-number counter" data-target="2">0</span><span class="stat-label">Semesters as CR</span></div>
                 </div>
             </div>
-
-            <div class="card card-wide project-card">
-                <div class="card-bg-image" style="background-image: url('assets/IMG-20251206-WA0058.jpg');"></div>
-                <div class="card-content overlay-dark">
-                    <div class="badge">Major Project</div>
-                    <h3>Automated Curry Maker</h3>
-                    <p>Designed in Fusion 360. Features rotating spoon mechanism, slotted lid timing, and ingredient-release systems.</p>
-                </div>
+        </section>
+        <section id="skills" class="section fade-in hidden-element">
+            <div class="section-header"><span class="section-number">02</span><h2 class="section-title">Skills &amp; Expertise</h2><div class="section-line"></div></div>
+            <div class="skills-tabs">
+                <button class="skill-tab active" data-tab="engineering"><i data-feather="tool"></i> Engineering</button>
+                <button class="skill-tab" data-tab="creative"><i data-feather="camera"></i> Creative</button>
+                <button class="skill-tab" data-tab="programming"><i data-feather="code"></i> Programming</button>
             </div>
-
-            <div class="card" id="engineering-card">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="tool"></i></div>
-                    <h3>Engineering</h3>
-                    <ul class="skill-list">
-                        <li>Fusion 360</li>
-                        <li>AutoCAD & UG NX</li>
-                        <li>Hypermesh</li>
-                        <li>3D Printing</li>
-                    </ul>
+            <div class="skills-content">
+                <div class="skill-panel active" id="panel-engineering">
+                    <div class="skills-grid">
+                        <div class="skill-item"><div class="skill-info"><span class="skill-name">Fusion 360</span><span class="skill-percent">90%</span></div><div class="skill-bar"><div class="skill-fill" data-width="90"></div></div><p class="skill-desc">Advanced parametric modeling, assembly design, and rendering</p></div>
+                        <div class="skill-item"><div class="skill-info"><span class="skill-name">AutoCAD &amp; UG NX</span><span class="skill-percent">80%</span></div><div class="skill-bar"><div class="skill-fill" data-width="80"></div></div><p class="skill-desc">Industry-standard 2D/3D drafting and modeling</p></div>
+                        <div class="skill-item"><div class="skill-info"><span class="skill-name">Hypermesh (FEA)</span><span class="skill-percent">65%</span></div><div class="skill-bar"><div class="skill-fill" data-width="65"></div></div><p class="skill-desc">Finite Element Analysis for stress and structural simulation</p></div>
+                        <div class="skill-item"><div class="skill-info"><span class="skill-name">3D Printing</span><span class="skill-percent">75%</span></div><div class="skill-bar"><div class="skill-fill" data-width="75"></div></div><p class="skill-desc">Rapid prototyping from digital mesh to physical object</p></div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="card" id="creative-card">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="camera"></i></div>
-                    <h3>Creative</h3>
-                    <ul class="skill-list">
-                        <li>Video Editing</li>
-                        <li>Photography</li>
-                        <li>Short Films</li>
-                        <li>Sketching</li>
-                    </ul>
+                <div class="skill-panel" id="panel-creative">
+                    <div class="skills-grid">
+                        <div class="skill-item"><div class="skill-info"><span class="skill-name">Video Editing</span><span class="skill-percent">85%</span></div><div class="skill-bar"><div class="skill-fill" data-width="85"></div></div><p class="skill-desc">Creating compelling narratives using DaVinci Resolve</p></div>
+                        <div class="skill-item"><div class="skill-info"><span class="skill-name">Photography</span><span class="skill-percent">80%</span></div><div class="skill-bar"><div class="skill-fill" data-width="80"></div></div><p class="skill-desc">Capturing industrial and natural aesthetics</p></div>
+                        <div class="skill-item"><div class="skill-info"><span class="skill-name">Short Films</span><span class="skill-percent">70%</span></div><div class="skill-bar"><div class="skill-fill" data-width="70"></div></div><p class="skill-desc">Directing and shooting visual stories</p></div>
+                        <div class="skill-item"><div class="skill-info"><span class="skill-name">Sketching</span><span class="skill-percent">75%</span></div><div class="skill-bar"><div class="skill-fill" data-width="75"></div></div><p class="skill-desc">Concept art, visualization, and hand-drawn design</p></div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="card card-tall" id="programming-card">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="code"></i></div>
-                    <h3>Programming</h3>
-                    <p>Bridging the gap between hardware and software.</p>
-                    <div class="tags">
-                        <span>Python</span>
-                        <span>Java</span>
-                        <span>C Language</span>
+                <div class="skill-panel" id="panel-programming">
+                    <div class="skills-grid">
+                        <div class="skill-item"><div class="skill-info"><span class="skill-name">Python</span><span class="skill-percent">75%</span></div><div class="skill-bar"><div class="skill-fill" data-width="75"></div></div><p class="skill-desc">Automation scripts, data processing, and IoT integration</p></div>
+                        <div class="skill-item"><div class="skill-info"><span class="skill-name">Java</span><span class="skill-percent">60%</span></div><div class="skill-bar"><div class="skill-fill" data-width="60"></div></div><p class="skill-desc">Object-oriented software development</p></div>
+                        <div class="skill-item"><div class="skill-info"><span class="skill-name">C Language</span><span class="skill-percent">70%</span></div><div class="skill-bar"><div class="skill-fill" data-width="70"></div></div><p class="skill-desc">Embedded programming for microcontrollers</p></div>
                     </div>
                 </div>
             </div>
-
-            <div class="card" id="edu-card">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="book"></i></div>
-                    <h3>Education Journey</h3>
-                    <p class="click-hint">(Click to track)</p>
-                    <div class="tracker-container">
-                        <div class="tracker-line-bg"></div>
-                        <div class="tracker-line-fill"></div>
-                        
-                        <div class="tracker-item">
-                            <div class="tracker-dot"></div>
-                            <div class="tracker-info">
-                                <span class="date">2023 - 2027</span>
-                                <strong>B.Tech Mechanical</strong>
-                                <span class="school">JNTUA College of Engineering</span>
-                            </div>
-                        </div>
-                        <div class="tracker-item">
-                            <div class="tracker-dot"></div>
-                            <div class="tracker-info">
-                                <span class="date">2021 - 2022</span>
-                                <strong>Intermediate</strong>
-                                <span class="school">S.K Govt Junior College</span>
-                            </div>
-                        </div>
-                        <div class="tracker-item">
-                            <div class="tracker-dot"></div>
-                            <div class="tracker-info">
-                                <span class="date">2021</span>
-                                <strong>SSC</strong>
-                                <span class="school">A.P. Model School</span>
-                            </div>
-                        </div>
-                    </div>
+        </section>
+        <section id="projects" class="section fade-in hidden-element">
+            <div class="section-header"><span class="section-number">03</span><h2 class="section-title">Projects</h2><div class="section-line"></div></div>
+            <div class="projects-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="engineering">Engineering</button>
+                <button class="filter-btn" data-filter="creative">Creative</button>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card-adv tilt-card" data-category="engineering" data-project="curry-maker">
+                    <div class="project-image"><img src="assets/IMG-20251206-WA0058.jpg" alt="Automated Curry Maker" loading="lazy"><div class="project-overlay"><button class="project-view-btn">View Details <i data-feather="arrow-up-right"></i></button></div></div>
+                    <div class="project-info"><div class="project-tags"><span>Fusion 360</span><span>Mechanism Design</span><span>Automation</span></div><h3>Automated Curry Maker</h3><p>Smart cooking machine with rotating spoon mechanism, slotted lid timing, and ingredient-release systems.</p></div>
+                </div>
+                <div class="project-card-adv tilt-card" data-category="engineering" data-project="ornithopter">
+                    <div class="project-image"><img src="assets/IMG-20251206-WA0055.jpg" alt="Ornithopter Design" loading="lazy"><div class="project-overlay"><button class="project-view-btn">View Details <i data-feather="arrow-up-right"></i></button></div></div>
+                    <div class="project-info"><div class="project-tags"><span>Workshop</span><span>Aerodynamics</span></div><h3>Ornithopter Design</h3><p>A bird-inspired flying mechanism designed and built during a specialized engineering workshop.</p></div>
+                </div>
+                <div class="project-card-adv tilt-card" data-category="creative" data-project="storytelling">
+                    <div class="project-image"><img src="assets/IMG-20251125-WA0001.jpg" alt="Visual Storytelling" loading="lazy"><div class="project-overlay"><button class="project-view-btn">View Details <i data-feather="arrow-up-right"></i></button></div></div>
+                    <div class="project-info"><div class="project-tags"><span>Photography</span><span>Filmmaking</span></div><h3>Visual Storytelling</h3><p>A collection of photography and short film projects capturing industrial and natural aesthetics.</p></div>
                 </div>
             </div>
-
-            <div class="card" id="social-card">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="heart"></i></div>
-                    <h3>Social Impact</h3>
-                    <div class="impact-item">
-                        <span class="impact-label">CRPF Mega Drive</span>
-                        <p class="impact-stat"><span class="counter" data-target="10000">0</span>+ Trees</p>
-                        <p class="impact-role">Active Volunteer Participant</p>
-                    </div>
-                    <div class="spacer"></div>
-                    <div class="impact-item">
-                        <span class="impact-label">Student Leadership</span>
-                        <p class="impact-stat"><span class="counter" data-target="2">0</span> Semesters</p>
-                        <p class="impact-role">Class Representative</p>
+        </section>
+        <section id="workshops" class="section fade-in hidden-element">
+            <div class="section-header"><span class="section-number">04</span><h2 class="section-title">Workshops &amp; Certifications</h2><div class="section-line"></div></div>
+            <div class="workshop-cards">
+                <div class="workshop-card tilt-card"><div class="workshop-icon"><i data-feather="wind"></i></div><h3>Ornithopter Design</h3><p>Hands-on workshop on bio-inspired flying mechanisms and aerodynamic design principles.</p></div>
+                <div class="workshop-card tilt-card"><div class="workshop-icon"><i data-feather="shield"></i></div><h3>Ethical Hacking</h3><p>Comprehensive certification covering cybersecurity fundamentals and penetration testing methods.</p></div>
+                <div class="workshop-card tilt-card"><div class="workshop-icon"><i data-feather="box"></i></div><h3>Fusion 360 Certified</h3><p>Official Autodesk certification validating advanced proficiency in Fusion 360 CAD software.</p></div>
+            </div>
+        </section>
+        <section id="education" class="section fade-in hidden-element">
+            <div class="section-header"><span class="section-number">05</span><h2 class="section-title">Education Journey</h2><div class="section-line"></div></div>
+            <div class="timeline">
+                <div class="timeline-item" data-aos="left"><div class="timeline-dot"></div><div class="timeline-content tilt-card"><span class="timeline-date">2023 - 2027</span><h3>B.Tech - Mechanical Engineering</h3><p class="timeline-school">JNTUA College of Engineering</p><ul><li>Major Project: Automated Curry Maker</li><li>Focus on Design &amp; Automation</li><li>Active Member: Art &amp; Crafts Club</li></ul></div></div>
+                <div class="timeline-item" data-aos="right"><div class="timeline-dot"></div><div class="timeline-content tilt-card"><span class="timeline-date">2021 - 2022</span><h3>Intermediate (MPC)</h3><p class="timeline-school">S.K Govt Junior College</p><ul><li>Core Subjects: Maths, Physics, Chemistry</li><li>Academic Excellence in Mechanics</li></ul></div></div>
+                <div class="timeline-item" data-aos="left"><div class="timeline-dot"></div><div class="timeline-content tilt-card"><span class="timeline-date">2020 - 2021</span><h3>Secondary School Certificate</h3><p class="timeline-school">A.P Model School</p></div></div>
+            </div>
+        </section>
+        <section id="impact" class="section fade-in hidden-element">
+            <div class="section-header"><span class="section-number">06</span><h2 class="section-title">Social Impact</h2><div class="section-line"></div></div>
+            <div class="impact-grid">
+                <div class="impact-card tilt-card"><div class="impact-icon"><i data-feather="heart"></i></div><h3>CRPF Mega Plantation Drive</h3><p>Volunteered in a massive drive planting over <span class="highlight"><span class="counter" data-target="10000">0</span>+</span> trees, managing logistics and irrigation planning.</p><span class="impact-role-tag">Active Volunteer Participant</span></div>
+                <div class="impact-card tilt-card"><div class="impact-icon"><i data-feather="users"></i></div><h3>Student Leadership</h3><p>Served as Class Representative for <span class="highlight"><span class="counter" data-target="2">0</span></span> semesters, bridging the gap between faculty and students.</p><span class="impact-role-tag">Class Representative</span></div>
+            </div>
+        </section>
+        <section id="contact" class="section fade-in hidden-element">
+            <div class="section-header"><span class="section-number">07</span><h2 class="section-title">Get in Touch</h2><div class="section-line"></div></div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <p class="contact-lead">Interested in working together? Let's connect and build something amazing.</p>
+                    <div class="contact-methods">
+                        <a href="mailto:prajwaleswa2004@gmail.com" class="contact-method"><div class="contact-icon"><i data-feather="mail"></i></div><div><span class="contact-label">Email</span><span class="contact-value">prajwaleswa2004@gmail.com</span></div></a>
+                        <a href="https://linkedin.com/in/prajwal-esvi-0a9514321" target="_blank" class="contact-method"><div class="contact-icon"><i data-feather="linkedin"></i></div><div><span class="contact-label">LinkedIn</span><span class="contact-value">Prajwal Esvi</span></div></a>
                     </div>
                 </div>
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group"><input type="text" id="form-name" required placeholder=" "><label for="form-name">Your Name</label></div>
+                    <div class="form-group"><input type="email" id="form-email" required placeholder=" "><label for="form-email">Your Email</label></div>
+                    <div class="form-group"><textarea id="form-message" rows="4" required placeholder=" "></textarea><label for="form-message">Your Message</label></div>
+                    <button type="submit" class="btn-primary magnetic-btn submit-btn"><span>Send Message</span><i data-feather="send"></i></button>
+                </form>
             </div>
-
-            <div class="card card-wide">
-                <div class="card-content">
-                    <div class="icon-box"><i data-feather="cpu"></i></div>
-                    <h3>Workshops & Certifications</h3>
-                    <div class="workshop-grid">
-                        <div class="badge-holo">Ornithopter Design</div>
-                        <div class="badge-holo">Ethical Hacking</div>
-                        <div class="badge-holo">Fusion 360 Certified</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        </section>
         <footer>
-            <div class="system-status">
-                <span id="system-time">00:00:00</span> // 
-                <span>SYSTEM: ONLINE</span> // 
-                <span>LOC: INDIA</span>
+            <div class="footer-content">
+                <div class="footer-brand"><span class="footer-logo">PE<span class="logo-dot">.</span></span><p>Designed &amp; Built by Prajwal E.</p></div>
+                <div class="footer-links"><a href="mailto:prajwaleswa2004@gmail.com"><i data-feather="mail"></i></a><a href="https://linkedin.com/in/prajwal-esvi-0a9514321" target="_blank"><i data-feather="linkedin"></i></a></div>
+                <div class="system-status"><span id="system-time">00:00:00</span> // <span>SYSTEM: ONLINE</span> // <span>LOC: INDIA</span></div>
             </div>
         </footer>
     </main>
-
     <div id="project-modal" class="modal-overlay">
         <div class="modal-content">
             <button class="close-modal">&times;</button>
             <div class="modal-header">
                 <div class="gallery-container">
                     <button class="nav-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
-                    <img src="assets/IMG-20251206-WA0058.jpg" id="gallery-img" alt="Project Detail">
+                    <img src="assets/IMG-20251206-WA0058.jpg" id="gallery-img" alt="Project Detail" loading="lazy">
                     <button class="nav-btn next-btn" onclick="changeSlide(1)">&#10095;</button>
                     <div class="image-counter">IMG <span id="current-slide">1</span>/3</div>
                 </div>
                 <div class="modal-title">
-                    <h2>Automated Curry Maker</h2>
-                    <div class="tags">
-                        <span>Fusion 360</span>
-                        <span>Mechanism Design</span>
-                        <span>Automation</span>
-                    </div>
+                    <h2 id="modal-project-title">Automated Curry Maker</h2>
+                    <div class="tags" id="modal-project-tags"><span>Fusion 360</span><span>Mechanism Design</span><span>Automation</span></div>
                 </div>
             </div>
-            <div class="modal-body">
-                <h3>The Problem</h3>
-                <p>Cooking consistently requires precise timing and stirring. Manual methods are labor-intensive.</p>
-                <h3>The Solution</h3>
-                <p>Designed a smart cooking machine that automates the entire process using low-cost mechanical components.</p>
+            <div class="modal-body" id="modal-project-body">
+                <h3>The Problem</h3><p>Cooking consistently requires precise timing and stirring. Manual methods are labor-intensive.</p>
+                <h3>The Solution</h3><p>Designed a smart cooking machine that automates the entire process using low-cost mechanical components.</p>
                 <h3>Key Mechanisms</h3>
-                <ul>
-                    <li><strong>Rotating Spoon:</strong> A custom gear-driven assembly to ensure even mixing.</li>
-                    <li><strong>Slotted Lid Timing:</strong> Automated ingredient release.</li>
-                    <li><strong>Cost Optimization:</strong> Built using basic electronic controls.</li>
-                </ul>
+                <ul><li><strong>Rotating Spoon:</strong> A custom gear-driven assembly to ensure even mixing.</li><li><strong>Slotted Lid Timing:</strong> Automated ingredient release.</li><li><strong>Cost Optimization:</strong> Built using basic electronic controls.</li></ul>
             </div>
         </div>
     </div>
-
-    <div id="info-modal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="close-modal">&times;</button>
-            <div class="modal-title">
-                <h2 id="info-title">Title</h2>
-                <div class="tags" id="info-tags"></div>
-            </div>
-            <div class="modal-body" id="info-body">
-                </div>
-        </div>
-    </div>
-
-    <div id="education-modal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="close-modal">&times;</button>
-            <div class="modal-title">
-                <h2>Education Journey</h2>
-                <div class="tags">
-                    <span>SYSTEM LOG</span>
-                    <span>READ ONLY</span>
-                </div>
-            </div>
-            <div class="modal-body">
-                <div class="education-timeline">
-                    
-                    <div class="edu-item">
-                        <div class="edu-dot"></div>
-                        <div class="edu-content">
-                            <span class="edu-date">2023 – 2027</span>
-                            <h3>B.Tech – Mechanical Engineering</h3>
-                            <p>JNTUA College of Engineering</p>
-                            <ul>
-                                <li>Major Project: Automated Curry Maker</li>
-                                <li>Focus on Design & Automation</li>
-                                <li>Active Member: Art & Crafts Club</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="edu-item">
-                        <div class="edu-dot"></div>
-                        <div class="edu-content">
-                            <span class="edu-date">2021 – 2022</span>
-                            <h3>Intermediate (MPC)</h3>
-                            <p>S.K Govt Junior College</p>
-                            <ul>
-                                <li>Core Subjects: Maths, Physics, Chemistry</li>
-                                <li>Academic Excellence in Mechanics</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="edu-item">
-                        <div class="edu-dot"></div>
-                        <div class="edu-content">
-                            <span class="edu-date">2020-2021</span>
-                            <h3>Secondary School Certificate</h3>
-                            <p>A.P Model School</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="blueprint-controls">
-        <label class="switch-label">VIEW MODE:</label>
-        <button id="blueprint-toggle" class="bp-btn">RENDER</button>
-    </div>
-
+    <button id="back-to-top" class="back-to-top" title="Back to top"><i data-feather="chevron-up"></i></button>
     <script src="script.js"></script>
 </body>
 </html>
