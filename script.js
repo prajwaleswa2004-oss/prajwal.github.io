@@ -103,117 +103,41 @@ document.addEventListener("DOMContentLoaded", () => {
     animate();
 
     /* ====== 4. SCROLL PROGRESS BAR ====== */
-    /* ===== ADVANCED CINEMATIC PARALLAX ===== */
+        /* ===== PARALLAX SCROLL EFFECT ===== */
 
     window.addEventListener('scroll',()=>{
 
     const scrollY = window.scrollY;
 
-    /* HERO FLOAT */
-    const heroContent =
-    document.querySelector('.hero-content');
+    // Hero content
+    const hero = document.querySelector('.hero-content');
 
-    if(heroContent){
-
-        heroContent.style.transform =
-        `translate3d(0, ${scrollY * 0.35}px, 0)`;
-
+    if(hero){
+        hero.style.transform =
+        `translateY(${scrollY * 0.2}px)`;
     }
 
-    /* ABOUT SECTION */
-    const about =
-    document.querySelector('#about .about-grid');
+    // Section headers
+    document.querySelectorAll('.section-header')
+    .forEach(header=>{
 
-    if(about){
+        const speed = 0.08;
 
-        about.style.transform =
-        `translate3d(0, ${scrollY * 0.12}px, 0)`;
-
-    }
-
-    /* SKILLS FLOAT */
-    document.querySelectorAll('.skill-item')
-    .forEach((card,index)=>{
-
-        const speed =
-        0.08 + (index * 0.015);
-
-        card.style.transform =
-        `translate3d(0, ${
-          scrollY * speed
-        }px, 0)`;
+        header.style.transform =
+        `translateY(${scrollY * speed}px)`;
 
     });
 
-    /* PROJECTS CINEMATIC DEPTH */
+    // Project cards depth
     document.querySelectorAll('.project-card-adv')
     .forEach((card,index)=>{
 
-        const speed =
-        index % 2 === 0
-        ? 0.18
-        : 0.12;
-
-        const rotate =
-        scrollY * 0.008;
+        const speed = (index % 2 === 0)
+        ? 0.05
+        : 0.08;
 
         card.style.transform =
-        `
-        translate3d(
-            0,
-            ${scrollY * speed}px,
-            0
-        )
-        rotateZ(${rotate}deg)
-        `;
-
-    });
-
-    /* TIMELINE FLOAT */
-    document.querySelectorAll('.timeline-item')
-    .forEach((item,index)=>{
-
-        const speed =
-        0.10 + (index * 0.03);
-
-        item.style.transform =
-        `translate3d(
-            0,
-            ${scrollY * speed}px,
-            0
-        )`;
-
-    });
-
-    /* WORKSHOP PARALLAX */
-    document.querySelectorAll('.workshop-card')
-    .forEach((card,index)=>{
-
-        const speed =
-        0.09 + (index * 0.02);
-
-        card.style.transform =
-        `translate3d(
-            0,
-            ${scrollY * speed}px,
-            0
-        )`;
- 
-    });
-
-    /* IMPACT SECTION FLOAT */
-    document.querySelectorAll('.impact-card')
-    .forEach((card,index)=>{
-
-        const speed =
-        0.1 + (index * 0.03);
-
-        card.style.transform =
-        `translate3d(
-           0,
-           ${scrollY * speed}px,
-           0
-        )`;
+        `translateY(${scrollY * speed}px)`;
 
     });
 
