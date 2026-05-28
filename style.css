@@ -500,21 +500,6 @@ footer { padding: 3rem 0; border-top: 1px solid var(--border-color); margin-top:
     .about-stats { grid-template-columns: 1fr; }
     .hero-socials { margin-left: 0; }
 }
-/* ===== PARALLAX OPTIMIZATION ===== */
-
-.project-card-adv,
-.skill-item,
-.timeline-item,
-.workshop-card,
-.impact-card,
-.hero-content,
-.about-grid{
-
-will-change:transform;
-transform-style:preserve-3d;
-backface-visibility:hidden;
-
-}
 /* ===== UNIVERSAL EXPLORE CARD ===== */
 
 .explore-showcase-card{
