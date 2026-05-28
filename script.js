@@ -102,17 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     animate();
 
-    /* ====== 3. GEAR SCROLL ENGINE ====== */
-    const gear1 = document.querySelector('.gear-1');
-    const gear2 = document.querySelector('.gear-2');
-    if (gear1 && gear2) {
-        window.addEventListener('scroll', () => {
-            const s = window.scrollY;
-            gear1.style.transform = `rotate(${s / 10}deg)`;
-            gear2.style.transform = `rotate(${s / -5}deg)`;
-        });
-    }
-
     /* ====== 4. SCROLL PROGRESS BAR ====== */
     /* ===== PARALLAX SCROLL EFFECT ===== */
 
