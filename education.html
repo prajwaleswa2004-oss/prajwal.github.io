@@ -1,1 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Education Journey | Prajwal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:'Space Grotesk',sans-serif;
+
+    background:
+    linear-gradient(
+        to bottom,
+        #060816,
+        #050505
+    );
+
+    color:white;
+
+    overflow-x:hidden;
+}
+
+/* SOFT GLOW */
+
+.soft-glow{
+
+    position:fixed;
+
+    width:700px;
+    height:700px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(96,165,250,0.08),
+        transparent 70%
+    );
+
+    top:-250px;
+    left:-250px;
+
+    filter:blur(120px);
+
+    z-index:-2;
+}
+
+/* NAV */
+
+.top-bar{
+
+    width:100%;
+
+    padding:20px 40px;
+
+    position:fixed;
+
+    top:0;
+
+    z-index:999;
+
+    backdrop-filter:blur(20px);
+
+    background:
+    rgba(0,0,0,0.25);
+
+    border-bottom:
+    1px solid rgba(255,255,255,0.08);
+}
+
+.back-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:12px 20px;
+
+    border-radius:40px;
+
+    text-decoration:none;
+
+    color:white;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    transition:0.3s ease;
+}
+
+.back-btn:hover{
+
+    border-color:#60a5fa;
+
+    transform:translateY(-3px);
+}
+
+/* HERO */
+
+.hero{
+
+    width:90%;
+
+    max-width:1100px;
+
+    margin:auto;
+
+    padding-top:140px;
+
+    padding-bottom:100px;
+}
+
+.hero h1{
+
+    font-size:4rem;
+
+    margin-bottom:20px;
+
+    line-height:1.1;
+}
+
+.hero p{
+
+    max-width:700px;
+
+    color:#cfcfcf;
+
+    line-height:1.8;
+}
+
+/* TIMELINE */
+
+.timeline{
+
+    width:90%;
+
+    max-width:1000px;
+
+    margin:auto;
+
+    position:relative;
+
+    padding-bottom:120px;
+}
+
+.timeline::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+
+    top:0;
+
+    width:2px;
+
+    height:100%;
+
+    background:
+    rgba(255,255,255,0.08);
+
+    transform:translateX(-50%);
+}
+
+/* ITEM */
+
+.timeline-item{
+
+    position:relative;
+
+    width:50%;
+
+    padding:30px;
+}
+
+.timeline-item:nth-child(odd){
+
+    left:0;
+}
+
+.timeline-item:nth-child(even){
+
+    left:50%;
+}
+
+/* CARD */
+
+.timeline-card{
+
+    background:
+    rgba(255,255,255,0.04);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    backdrop-filter:blur(20px);
+
+    transition:0.4s ease;
+}
+
+.timeline-card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#60a5fa;
+
+    box-shadow:
+    0 0 40px rgba(96,165,250,0.08);
+}
+
+/* IMAGE */
+
+.timeline-card img{
+
+    width:100%;
+
+    height:220px;
+
+    object-fit:cover;
+
+    display:block;
+
+    cursor:pointer;
+
+    transition:0.4s ease;
+}
+
+.timeline-card:hover img{
+
+    transform:scale(1.03);
+}
+
+/* CONTENT */
+
+.timeline-content{
+
+    padding:24px;
+}
+
+.timeline-content span{
+
+    display:inline-block;
+
+    margin-bottom:12px;
+
+    color:#60a5fa;
+
+    font-size:0.85rem;
+
+    letter-spacing:1px;
+}
+
+.timeline-content h3{
+
+    margin-bottom:12px;
+
+    font-size:1.4rem;
+}
+
+.timeline-content p{
+
+    color:#aaa;
+
+    line-height:1.8;
+
+    font-size:0.95rem;
+}
+
+/* DOT */
+
+.timeline-dot{
+
+    position:absolute;
+
+    top:50px;
+
+    right:-10px;
+
+    width:20px;
+
+    height:20px;
+
+    border-radius:50%;
+
+    background:#60a5fa;
+
+    box-shadow:
+    0 0 20px rgba(96,165,250,0.6);
+}
+
+.timeline-item:nth-child(even) .timeline-dot{
+
+    left:-10px;
+}
+
+/* MODAL */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+    rgba(0,0,0,0.9);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:5000;
+
+    padding:20px;
+}
+
+.modal.active{
+
+    display:flex;
+}
+
+.modal img{
+
+    max-width:90%;
+
+    max-height:90vh;
+
+    border-radius:20px;
+}
+
+.close-modal{
+
+    position:absolute;
+
+    top:30px;
+
+    right:40px;
+
+    font-size:2rem;
+
+    cursor:pointer;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .hero h1{
+
+        font-size:2.5rem;
+    }
+
+    .timeline::before{
+
+        left:20px;
+    }
+
+    .timeline-item{
+
+        width:100%;
+
+        left:0 !important;
+
+        padding-left:60px;
+    }
+
+    .timeline-dot{
+
+        left:10px !important;
+    }
+
+    .top-bar{
+
+        padding:16px 20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="soft-glow"></div>
+
+<!-- NAV -->
+
+<div class="top-bar">
+
+<a href="index.html" class="back-btn">
+
+← Back to Portfolio
+
+</a>
+
+</div>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1>
+Education Journey
+</h1>
+
+<p>
+A timeline of academic growth, engineering learning,
+creative exploration, and the journey that shaped
+my passion for innovation, technology,
+and futuristic problem solving.
+</p>
+
+</section>
+
+<!-- TIMELINE -->
+
+<section class="timeline">
+
+<!-- ITEM -->
+
+<div class="timeline-item">
+
+<div class="timeline-dot"></div>
+
+<div class="timeline-card">
+
+<img
+src="assets/IMG-20251206-WA0022.jpg"
+loading="lazy"
+class="gallery-image"
+>
+
+<div class="timeline-content">
+
+<span>
+2020 - 2021
+</span>
+
+<h3>
+Secondary School Education
+</h3>
+
+<p>
+Built foundational academic skills while
+exploring creativity, drawing, and early
+interest in technology and engineering concepts.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ITEM -->
+
+<div class="timeline-item">
+
+<div class="timeline-dot"></div>
+
+<div class="timeline-card">
+
+<img
+src="assets/IMG-20251206-WA0042.jpg"
+loading="lazy"
+class="gallery-image"
+>
+
+<div class="timeline-content">
+
+<span>
+2021 - 2022
+</span>
+
+<h3>
+Intermediate (MPC)
+</h3>
+
+<p>
+Focused on Mathematics, Physics,
+and Chemistry while strengthening
+analytical thinking and engineering fundamentals.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ITEM -->
+
+<div class="timeline-item">
+
+<div class="timeline-dot"></div>
+
+<div class="timeline-card">
+
+<img
+src="assets/IMG-20251206-WA0046.jpg"
+loading="lazy"
+class="gallery-image"
+>
+
+<div class="timeline-content">
+
+<span>
+2023 - Present
+</span>
+
+<h3>
+B.Tech Mechanical Engineering
+</h3>
+
+<p>
+Exploring CAD modeling, automation,
+Fusion 360, design innovation,
+and futuristic engineering project development.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+<span class="close-modal" id="closeModal">
+×
+</span>
+
+<img id="modalImg">
+
+</div>
+
+<script>
+
+const modal =
+document.getElementById('modal');
+
+const modalImg =
+document.getElementById('modalImg');
+
+const closeModal =
+document.getElementById('closeModal');
+
+document.querySelectorAll('.gallery-image')
+.forEach(img=>{
+
+    img.addEventListener('click',()=>{
+
+        modal.classList.add('active');
+
+        modalImg.src = img.src;
+
+    });
+
+});
+
+closeModal.addEventListener('click',()=>{
+
+    modal.classList.remove('active');
+
+});
+
+modal.addEventListener('click',(e)=>{
+
+    if(e.target===modal){
+
+        modal.classList.remove('active');
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>
