@@ -114,14 +114,45 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ====== 4. SCROLL PROGRESS BAR ====== */
-    const scrollProgress = document.getElementById('scroll-progress');
-    if (scrollProgress) {
-        window.addEventListener('scroll', () => {
-            const winScroll = document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            scrollProgress.style.width = (winScroll / height * 100) + '%';
-        });
+    /* ===== PARALLAX SCROLL EFFECT ===== */
+
+    window.addEventListener('scroll',()=>{
+
+    const scrollY = window.scrollY;
+
+    // Hero content
+    const hero = document.querySelector('.hero-content');
+
+    if(hero){
+        hero.style.transform =
+        `translateY(${scrollY * 0.2}px)`;
     }
+
+    // Section headers
+    document.querySelectorAll('.section-header')
+    .forEach(header=>{
+
+        const speed = 0.08;
+
+        header.style.transform =
+        `translateY(${scrollY * speed}px)`;
+
+    });
+
+    // Project cards depth
+    document.querySelectorAll('.project-card-adv')
+    .forEach((card,index)=>{
+
+        const speed = (index % 2 === 0)
+        ? 0.05
+        : 0.08;
+
+        card.style.transform =
+        `translateY(${scrollY * speed}px)`;
+
+    });
+
+    });
 
     /* ====== 5. STICKY NAVBAR ====== */
     const navbar = document.getElementById('navbar');
