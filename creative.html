@@ -1,1 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Creative Gallery | Prajwal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:'Space Grotesk',sans-serif;
+
+    background:
+    linear-gradient(
+        to bottom,
+        #03110a,
+        #050505
+    );
+
+    color:white;
+
+    overflow-x:hidden;
+}
+
+/* GREEN GLOW */
+
+.green-glow{
+
+    position:fixed;
+
+    width:700px;
+    height:700px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(74,222,128,0.15),
+        transparent 70%
+    );
+
+    top:-200px;
+    left:-200px;
+
+    filter:blur(100px);
+
+    z-index:-2;
+
+    animation:floatGlow 8s ease-in-out infinite;
+}
+
+@keyframes floatGlow{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(40px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}
+
+/* SHIP */
+
+.ship-container{
+
+    position:fixed;
+
+    bottom:20px;
+
+    left:-200px;
+
+    width:200px;
+
+    opacity:0.2;
+
+    z-index:-1;
+
+    animation:sail 40s linear infinite;
+}
+
+.ship{
+
+    width:100%;
+}
+
+@keyframes sail{
+
+    0%{
+        transform:translateX(0);
+    }
+
+    100%{
+        transform:translateX(140vw);
+    }
+
+}
+
+/* NAV */
+
+.top-bar{
+
+    width:100%;
+
+    padding:20px 40px;
+
+    position:fixed;
+
+    top:0;
+
+    z-index:999;
+
+    backdrop-filter:blur(20px);
+
+    background:
+    rgba(0,0,0,0.25);
+
+    border-bottom:
+    1px solid rgba(255,255,255,0.08);
+}
+
+.back-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:12px 20px;
+
+    border-radius:40px;
+
+    text-decoration:none;
+
+    color:white;
+
+    background:
+    rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    transition:0.3s ease;
+}
+
+.back-btn:hover{
+
+    border-color:#4ade80;
+
+    transform:translateY(-3px);
+}
+
+/* HERO */
+
+.hero{
+
+    width:90%;
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding-top:140px;
+
+    padding-bottom:80px;
+}
+
+.hero h1{
+
+    font-size:4rem;
+
+    margin-bottom:20px;
+
+    line-height:1.1;
+}
+
+.hero p{
+
+    max-width:700px;
+
+    color:#bdbdbd;
+
+    line-height:1.8;
+}
+
+/* GALLERY */
+
+.gallery{
+
+    width:90%;
+
+    max-width:1200px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(320px,1fr));
+
+    gap:30px;
+
+    padding-bottom:120px;
+}
+
+.gallery-card{
+
+    background:
+    rgba(255,255,255,0.04);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    backdrop-filter:blur(20px);
+
+    transition:0.4s ease;
+}
+
+.gallery-card:hover{
+
+    transform:
+    translateY(-10px);
+
+    border-color:#4ade80;
+
+    box-shadow:
+    0 0 40px rgba(74,222,128,0.08);
+}
+
+/* IMAGE + VIDEO */
+
+.gallery-card img,
+.gallery-card video{
+
+    width:100%;
+
+    height:240px;
+
+    object-fit:cover;
+
+    display:block;
+}
+
+.gallery-card video{
+
+    background:black;
+}
+
+/* CONTENT */
+
+.gallery-content{
+
+    padding:24px;
+}
+
+.gallery-content h3{
+
+    margin-bottom:12px;
+
+    font-size:1.3rem;
+}
+
+.gallery-content p{
+
+    color:#aaa;
+
+    line-height:1.8;
+
+    font-size:0.95rem;
+}
+
+/* MODAL */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+    rgba(0,0,0,0.9);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:5000;
+
+    padding:20px;
+}
+
+.modal.active{
+
+    display:flex;
+}
+
+.modal img{
+
+    max-width:90%;
+
+    max-height:90vh;
+
+    border-radius:20px;
+}
+
+.close-modal{
+
+    position:absolute;
+
+    top:30px;
+
+    right:40px;
+
+    font-size:2rem;
+
+    cursor:pointer;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .hero h1{
+
+        font-size:2.5rem;
+    }
+
+    .top-bar{
+
+        padding:16px 20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="green-glow"></div>
+
+<!-- SHIP -->
+
+<div class="ship-container">
+
+<svg class="ship" viewBox="0 0 512 512" fill="white">
+
+<path d="M497.941 225.941c-7.812-7.813-20.469-7.813-28.281 0l-85.094 85.094H128c-11.047 0-20 8.953-20 20s8.953 20 20 20h272c5.313 0 10.391-2.109 14.141-5.859l91.719-91.719c7.812-7.812 7.812-20.469.001-28.281z"/>
+
+</svg>
+
+</div>
+
+<!-- NAV -->
+
+<div class="top-bar">
+
+<a href="index.html" class="back-btn">
+
+← Back to Portfolio
+
+</a>
+
+</div>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1>
+Creative Universe
+</h1>
+
+<p>
+A cinematic collection of visual storytelling,
+photography, filmmaking, greenery exploration,
+and artistic experiments inspired by emotion,
+nature, and imagination.
+</p>
+
+</section>
+
+<!-- GALLERY -->
+
+<section class="gallery">
+
+<!-- VIDEO CARD -->
+
+<div class="gallery-card">
+
+<video
+controls
+muted
+loop
+playsinline
+>
+
+<source src="assets/creative/video1.mp4" type="video/mp4">
+
+</video>
+
+<div class="gallery-content">
+
+<h3>
+Nature Cinematic Reel
+</h3>
+
+<p>
+Short cinematic visual exploring greenery,
+lighting, atmosphere, and peaceful storytelling
+through moving frames and nature shots.
+</p>
+
+</div>
+
+</div>
+
+<!-- IMAGE CARD -->
+
+<div class="gallery-card">
+
+<img
+src="assets/creative/photo1.jpg"
+loading="lazy"
+class="gallery-image"
+>
+
+<div class="gallery-content">
+
+<h3>
+Evening Landscape
+</h3>
+
+<p>
+Captured natural lighting and cinematic framing
+during sunset to create calm emotional visuals
+inspired by film composition.
+</p>
+
+</div>
+
+</div>
+
+<!-- IMAGE CARD -->
+
+<div class="gallery-card">
+
+<img
+src="assets/creative/photo2.jpg"
+loading="lazy"
+class="gallery-image"
+>
+
+<div class="gallery-content">
+
+<h3>
+Creative Sketch Art
+</h3>
+
+<p>
+Hand-drawn artwork and conceptual sketches
+focused on storytelling, emotional depth,
+and visual imagination.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+<span class="close-modal" id="closeModal">
+×
+</span>
+
+<img id="modalImg">
+
+</div>
+
+<script>
+
+const modal =
+document.getElementById('modal');
+
+const modalImg =
+document.getElementById('modalImg');
+
+const closeModal =
+document.getElementById('closeModal');
+
+document.querySelectorAll('.gallery-image')
+.forEach(img=>{
+
+    img.addEventListener('click',()=>{
+
+        modal.classList.add('active');
+
+        modalImg.src = img.src;
+
+    });
+
+});
+
+closeModal.addEventListener('click',()=>{
+
+    modal.classList.remove('active');
+
+});
+
+modal.addEventListener('click',(e)=>{
+
+    if(e.target===modal){
+
+        modal.classList.remove('active');
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>
