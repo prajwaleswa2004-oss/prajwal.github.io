@@ -515,3 +515,99 @@ transform-style:preserve-3d;
 backface-visibility:hidden;
 
 }
+/* ===== UNIVERSAL EXPLORE CARD ===== */
+
+.explore-showcase-card{
+
+margin-top:3rem;
+
+background:
+rgba(255,255,255,0.04);
+
+border:
+1px solid rgba(255,255,255,0.08);
+
+border-radius:24px;
+
+padding:2rem;
+
+overflow:hidden;
+
+position:relative;
+
+transition:0.4s ease;
+
+backdrop-filter:blur(20px);
+
+}
+
+.explore-showcase-card:hover{
+
+border-color:#4ade80;
+
+transform:translateY(-8px);
+
+box-shadow:
+0 0 40px rgba(74,222,128,0.08);
+
+}
+
+.explore-label{
+
+color:#4ade80;
+
+font-size:0.8rem;
+
+letter-spacing:2px;
+
+text-transform:uppercase;
+
+}
+
+.explore-content h3{
+
+font-size:2rem;
+
+margin-top:1rem;
+
+margin-bottom:1rem;
+
+}
+
+.explore-content p{
+
+color:#999;
+
+line-height:1.8;
+
+max-width:700px;
+
+}
+
+.explore-btn{
+
+display:inline-flex;
+
+margin-top:1.5rem;
+
+padding:12px 24px;
+
+border-radius:40px;
+
+background:#4ade80;
+
+color:#000;
+
+text-decoration:none;
+
+font-weight:600;
+
+transition:0.3s ease;
+
+}
+
+.explore-btn:hover{
+
+transform:scale(1.05);
+
+}
