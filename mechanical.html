@@ -1,1 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mechanical Engineering Gallery | Prajwal</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            font-family:'Space Grotesk',sans-serif;
+            background:#050505;
+            color:white;
+            overflow-x:hidden;
+
+        }
+
+        /* BACKGROUND */
+
+        .bg-glow{
+
+            position:fixed;
+            width:600px;
+            height:600px;
+            border-radius:50%;
+
+            background:
+            radial-gradient(
+                circle,
+                rgba(74,222,128,0.15),
+                transparent 70%
+            );
+
+            top:-200px;
+            right:-200px;
+
+            z-index:-1;
+
+            filter:blur(80px);
+
+        }
+
+        /* NAVBAR */
+
+        .top-bar{
+
+            width:100%;
+
+            padding:20px 40px;
+
+            position:fixed;
+
+            top:0;
+
+            z-index:999;
+
+            backdrop-filter:blur(20px);
+
+            background:
+            rgba(0,0,0,0.3);
+
+            border-bottom:
+            1px solid rgba(255,255,255,0.08);
+
+        }
+
+        .back-btn{
+
+            display:inline-flex;
+
+            align-items:center;
+
+            gap:10px;
+
+            padding:12px 20px;
+
+            border-radius:40px;
+
+            text-decoration:none;
+
+            color:white;
+
+            background:
+            rgba(255,255,255,0.05);
+
+            border:
+            1px solid rgba(255,255,255,0.08);
+
+            transition:0.3s ease;
+
+        }
+
+        .back-btn:hover{
+
+            border-color:#4ade80;
+
+            transform:translateY(-3px);
+
+        }
+
+        /* HERO */
+
+        .hero{
+
+            padding-top:140px;
+
+            padding-bottom:80px;
+
+            width:90%;
+
+            max-width:1200px;
+
+            margin:auto;
+
+        }
+
+        .hero h1{
+
+            font-size:4rem;
+
+            line-height:1.1;
+
+            margin-bottom:20px;
+
+        }
+
+        .hero p{
+
+            color:#aaa;
+
+            max-width:700px;
+
+            line-height:1.8;
+
+            font-size:1rem;
+
+        }
+
+        /* GALLERY */
+
+        .gallery{
+
+            width:90%;
+
+            max-width:1200px;
+
+            margin:auto;
+
+            display:grid;
+
+            grid-template-columns:
+            repeat(auto-fit,minmax(320px,1fr));
+
+            gap:30px;
+
+            padding-bottom:100px;
+
+        }
+
+        .gallery-card{
+
+            background:
+            rgba(255,255,255,0.04);
+
+            border:
+            1px solid rgba(255,255,255,0.08);
+
+            border-radius:24px;
+
+            overflow:hidden;
+
+            backdrop-filter:blur(20px);
+
+            transition:0.4s ease;
+
+        }
+
+        .gallery-card:hover{
+
+            transform:
+            translateY(-10px);
+
+            border-color:#4ade80;
+
+            box-shadow:
+            0 0 40px rgba(74,222,128,0.1);
+
+        }
+
+        .gallery-card img{
+
+            width:100%;
+
+            height:240px;
+
+            object-fit:cover;
+
+            display:block;
+
+            cursor:pointer;
+
+            transition:0.4s ease;
+
+        }
+
+        .gallery-card:hover img{
+
+            transform:scale(1.03);
+
+        }
+
+        .gallery-content{
+
+            padding:24px;
+
+        }
+
+        .gallery-content h3{
+
+            font-size:1.3rem;
+
+            margin-bottom:12px;
+
+        }
+
+        .gallery-content p{
+
+            color:#aaa;
+
+            line-height:1.7;
+
+            font-size:0.95rem;
+
+        }
+
+        /* MODAL */
+
+        .modal{
+
+            position:fixed;
+
+            inset:0;
+
+            background:
+            rgba(0,0,0,0.85);
+
+            display:none;
+
+            justify-content:center;
+
+            align-items:center;
+
+            z-index:5000;
+
+            padding:20px;
+
+        }
+
+        .modal.active{
+
+            display:flex;
+
+        }
+
+        .modal img{
+
+            max-width:90%;
+
+            max-height:90vh;
+
+            border-radius:20px;
+
+        }
+
+        .close-modal{
+
+            position:absolute;
+
+            top:30px;
+
+            right:40px;
+
+            font-size:2rem;
+
+            color:white;
+
+            cursor:pointer;
+
+        }
+
+        /* MOBILE */
+
+        @media(max-width:768px){
+
+            .hero h1{
+
+                font-size:2.5rem;
+
+            }
+
+            .top-bar{
+
+                padding:16px 20px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="bg-glow"></div>
+
+    <div class="top-bar">
+
+        <a href="index.html" class="back-btn">
+            ← Back to Portfolio
+        </a>
+
+    </div>
+
+    <section class="hero">
+
+        <h1>
+            Mechanical Engineering Gallery
+        </h1>
+
+        <p>
+            A collection of CAD models, automation concepts,
+            Fusion 360 projects, workshop designs, and
+            engineering explorations focused on creativity,
+            mechanism development, and futuristic product design.
+        </p>
+
+    </section>
+
+    <section class="gallery">
+
+        <!-- CARD 1 -->
+
+        <div class="gallery-card">
+
+            <img
+                src="assets/IMG-20251206-WA0058.jpg"
+                alt="AutoChef"
+                loading="lazy"
+            >
+
+            <div class="gallery-content">
+
+                <h3>
+                    Automated Curry Maker
+                </h3>
+
+                <p>
+                    Smart cooking automation project designed
+                    using Fusion 360 with rotating spoon
+                    mechanism, ingredient slot system,
+                    and modular assembly structure.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- CARD 2 -->
+
+        <div class="gallery-card">
+
+            <img
+                src="assets/IMG-20251206-WA0055.jpg"
+                alt="Ornithopter"
+                loading="lazy"
+            >
+
+            <div class="gallery-content">
+
+                <h3>
+                    Ornithopter Prototype
+                </h3>
+
+                <p>
+                    Bird-inspired flying mechanism developed
+                    during workshop activities to understand
+                    aerodynamics, wing motion,
+                    and lightweight structure design.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- CARD 3 -->
+
+        <div class="gallery-card">
+
+            <img
+                src="assets/IMG-20251206-WA0056.jpg"
+                alt="CAD Design"
+                loading="lazy"
+            >
+
+            <div class="gallery-content">
+
+                <h3>
+                    CAD Mechanism Design
+                </h3>
+
+                <p>
+                    Experimental CAD assemblies and
+                    engineering concepts focused on
+                    automation, rotating systems,
+                    and practical manufacturing ideas.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- MODAL -->
+
+    <div class="modal" id="modal">
+
+        <span class="close-modal" id="closeModal">
+            ×
+        </span>
+
+        <img id="modalImg">
+
+    </div>
+
+    <script>
+
+        const modal =
+        document.getElementById('modal');
+
+        const modalImg =
+        document.getElementById('modalImg');
+
+        const closeModal =
+        document.getElementById('closeModal');
+
+        document.querySelectorAll('.gallery-card img')
+        .forEach(img=>{
+
+            img.addEventListener('click',()=>{
+
+                modal.classList.add('active');
+
+                modalImg.src = img.src;
+
+            });
+
+        });
+
+        closeModal.addEventListener('click',()=>{
+
+            modal.classList.remove('active');
+
+        });
+
+        modal.addEventListener('click',(e)=>{
+
+            if(e.target===modal){
+
+                modal.classList.remove('active');
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
