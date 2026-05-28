@@ -103,46 +103,121 @@ document.addEventListener("DOMContentLoaded", () => {
     animate();
 
     /* ====== 4. SCROLL PROGRESS BAR ====== */
-    /* ===== PARALLAX SCROLL EFFECT ===== */
+    /* ===== ADVANCED CINEMATIC PARALLAX ===== */
 
     window.addEventListener('scroll',()=>{
 
     const scrollY = window.scrollY;
 
-    // Hero content
-    const hero = document.querySelector('.hero-content');
+    /* HERO FLOAT */
+    const heroContent =
+    document.querySelector('.hero-content');
 
-    if(hero){
-        hero.style.transform =
-        `translateY(${scrollY * 0.2}px)`;
+    if(heroContent){
+
+        heroContent.style.transform =
+        `translate3d(0, ${scrollY * 0.35}px, 0)`;
+
     }
 
-    // Section headers
-    document.querySelectorAll('.section-header')
-    .forEach(header=>{
+    /* ABOUT SECTION */
+    const about =
+    document.querySelector('#about .about-grid');
 
-        const speed = 0.08;
+    if(about){
 
-        header.style.transform =
-        `translateY(${scrollY * speed}px)`;
+        about.style.transform =
+        `translate3d(0, ${scrollY * 0.12}px, 0)`;
+
+    }
+
+    /* SKILLS FLOAT */
+    document.querySelectorAll('.skill-item')
+    .forEach((card,index)=>{
+
+        const speed =
+        0.08 + (index * 0.015);
+
+        card.style.transform =
+        `translate3d(0, ${
+          scrollY * speed
+        }px, 0)`;
 
     });
 
-    // Project cards depth
+    /* PROJECTS CINEMATIC DEPTH */
     document.querySelectorAll('.project-card-adv')
     .forEach((card,index)=>{
 
-        const speed = (index % 2 === 0)
-        ? 0.05
-        : 0.08;
+        const speed =
+        index % 2 === 0
+        ? 0.18
+        : 0.12;
+
+        const rotate =
+        scrollY * 0.008;
 
         card.style.transform =
-        `translateY(${scrollY * speed}px)`;
+        `
+        translate3d(
+            0,
+            ${scrollY * speed}px,
+            0
+        )
+        rotateZ(${rotate}deg)
+        `;
+
+    });
+
+    /* TIMELINE FLOAT */
+    document.querySelectorAll('.timeline-item')
+    .forEach((item,index)=>{
+
+        const speed =
+        0.10 + (index * 0.03);
+
+        item.style.transform =
+        `translate3d(
+            0,
+            ${scrollY * speed}px,
+            0
+        )`;
+
+    });
+
+    /* WORKSHOP PARALLAX */
+    document.querySelectorAll('.workshop-card')
+    .forEach((card,index)=>{
+
+        const speed =
+        0.09 + (index * 0.02);
+
+        card.style.transform =
+        `translate3d(
+            0,
+            ${scrollY * speed}px,
+            0
+        )`;
+ 
+    });
+
+    /* IMPACT SECTION FLOAT */
+    document.querySelectorAll('.impact-card')
+    .forEach((card,index)=>{
+
+        const speed =
+        0.1 + (index * 0.03);
+
+        card.style.transform =
+        `translate3d(
+           0,
+           ${scrollY * speed}px,
+           0
+        )`;
 
     });
 
     });
-
     /* ====== 5. STICKY NAVBAR ====== */
     const navbar = document.getElementById('navbar');
     if (navbar) {
