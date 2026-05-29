@@ -112,9 +112,9 @@ document.addEventListener("DOMContentLoaded", () => {
             .forEach(el=>{
                 const rect = el.getBoundingClientRect();
                 const move =
-                    (window.innerHeight - rect.top) * 0.08;
+                    (window.innerHeight - rect.top) * 0.05;
                 el.style.transform =
-                    `translateY(${Math.min(move,80)}px)`;
+                    `translateY(${Math.min(move,50)}px)`;
             });
     });
     /* ====== 5. STICKY NAVBAR ====== */
