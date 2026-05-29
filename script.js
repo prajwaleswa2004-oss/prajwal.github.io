@@ -129,18 +129,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Project cards depth
-    document.querySelectorAll('.project-card-adv')
-    .forEach((card,index)=>{
-
-        const speed = (index % 2 === 0)
-        ? 0.05
-        : 0.08;
-
-        card.style.transform =
-        `translateY(${scrollY * speed}px)`;
-
+    window.addEventListener('scroll',()=>{
+        document
+            .querySelectorAll(
+                '.section-header, .about-text, .skill-item, .project-card-adv, .timeline-card, .gallery-card'
+            )
+            .forEach(el=>{
+                const rect = el.getBoundingClientRect();
+                const speed = 0.02;
+                const offset = (window.innerHeight - rect.top)* speed;
+                el.style.transform =`translateY(${Math.min(offset,20)}px)`;
+            });
     });
-
     });
     /* ====== 5. STICKY NAVBAR ====== */
     const navbar = document.getElementById('navbar');
