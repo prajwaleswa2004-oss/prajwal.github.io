@@ -117,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     `translateY(${Math.min(move,35)}px)`;
             });
     });
-    });
     /* ====== 5. STICKY NAVBAR ====== */
     const navbar = document.getElementById('navbar');
     if (navbar) {
