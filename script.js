@@ -106,15 +106,15 @@ document.addEventListener("DOMContentLoaded", () => {
         /* ===== PARALLAX SCROLL EFFECT ===== */
 
     window.addEventListener('scroll',()=>{
-        document
-            .querySelectorAll(
-                '.section-header, .about-text, .skill-item, .project-card-adv, .timeline-card, .gallery-card'
-            )
+        document.querySelectorAll(
+            '.section-header, .about-text, .skill-item, .project-card-adv, .timeline-card, .gallery-card'
+        )
             .forEach(el=>{
                 const rect = el.getBoundingClientRect();
-                const speed = 0.02;
-                const offset = (window.innerHeight - rect.top)* speed;
-                el.style.transform =`translateY(${Math.min(offset,20)}px)`;
+                const move =
+                    (window.innerHeight - rect.top) * 0.03;
+                el.style.transform =
+                    `translateY(${Math.min(move,35)}px)`;
             });
     });
     });
