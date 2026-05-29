@@ -712,3 +712,21 @@ body{
     }
 
 }
+.custom-logo{
+
+    width: 56px;
+    height: 56px;
+
+    object-fit: contain;
+
+    display: block;
+
+    transition: all 0.3s ease;
+
+}
+
+.custom-logo:hover{
+
+    transform: scale(1.08);
+
+}
