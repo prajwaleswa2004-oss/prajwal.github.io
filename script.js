@@ -106,30 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
         /* ===== PARALLAX SCROLL EFFECT ===== */
 
     window.addEventListener('scroll',()=>{
-
-    const scrollY = window.scrollY;
-
-    // Hero content
-    const hero = document.querySelector('.hero-content');
-
-    if(hero){
-        hero.style.transform =
-        `translateY(${scrollY * 0.2}px)`;
-    }
-
-    // Section headers
-    document.querySelectorAll('.section-header')
-    .forEach(header=>{
-
-        const speed = 0.08;
-
-        header.style.transform =
-        `translateY(${scrollY * speed}px)`;
-
-    });
-
-    // Project cards depth
-    window.addEventListener('scroll',()=>{
         document
             .querySelectorAll(
                 '.section-header, .about-text, .skill-item, .project-card-adv, .timeline-card, .gallery-card'
