@@ -651,3 +651,41 @@ box-shadow:
 0 0 30px rgba(74,222,128,0.08);
 
 }
+.signature-logo{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    letter-spacing:-2px;
+
+    position:relative;
+
+    color:white;
+
+}
+
+.signature-logo::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:18px;
+
+    top:50%;
+
+    width:70px;
+
+    height:2px;
+
+    background:#4ade80;
+
+    transform:translateY(-50%);
+
+    border-radius:999px;
+
+    box-shadow:
+    0 0 10px rgba(74,222,128,0.6);
+
+}
