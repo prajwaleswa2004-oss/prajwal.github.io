@@ -66,7 +66,20 @@
                 height:42px;
             }
         }
-
+        .hero h1{
+            opacity:0;
+            transform:
+                translateY(40px);
+            animation:
+                titleReveal 1s ease forwards;
+        }
+        @keyframes titleReveal{
+            to{
+                opacity:1;
+                transform:
+                    translateY(0);
+            }
+        }
         /* NAVBAR */
 
         /* NAVBAR */
