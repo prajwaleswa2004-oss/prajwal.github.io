@@ -463,11 +463,17 @@
 
         <div class="gallery-card">
 
-            <img
-                src="assets/IMG-20251206-WA0058.jpg"
-                alt="AutoChef"
-                loading="lazy"
-            >
+            <model-viewer 
+                src="assets/models/curry-maker.glb"
+                alt="3D model of the Automated Curry Maker"
+                auto-rotate 
+                camera-controls 
+                shadow-intensity="1"
+                environment-image="neutral"
+                exposure="1"
+                style="width: 100%; height: 240px; background-color: #050505;"
+                poster="assets/IMG-20251206-WA0058.jpg">
+            </model-viewer>
 
             <div class="gallery-content">
 
@@ -595,6 +601,7 @@
         });
 
     </script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
 </body>
 
